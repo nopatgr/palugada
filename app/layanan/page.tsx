@@ -1,301 +1,184 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import Link from "next/link";
-import {
-  Monitor,
-  Settings,
-  Headphones,
-  Palette,
-  CheckCircle,
-  ArrowRight,
-  Shield,
-  Clock,
-  Award,
-  Zap,
-  Wrench,
-  Cpu,
-} from "lucide-react";
+'use client'
+
+import { useState, useEffect } from "react"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { ScrollReveal } from "@/components/ui/scroll-reveal"
+import { Star, Zap, Shield, Clock, ArrowRight } from "lucide-react"
+import Link from "next/link"
+
+interface Service {
+  id: string
+  title: string
+  description: string
+  price: string
+  category: string
+  status: 'active' | 'inactive'
+  image?: string
+  gradient?: string
+  features?: string[]
+  popular?: boolean
+}
 
 export default function LayananPage() {
-  const services = [
-    {
-      id: "os-installation",
-      icon: Monitor,
-      title: "OS Installation",
-      description:
-        "Instalasi sistem operasi Windows, macOS, dan Linux dengan konfigurasi optimal untuk kebutuhan bisnis Anda.",
-      features: [
-        "Windows 10/11 Installation",
-        "macOS Setup & Configuration",
-        "Linux Distribution Setup",
-        "Driver Installation",
-        "System Optimization",
-        "Security Configuration",
-      ],
-      startingPrice: "Rp 500.000",
-      duration: "1-2 hari",
-      popular: false,
-      color: "from-cyan-500 to-blue-500"
-    },
-    {
-      id: "software-setup",
-      icon: Settings,
-      title: "Software Setup",
-      description:
-        "Setup dan konfigurasi software aplikasi sesuai kebutuhan bisnis dengan training dan dokumentasi lengkap.",
-      features: [
-        "Business Software Installation",
-        "Application Configuration",
-        "User Account Setup",
-        "Training & Documentation",
-        "License Management",
-        "Performance Optimization",
-      ],
-      startingPrice: "Rp 300.000",
-      duration: "1 hari",
-      popular: true,
-      color: "from-blue-500 to-purple-500"
-    },
-    {
-      id: "tech-support",
-      icon: Headphones,
-      title: "Tech Support",
-      description:
-        "Dukungan teknis 24/7 untuk troubleshooting, maintenance sistem, dan konsultasi teknologi.",
-      features: [
-        "24/7 Technical Support",
-        "Remote Troubleshooting",
-        "System Maintenance",
-        "Hardware Diagnostics",
-        "Network Configuration",
-        "Data Recovery Services",
-      ],
-      startingPrice: "Rp 200.000/jam",
-      duration: "On-demand",
-      popular: false,
-      color: "from-purple-500 to-cyan-500"
-    },
-    {
-      id: "hardware-upgrade",
-      icon: Cpu,
-      title: "Hardware Upgrade",
-      description:
-        "Upgrade dan optimasi hardware untuk meningkatkan performa sistem sesuai kebutuhan Anda.",
-      features: [
-        "RAM & Storage Upgrade",
-        "Graphics Card Installation",
-        "Processor Upgrade",
-        "Cooling System Setup",
-        "Power Supply Upgrade",
-        "Performance Testing",
-      ],
-      startingPrice: "Rp 400.000",
-      duration: "1-3 hari",
-      popular: false,
-      color: "from-cyan-500 to-purple-500"
-    },
-  ];
+  const [services, setServices] = useState<Service[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const response = await fetch('/api/services')
+        const data = await response.json()
+        // Hanya tampilkan layanan yang aktif
+        setServices(data.services?.filter((service: Service) => service.status === 'active') || [])
+      } catch (error) {
+        console.error('Error fetching services:', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchServices()
+  }, [])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+        <div className="text-white text-xl">Memuat layanan...</div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Header */}
-      <section className="relative py-20 mt-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-600/10 to-purple-600/10"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]"></div>
-        <div className="container px-4 mx-auto relative z-10">
-          <ScrollReveal direction="up">
-            <div className="text-center">
-              <div className="inline-flex items-center px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 backdrop-blur-sm mb-6">
-                <Wrench className="w-4 h-4 mr-2 text-cyan-400" />
-                <span className="text-cyan-300 text-sm font-semibold tracking-wide">Hardware Services</span>
-              </div>
-              <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-white">
-                Layanan <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">Kami</span>
-              </h1>
-              <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed tracking-wide">
-                Solusi hardware komprehensif untuk mendukung operasional bisnis Anda dengan layanan profesional
-              </p>
+      <div className="container mx-auto px-4 py-8">
+        <ScrollReveal direction="up">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 backdrop-blur-sm mb-6">
+              <Zap className="w-4 h-4 text-cyan-400" />
+              <span className="text-cyan-300 text-sm font-semibold tracking-wide">Layanan Profesional</span>
             </div>
-          </ScrollReveal>
-        </div>
-      </section>
+            <h1 className="text-3xl lg:text-4xl font-bold mb-4 text-white tracking-tight">Layanan Kami</h1>
+            <p className="text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed tracking-wide">
+              Berbagai layanan teknologi profesional untuk mendukung operasional bisnis Anda
+            </p>
+          </div>
+        </ScrollReveal>
 
-      {/* Services Grid */}
-      <section className="py-20">
-        <div className="container px-4 mx-auto">
-          <div className="grid md:grid-cols-2 gap-8">
+        {/* Services Grid */}
+        <ScrollReveal direction="up" delay={200}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {services.map((service, index) => (
-              <ScrollReveal key={service.id} direction="up" delay={index * 200}>
-                <Card
-                  className={`relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-slate-800 to-slate-700 backdrop-blur-sm border-0 ${
-                    service.popular ? "ring-2 ring-cyan-500" : ""
-                  }`}
-                >
+              <Card key={service.id} className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 group">
+                <CardHeader className="relative">
                   {service.popular && (
-                    <Badge className="absolute top-4 right-4 bg-gradient-to-r from-cyan-500 to-blue-500 text-white border-0">
-                      Popular
+                    <Badge className="absolute top-4 right-4 bg-gradient-to-r from-yellow-500 to-orange-500 text-white">
+                      <Star className="w-3 h-3 mr-1" />
+                      Populer
                     </Badge>
                   )}
-                  <CardHeader>
-                    <div className={`w-16 h-16 bg-gradient-to-r ${service.color} rounded-xl flex items-center justify-center mb-4 shadow-lg`}>
-                      <service.icon className="h-8 w-8 text-white" />
-                    </div>
-                    <CardTitle className="text-xl text-white tracking-wide">
-                      {service.title}
-                    </CardTitle>
-                    <CardDescription className="text-base text-slate-300 tracking-wide">
-                      {service.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-6">
-                    <div className="space-y-3">
-                      {service.features.map((feature) => (
-                        <div key={feature} className="flex items-center gap-3">
-                          <CheckCircle className="h-4 w-4 text-cyan-400 flex-shrink-0" />
-                          <span className="text-sm text-slate-300 tracking-wide">
-                            {feature}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div className="space-y-2 pt-4 border-t border-slate-600">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-slate-400 tracking-wide">
-                          Mulai dari:
-                        </span>
-                        <span className="font-bold text-cyan-400">
-                          {service.startingPrice}
-                        </span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-slate-400 tracking-wide">
-                          Durasi:
-                        </span>
-                        <span className="font-medium text-slate-300 tracking-wide">
-                          {service.duration}
-                        </span>
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${service.gradient || 'from-cyan-500 to-blue-500'} shadow-lg`}></div>
+                    <CardTitle className="text-xl text-white">{service.title}</CardTitle>
+                  </div>
+                  <CardDescription className="text-slate-300 leading-relaxed">
+                    {service.description}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {service.features && service.features.length > 0 && (
+                    <div className="mb-6">
+                      <h4 className="text-sm font-semibold text-cyan-400 mb-3">Fitur Utama:</h4>
+                      <div className="grid grid-cols-1 gap-2">
+                        {service.features.map((feature, idx) => (
+                          <div key={idx} className="flex items-center gap-2 text-slate-300 text-sm">
+                            <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full" />
+                            <span>{feature}</span>
+                          </div>
+                        ))}
                       </div>
                     </div>
-
+                  )}
+                  
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-600">
+                    <div>
+                      <span className="text-2xl font-bold text-cyan-400">{service.price}</span>
+                    </div>
                     <Button
-                      className={`w-full bg-gradient-to-r ${service.color} hover:opacity-90 text-white shadow-xl hover:shadow-2xl transition-all duration-300 font-semibold tracking-wide`}
+                      size="sm"
+                      className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                       asChild
                     >
-                      <Link href={`/booking?service=${service.id}`}>
-                        Pesan Layanan
+                      <Link href="/booking">
+                        Pilih Layanan
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Link>
                     </Button>
-                  </CardContent>
-                </Card>
-              </ScrollReveal>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
-        </div>
-      </section>
+        </ScrollReveal>
 
-      {/* Why Choose Us Section */}
-      <section className="py-20 bg-slate-800/30">
-        <div className="container px-4 mx-auto">
-          <ScrollReveal direction="up">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold mb-4 text-white">
-                Mengapa Memilih <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Layanan Kami?</span>
-              </h2>
-              <p className="text-xl text-slate-300 max-w-2xl mx-auto tracking-wide">
-                Komitmen kami untuk memberikan layanan hardware terbaik dengan standar profesional
-              </p>
+        {/* Additional Info */}
+        <ScrollReveal direction="up" delay={400}>
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            <div className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
+              <Clock className="w-8 h-8 text-cyan-400 mx-auto mb-3" />
+              <h3 className="text-lg font-semibold text-white mb-2">Response Cepat</h3>
+              <p className="text-slate-300 text-sm">Dukungan teknis 24/7 dengan response time &lt; 2 jam</p>
             </div>
-          </ScrollReveal>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Award,
-                title: "Teknisi Bersertifikat",
-                description:
-                  "Tim teknisi kami memiliki sertifikasi internasional dan pengalaman bertahun-tahun dalam hardware",
-                gradient: "from-cyan-500 to-blue-500",
-              },
-              {
-                icon: Clock,
-                title: "Support 24/7",
-                description:
-                  "Dukungan teknis tersedia 24 jam sehari, 7 hari seminggu untuk kebutuhan hardware mendesak",
-                gradient: "from-blue-500 to-purple-500",
-              },
-              {
-                icon: Shield,
-                title: "Garansi Layanan",
-                description:
-                  "Semua layanan hardware dilengkapi garansi dan after-sales support untuk kepuasan Anda",
-                gradient: "from-purple-500 to-cyan-500",
-              },
-            ].map((item, index) => (
-              <ScrollReveal key={index} direction="up" delay={index * 200}>
-                <Card className="text-center border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-slate-800 to-slate-700 backdrop-blur-sm">
-                  <CardHeader>
-                    <div
-                      className={`mx-auto w-16 h-16 bg-gradient-to-r ${item.gradient} rounded-xl flex items-center justify-center mb-4 shadow-lg`}
-                    >
-                      <item.icon className="h-8 w-8 text-white" />
-                    </div>
-                    <CardTitle className="text-white tracking-wide">
-                      {item.title}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <CardDescription className="text-base text-slate-300 tracking-wide">
-                      {item.description}
-                    </CardDescription>
-                  </CardContent>
-                </Card>
-              </ScrollReveal>
-            ))}
+            <div className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
+              <Shield className="w-8 h-8 text-blue-400 mx-auto mb-3" />
+              <h3 className="text-lg font-semibold text-white mb-2">Garansi Layanan</h3>
+              <p className="text-slate-300 text-sm">Garansi 30 hari untuk semua layanan yang kami berikan</p>
+            </div>
+            <div className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
+              <Zap className="w-8 h-8 text-purple-400 mx-auto mb-3" />
+              <h3 className="text-lg font-semibold text-white mb-2">Solusi Terbaik</h3>
+              <p className="text-slate-300 text-sm">Tim ahli berpengalaman dengan solusi yang tepat sasaran</p>
+            </div>
           </div>
-        </div>
-      </section>
+        </ScrollReveal>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-slate-800 to-slate-700">
-        <div className="container px-4 mx-auto text-center">
-          <ScrollReveal direction="up">
-            <h2 className="text-3xl font-bold mb-4 text-white">
-              Butuh Bantuan <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Hardware?</span>
-            </h2>
-            <p className="text-xl mb-8 text-slate-300 max-w-2xl mx-auto tracking-wide">
-              Konsultasikan kebutuhan hardware Anda dengan tim ahli kami.
-              Dapatkan solusi terbaik untuk sistem Anda.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-500/90 hover:via-blue-600/90 hover:to-purple-600/90 text-white shadow-xl hover:shadow-2xl transition-all duration-300 px-8 py-3 font-semibold tracking-wide"
-                asChild
-              >
-                <Link href="/booking">Konsultasi Gratis</Link>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="text-white border-slate-600 hover:bg-slate-700/50 bg-slate-800/50 backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-300 px-8 py-3 font-semibold tracking-wide"
-                asChild
-              >
-                <Link href="/contact">Hubungi Kami</Link>
-              </Button>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
+        {/* CTA Section */}
+        <ScrollReveal direction="up" delay={600}>
+          <div className="text-center">
+            <Card className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-cyan-500/20 backdrop-blur-sm">
+              <CardContent className="p-8">
+                <h2 className="text-2xl font-bold text-white mb-4">Siap untuk Memulai?</h2>
+                <p className="text-slate-300 mb-6 max-w-md mx-auto">
+                  Hubungi kami sekarang untuk konsultasi gratis dan dapatkan solusi terbaik untuk kebutuhan teknologi Anda.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    asChild
+                  >
+                    <Link href="/booking">
+                      Mulai Konsultasi
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm"
+                    asChild
+                  >
+                    <Link href="/contact">
+                      Hubungi Kami
+                    </Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </ScrollReveal>
+      </div>
     </div>
-  );
+  )
 }

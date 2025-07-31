@@ -28,11 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id">
-      <body className={poppins.className}>
+    <html lang="id" className="scroll-smooth">
+      <body className={`${poppins.className} bg-white dark:bg-slate-900 text-slate-900 dark:text-white transition-colors duration-300`}>
         <Providers>
           <Navbar />
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen pt-20">{children}</main>
           <Footer />
         </Providers>
       </body>

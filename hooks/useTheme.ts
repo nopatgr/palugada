@@ -1,41 +1,53 @@
-import { useState, useEffect } from 'react';
+'use client'
 
-type Theme = 'light' | 'dark' | 'system';
+import { useState, useEffect } from 'react'
+
+type Theme = 'light' | 'dark' | 'system'
 
 export const useTheme = () => {
   const [theme, setTheme] = useState<Theme>(() => {
-    const stored = localStorage.getItem('theme') as Theme;
-    return stored || 'system';
-  });
-
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('dark');
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    const updateResolvedTheme = () => {
-      if (theme === 'system') {
-        setResolvedTheme(mediaQuery.matches ? 'dark' : 'light');
-      } else {
-        setResolvedTheme(theme);
-      }
-    };
-
-    updateResolvedTheme();
-    mediaQuery.addEventListener('change', updateResolvedTheme);
-
-    return () => mediaQuery.removeEventListener('change', updateResolvedTheme);
-  }, [theme]);
-
-  useEffect(() => {
-    localStorage.setItem('theme', theme);
-    
-    if (resolvedTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    // Check if we're in browser environment
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('theme') as Theme
+      return stored || 'system'
     }
-  }, [theme, resolvedTheme]);
+    return 'system'
+  })
 
-  return { theme, setTheme, resolvedTheme };
-};
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', theme)
+      
+      const root = window.document.documentElement
+      root.classList.remove('light', 'dark')
+
+      if (theme === 'system') {
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+        root.classList.add(systemTheme)
+      } else {
+        root.classList.add(theme)
+      }
+    }
+  }, [theme])
+
+  const toggleTheme = () => {
+    setTheme(prev => {
+      if (prev === 'light') return 'dark'
+      if (prev === 'dark') return 'system'
+      return 'light'
+    })
+  }
+
+  return {
+    theme,
+    setTheme,
+    toggleTheme,
+    mounted
+  }
+}

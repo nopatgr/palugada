@@ -26,16 +26,19 @@ export function VideoBackground({
   const [isLoaded, setIsLoaded] = useState(false)
   const [hasError, setHasError] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [isTablet, setIsTablet] = useState(false)
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+    const checkDevice = () => {
+      const width = window.innerWidth
+      setIsMobile(width < 768)
+      setIsTablet(width >= 768 && width < 1024)
     }
     
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
+    checkDevice()
+    window.addEventListener('resize', checkDevice)
     
-    return () => window.removeEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkDevice)
   }, [])
 
   useEffect(() => {
@@ -50,7 +53,7 @@ export function VideoBackground({
           console.warn("Video autoplay failed:", error)
           setHasError(true)
         })
-      }, isMobile ? 1000 : 100)
+      }, isMobile ? 1500 : 100)
     }
 
     const handleError = () => {
@@ -80,7 +83,9 @@ export function VideoBackground({
       case "bottom":
         return "object-bottom"
       case "top-shifted":
-        return isMobile ? "object-[50%_25%]" : "object-[50%_10%]"
+        if (isMobile) return "object-[50%_20%]"
+        if (isTablet) return "object-[50%_15%]"
+        return "object-[50%_10%]"
       default:
         return "object-center"
     }

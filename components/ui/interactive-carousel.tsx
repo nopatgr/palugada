@@ -35,31 +35,31 @@ export function InteractiveCarousel({
   const [isTransitioning, setIsTransitioning] = useState(false)
 
   useEffect(() => {
-    if (!autoPlay) return
+    if (!autoPlay || items.length <= 1) return
 
     const timer = setInterval(() => {
       nextSlide()
     }, interval)
 
     return () => clearInterval(timer)
-  }, [autoPlay, interval, currentIndex])
+  }, [autoPlay, interval, currentIndex, items.length])
 
   const nextSlide = () => {
-    if (isTransitioning) return
+    if (isTransitioning || items.length <= 1) return
     setIsTransitioning(true)
     setCurrentIndex((prev) => (prev + 1) % items.length)
     setTimeout(() => setIsTransitioning(false), 300)
   }
 
   const prevSlide = () => {
-    if (isTransitioning) return
+    if (isTransitioning || items.length <= 1) return
     setIsTransitioning(true)
     setCurrentIndex((prev) => (prev - 1 + items.length) % items.length)
     setTimeout(() => setIsTransitioning(false), 300)
   }
 
   const goToSlide = (index: number) => {
-    if (isTransitioning) return
+    if (isTransitioning || index === currentIndex) return
     setIsTransitioning(true)
     setCurrentIndex(index)
     setTimeout(() => setIsTransitioning(false), 300)
@@ -77,100 +77,84 @@ export function InteractiveCarousel({
   }
 
   const getTransformStyle = (index: number) => {
-    switch (effect) {
-      case "fade":
-        return {
-          opacity: index === currentIndex ? 1 : 0,
-          transform: "translateX(0)",
-          transition: "opacity 0.3s ease-in-out"
-        }
-      case "zoom":
-        return {
-          opacity: index === currentIndex ? 1 : 0,
-          transform: index === currentIndex ? "scale(1)" : "scale(0.8)"
-        }
-      default:
-        return {
-          opacity: 1,
-          transform: `translateX(-${currentIndex * 100}%)`
-        }
+    if (effect === "fade") {
+      return {
+        opacity: index === currentIndex ? 1 : 0,
+        zIndex: index === currentIndex ? 10 : 0,
+      }
+    } else if (effect === "zoom") {
+      const scale = index === currentIndex ? 1 : 0.8
+      const opacity = index === currentIndex ? 1 : 0.3
+      return {
+        transform: `scale(${scale})`,
+        opacity,
+        zIndex: index === currentIndex ? 10 : 0,
+      }
+    } else {
+      // Slide effect
+      const translateX = (index - currentIndex) * 100
+      return {
+        transform: `translateX(${translateX}%)`,
+        zIndex: index === currentIndex ? 10 : 0,
+      }
     }
+  }
+
+  if (!items || items.length === 0) {
+    return (
+      <div className={cn("flex items-center justify-center bg-slate-100 dark:bg-slate-800 rounded-lg", className)}>
+        <p className="text-slate-500 dark:text-slate-400">No items to display</p>
+      </div>
+    )
   }
 
   return (
     <div className={cn("relative overflow-hidden rounded-lg", className)}>
       {/* Carousel Container */}
-      <div className="relative h-full">
-        <div
-          className={cn(
-            "flex h-full",
-            effect === "slide" ? "transition-transform duration-300" : ""
-          )}
-          style={
-            effect === "slide"
-              ? { transform: `translateX(-${currentIndex * 100}%)` }
-              : {}
-          }
-        >
-          {items.map((item, index) => (
-            <div
-              key={item.id}
-              className={cn(
-                "w-full flex-shrink-0",
-                getEffectClasses()
-              )}
-              style={getTransformStyle(index)}
-            >
-             
-              <div className="relative h-full">
-                {item.content}
-                {(item.title || item.description) && (
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/80 to-transparent p-6">
-                    {item.title && (
-                      <h3 className="text-xl font-bold text-white mb-2 tracking-wide">
-                        {item.title}
-                      </h3>
-                    )}
-                    {item.description && (
-                      <p className="text-slate-200 tracking-wide">
-                        {item.description}
-                      </p>
-                    )}
-                  </div>
-                )}
-              </div>
+      <div className="relative w-full h-full">
+        {items.map((item, index) => (
+          <div
+            key={item.id}
+            className={cn(
+              "absolute inset-0 w-full h-full",
+              getEffectClasses()
+            )}
+            style={getTransformStyle(index)}
+          >
+            <div className="w-full h-full">
+              {item.content}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
 
       {/* Navigation Arrows */}
       {showArrows && items.length > 1 && (
         <>
           <Button
-            variant="ghost"
-            size="sm"
+            variant="outline"
+            size="icon"
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm hover:bg-white dark:hover:bg-slate-800"
             onClick={prevSlide}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-slate-800/50 hover:bg-slate-700/50 text-white border-0 rounded-full w-10 h-10 p-0 backdrop-blur-sm"
             disabled={isTransitioning}
           >
-            <ChevronLeft className="h-5 w-5" />
+            <ChevronLeft className="h-4 w-4" />
           </Button>
           <Button
-            variant="ghost"
-            size="sm"
+            variant="outline"
+            size="icon"
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm hover:bg-white dark:hover:bg-slate-800"
             onClick={nextSlide}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-slate-800/50 hover:bg-slate-700/50 text-white border-0 rounded-full w-10 h-10 p-0 backdrop-blur-sm"
             disabled={isTransitioning}
           >
-            <ChevronRight className="h-5 w-5" />
+            <ChevronRight className="h-4 w-4" />
           </Button>
         </>
       )}
 
       {/* Dots Indicator */}
       {showDots && items.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex gap-2">
           {items.map((_, index) => (
             <button
               key={index}
@@ -178,8 +162,8 @@ export function InteractiveCarousel({
               className={cn(
                 "w-2 h-2 rounded-full transition-all duration-300",
                 index === currentIndex
-                  ? "bg-cyan-400 scale-125"
-                  : "bg-slate-400 hover:bg-slate-300"
+                  ? "bg-white scale-125"
+                  : "bg-white/50 hover:bg-white/75"
               )}
               disabled={isTransitioning}
             />
@@ -187,15 +171,17 @@ export function InteractiveCarousel({
         </div>
       )}
 
-      {/* Progress Bar */}
-      {autoPlay && (
-        <div className="absolute bottom-0 left-0 right-0 h-1 bg-slate-700">
-          <div
-            className="h-full bg-gradient-to-r from-cyan-500 to-blue-500 transition-all duration-100 ease-linear"
-            style={{
-              width: `${((currentIndex + 1) / items.length) * 100}%`
-            }}
-          />
+      {/* Content Overlay */}
+      {items[currentIndex]?.title && (
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-6 z-10">
+          <h3 className="text-white font-semibold text-lg mb-2">
+            {items[currentIndex].title}
+          </h3>
+          {items[currentIndex].description && (
+            <p className="text-white/90 text-sm">
+              {items[currentIndex].description}
+            </p>
+          )}
         </div>
       )}
     </div>
@@ -250,10 +236,9 @@ export function ImageCarousel({
 interface CardCarouselProps {
   cards: Array<{
     id: string | number
-    title: string
-    description: string
-    icon?: React.ReactNode
-    color?: "cyan" | "blue" | "purple"
+    content: React.ReactNode
+    title?: string
+    description?: string
   }>
   className?: string
   autoPlay?: boolean
@@ -268,29 +253,15 @@ export function CardCarousel({
 }: CardCarouselProps) {
   const carouselItems: CarouselItem[] = cards.map((card) => ({
     id: card.id,
-    content: (
-      <div className="p-6 h-full flex flex-col justify-center">
-        <div className="text-center">
-          {card.icon && (
-            <div className="mx-auto w-16 h-16 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-xl flex items-center justify-center mb-4">
-              {card.icon}
-            </div>
-          )}
-          <h3 className="text-xl font-bold text-white mb-2 tracking-wide">
-            {card.title}
-          </h3>
-          <p className="text-slate-300 tracking-wide">
-            {card.description}
-          </p>
-        </div>
-      </div>
-    )
+    content: card.content,
+    title: card.title,
+    description: card.description
   }))
 
   return (
     <InteractiveCarousel
       items={carouselItems}
-      className={cn("h-64", className)}
+      className={className}
       autoPlay={autoPlay}
       interval={interval}
       effect="fade"
