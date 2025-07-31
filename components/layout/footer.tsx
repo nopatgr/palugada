@@ -90,12 +90,12 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-center space-x-3 group">
                 <Phone className="h-5 w-5 text-futuristic-accent group-hover:text-futuristic-accent-hover transition-colors" />
-                <span className="text-futuristic-text-secondary group-hover:text-futuristic-text-primary transition-colors tracking-wide">+62 812-3456-7890</span>
+                <span className="text-futuristic-text-secondary group-hover:text-futuristic-text-primary transition-colors tracking-wide">+62 857-7710-1676</span>
               </div>
               <div className="flex items-center space-x-3 group">
                 <Mail className="h-5 w-5 text-futuristic-accent group-hover:text-futuristic-accent-hover transition-colors" />
                 <span className="text-futuristic-text-secondary group-hover:text-futuristic-text-primary transition-colors tracking-wide">
-                  hello@palugadadigital.com
+                  services@palugada.biz.id
                 </span>
               </div>
               <div className="flex items-start space-x-3 group">

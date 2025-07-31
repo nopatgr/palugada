@@ -56,10 +56,10 @@ Buat file `.env.local` dengan konfigurasi berikut:
 # Email Configuration
 EMAIL_USER=your-email@gmail.com
 EMAIL_PASS=your-app-password
-ADMIN_EMAIL=admin@palugada.com
+ADMIN_EMAIL=services@palugada.biz.id
 
 # WhatsApp Configuration
-ADMIN_PHONE=6281234567890
+ADMIN_PHONE=6285777101676
 
 # NextAuth Configuration (if needed)
 NEXTAUTH_URL=http://localhost:3000
@@ -71,10 +71,10 @@ NEXTAUTH_SECRET=your-secret-key
 # Email Configuration (dummy values untuk testing)
 EMAIL_USER=test@example.com
 EMAIL_PASS=test-password
-ADMIN_EMAIL=admin@palugada.com
+ADMIN_EMAIL=services@palugada.biz.id
 
 # WhatsApp Configuration
-ADMIN_PHONE=6281234567890
+ADMIN_PHONE=6285777101676
 ```
 
 4. **Jalankan development server**
@@ -227,8 +227,8 @@ MIT License - lihat file LICENSE untuk detail
 
 ## 📞 Support
 
-- **Email**: admin@palugada.com
-- **WhatsApp**: +62 812-3456-7890
+- **Email**: services@palugada.biz.id
+- **WhatsApp**: +62 857-7710-1676
 - **Website**: https://palugada.com
 
 ---

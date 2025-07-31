@@ -32,8 +32,8 @@ export default function ContactPage() {
       icon: Phone,
       title: "Telepon",
       description: "Hubungi kami langsung",
-      value: "+62 812-3456-7890",
-      action: "tel:+6281234567890",
+      value: "+62 857-7710-1676",
+      action: "tel:+6285777101676",
       available: "24/7",
       color: "from-futuristic-accent to-futuristic-cyan"
     },
@@ -41,8 +41,8 @@ export default function ContactPage() {
       icon: MessageCircle,
       title: "WhatsApp",
       description: "Chat langsung dengan tim",
-      value: "+62 812-3456-7890",
-      action: "https://wa.me/6281234567890",
+      value: "+62 857-7710-1676",
+      action: "https://wa.me/6285777101676",
       available: "24/7",
       color: "from-futuristic-cyan to-futuristic-accent"
     },
@@ -50,8 +50,8 @@ export default function ContactPage() {
       icon: Mail,
       title: "Email",
       description: "Kirim email ke kami",
-      value: "hello@palugadadigital.com",
-      action: "mailto:hello@palugadadigital.com",
+      value: "services@palugada.biz.id",
+      action: "mailto:services@palugada.biz.id",
       available: "Respon dalam 24 jam",
       color: "from-futuristic-accent to-futuristic-accent-hover"
     },
@@ -196,10 +196,10 @@ export default function ContactPage() {
                     Cibitung, Kabupaten Bekasi
                   </p>
                   <p className="text-sm text-futuristic-accent mt-2 tracking-wide">
-                    +62 812-3456-7890
+                    +62 857-7710-1676
                   </p>
                   <p className="text-sm text-futuristic-accent tracking-wide">
-                    hello@palugadadigital.com
+                    services@palugada.biz.id
                   </p>
                   <div className="flex items-center gap-2 mt-2">
                     <Clock className="h-4 w-4 text-futuristic-text-secondary" />
@@ -349,7 +349,7 @@ export default function ContactPage() {
               asChild
             >
               <a
-                href="https://wa.me/6281234567890"
+                href="https://wa.me/6285777101676"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -363,7 +363,7 @@ export default function ContactPage() {
               className="text-futuristic-text-primary border-futuristic-border hover:bg-futuristic-secondary/50 bg-futuristic-secondary/50 backdrop-blur-sm shadow-xl hover:shadow-futuristic-glow transition-all duration-300 px-8 py-3 font-semibold tracking-wide"
               asChild
             >
-              <a href="tel:+6281234567890">
+              <a href="tel:+6285777101676">
                 <Phone className="mr-2 h-4 w-4" />
                 Telepon Sekarang
               </a>

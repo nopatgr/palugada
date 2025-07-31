@@ -170,7 +170,7 @@ export default function BookingPage() {
                     </label>
                     <Input
                       type="tel"
-                      placeholder="+62 812-3456-7890"
+                      placeholder="+62 857-7710-1676"
                       className="bg-futuristic-secondary border-futuristic-border text-futuristic-text-primary"
                       value={formData.phone}
                       onChange={(e) => handleInputChange('phone', e.target.value)}
@@ -305,21 +305,21 @@ export default function BookingPage() {
                       <Phone className="w-5 h-5 text-futuristic-accent" />
                       <div>
                         <p className="text-futuristic-text-primary font-medium">Telepon</p>
-                        <p className="text-futuristic-text-secondary text-sm">+62 812-3456-7890</p>
+                        <p className="text-futuristic-text-secondary text-sm">+62 857-7710-1676</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <Mail className="w-5 h-5 text-futuristic-cyan" />
                       <div>
                         <p className="text-futuristic-text-primary font-medium">Email</p>
-                        <p className="text-futuristic-text-secondary text-sm">info@palugada.com</p>
+                        <p className="text-futuristic-text-secondary text-sm">services@palugada.biz.id</p>
                       </div>
                     </div>
                     <div className="flex items-center gap-3">
                       <MessageSquare className="w-5 h-5 text-futuristic-accent-hover" />
                       <div>
                         <p className="text-futuristic-text-primary font-medium">WhatsApp</p>
-                        <p className="text-futuristic-text-secondary text-sm">+62 812-3456-7890</p>
+                        <p className="text-futuristic-text-secondary text-sm">+62 857-7710-1676</p>
                       </div>
                     </div>
                   </div>

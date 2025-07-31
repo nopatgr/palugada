@@ -74,7 +74,7 @@ Salam,
 ${formData.name}
 ${formData.phone}`)
 
-    window.open(`mailto:hello@palugadadigital.com?subject=${emailSubject}&body=${emailBody}`, "_self")
+    window.open(`mailto:services@palugada.biz.id?subject=${emailSubject}&body=${emailBody}`, "_self")
   }
 
   if (isSubmitted) {

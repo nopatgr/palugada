@@ -27,7 +27,7 @@ async function sendEmail(bookingData: any) {
 
   const mailOptions = {
     from: process.env.EMAIL_USER || 'test@example.com',
-    to: process.env.ADMIN_EMAIL || 'admin@palugada.com',
+    to: process.env.ADMIN_EMAIL || 'services@palugada.biz.id',
     subject: `Booking Baru - ${service}`,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -71,7 +71,7 @@ async function sendEmail(bookingData: any) {
           </p>
         </div>
         <p style="color: #666; font-size: 14px;">
-          Jika ada pertanyaan, silakan hubungi kami di: ${process.env.ADMIN_PHONE || '+62 812-3456-7890'}
+          Jika ada pertanyaan, silakan hubungi kami di: ${process.env.ADMIN_PHONE || '+62 857-7710-1676'}
         </p>
       </div>
     `,
@@ -90,7 +90,7 @@ async function sendEmail(bookingData: any) {
 // Fungsi untuk membuat link WhatsApp
 function createWhatsAppLink(bookingData: any) {
   const { name, service, date, message, phone } = bookingData
-  const adminPhone = process.env.ADMIN_PHONE || '6281234567890'
+  const adminPhone = process.env.ADMIN_PHONE || '6285777101676'
   
   const text = `Halo! Ada booking baru dari website:
 
@@ -166,7 +166,7 @@ export async function GET() {
         service: 'OS Installation',
         date: '2024-02-15',
         message: 'Need Windows 11 installation',
-        phone: '+6281234567890',
+        phone: '+6285777101676',
         status: 'confirmed',
         createdAt: '2024-01-15T10:00:00Z'
       },
@@ -177,7 +177,7 @@ export async function GET() {
         service: 'Software Setup',
         date: '2024-02-20',
         message: 'Office suite installation required',
-        phone: '+6281234567891',
+        phone: '+6285777101676',
         status: 'pending',
         createdAt: '2024-01-20T14:30:00Z'
       }
