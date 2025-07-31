@@ -13,10 +13,13 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Palugada Digital - Solusi Digital Terpadu",
+  title: "Palugada Digital",
   description:
     "Palugada Digital menyediakan layanan digital terpadu untuk kebutuhan bisnis Anda",
   generator: "v0.dev",
+  icons: {
+    icon: "/favicon.ico"
+  }
 };
 
 export default function RootLayout({

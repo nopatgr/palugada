@@ -5,24 +5,6 @@ import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/ca
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
 import { InteractiveCarousel } from "@/components/ui/interactive-carousel"
 
-interface Service {
-  title: string
-  description: string
-  image: string
-  gradient: string
-  popular?: boolean
-  features?: string[]
-  price?: string
-}
-
-interface ServicesSectionProps {
-  title?: string
-  subtitle?: string
-  services?: Service[]
-  ctaText?: string
-  ctaHref?: string
-}
-
 export function ServicesSection({
   title = "Layanan Unggulan",
   subtitle = "Berbagai layanan teknologi profesional untuk mendukung operasional bisnis Anda",
@@ -42,6 +24,7 @@ export function ServicesSection({
       image: "/images/computer-repair.jpeg",
       gradient: "from-blue-500 to-purple-500",
       features: ["Office Suite", "Design Software", "Development Tools", "Security Software"],
+      popular: true,
       price: "Mulai Rp 200K"
     },
     {
@@ -52,10 +35,11 @@ export function ServicesSection({
       features: ["Remote Support", "On-site Service", "Preventive Maintenance", "Emergency Response"],
       price: "Mulai Rp 100K/jam"
     },
+  
   ],
   ctaText = "Lihat Semua Layanan",
   ctaHref = "/layanan",
-}: ServicesSectionProps) {
+}) {
   const carouselItems = services.map((service, index) => ({
     id: service.title,
     content: (
@@ -101,17 +85,23 @@ export function ServicesSection({
             </div>
             <Button
               size="sm"
+             
               className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            
             >
-              Pilih Layanan
+              <Link href={ctaHref}>
+                Pilih Layanan
+              </Link>
+             
             </Button>
           </div>
         </div>
       </div>
     ),
-    title: service.title,
-    description: service.description
+    // title: service.title,
+    // description: service.description
   }))
+  // console.log("carouselItems:", carouselItems);
 
   return (
     <section className="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden">
@@ -153,7 +143,7 @@ export function ServicesSection({
             <div className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
               <Clock className="w-8 h-8 text-cyan-400 mx-auto mb-3" />
               <h3 className="text-lg font-semibold text-white mb-2">Response Cepat</h3>
-              <p className="text-slate-300 text-sm">Dukungan teknis 24/7 dengan response time < 2 jam</p>
+              <p className="text-slate-300 text-sm">Dukungan teknis 24/7 dengan response time &lt; 2 jam</p>
             </div>
             <div className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
               <Shield className="w-8 h-8 text-blue-400 mx-auto mb-3" />

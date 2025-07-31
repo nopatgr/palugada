@@ -81,7 +81,8 @@ export function InteractiveCarousel({
       case "fade":
         return {
           opacity: index === currentIndex ? 1 : 0,
-          transform: "translateX(0)"
+          transform: "translateX(0)",
+          transition: "opacity 0.3s ease-in-out"
         }
       case "zoom":
         return {
@@ -120,6 +121,7 @@ export function InteractiveCarousel({
               )}
               style={getTransformStyle(index)}
             >
+             
               <div className="relative h-full">
                 {item.content}
                 {(item.title || item.description) && (
