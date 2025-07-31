@@ -1,6 +1,6 @@
 import type { Config } from "tailwindcss";
 
-export default {
+const config: Config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -19,6 +19,20 @@ export default {
     },
     extend: {
       colors: {
+        // Custom Futuristic Purple + Black Palette
+        'futuristic': {
+          'primary': '#0D0D0D',      // Hitam pekat - Primary Background
+          'secondary': '#1A1A1A',     // Abu gelap - Secondary Background
+          'accent': '#7F5AF0',        // Ungu Futuristik - Accent/Primary Color
+          'accent-hover': '#9C84F9',  // Ungu Muda/Neon - Hover Accent
+          'cyan': '#00CFFF',          // Cyan Elektrik - Secondary Accent
+          'text-primary': '#FFFFFF',   // Putih - Text Utama
+          'text-secondary': '#C5C5C5', // Abu terang - Text Sekunder
+          'border': '#2A2A2A',        // Abu transparan - Border/Divider
+          'glow': '#00CFFF80',        // Neon Cyan Glow - Shadow Glow
+          'button-secondary': '#FFFFFF20', // Transparent border putih
+          'button-secondary-hover': '#333333', // Border + Background abu
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -171,6 +185,14 @@ export default {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-20px)" },
         },
+        "float-delay": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-15px)" },
+        },
+        "float-delay-2": {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-25px)" },
+        },
         "pulse-slow": {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.5" },
@@ -180,8 +202,12 @@ export default {
           "50%": { transform: "rotate(3deg)" },
         },
         "shimmer": {
-          "0%": { backgroundPosition: "-200% 0" },
-          "100%": { backgroundPosition: "200% 0" },
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
+        "slow-zoom": {
+          "0%": { transform: "scale(1)" },
+          "100%": { transform: "scale(1.1)" },
         },
       },
       animation: {
@@ -207,14 +233,19 @@ export default {
         "slide-down": "slide-down 0.5s ease-out",
         "slide-left": "slide-left 0.5s ease-out",
         "slide-right": "slide-right 0.5s ease-out",
-        "spin-slow": "spin-slow 8s linear infinite",
-        "spin-slow-reverse": "spin-slow-reverse 12s linear infinite",
+        "spin-slow": "spin-slow 20s linear infinite",
+        "spin-slow-reverse": "spin-slow-reverse 25s linear infinite",
         "float": "float 6s ease-in-out infinite",
+        "float-delay": "float-delay 6s ease-in-out infinite 2s",
+        "float-delay-2": "float-delay-2 6s ease-in-out infinite 4s",
         "pulse-slow": "pulse-slow 3s ease-in-out infinite",
         "wiggle": "wiggle 1s ease-in-out infinite",
         "shimmer": "shimmer 2s linear infinite",
+        "slow-zoom": "slow-zoom 20s ease-in-out infinite",
       },
     },
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+
+export default config;

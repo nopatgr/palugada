@@ -44,23 +44,23 @@ export default function LayananPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
-        <div className="text-white text-xl">Memuat layanan...</div>
+      <div className="min-h-screen bg-futuristic-primary flex items-center justify-center">
+        <div className="text-futuristic-text-primary text-xl">Memuat layanan...</div>
       </div>
     )
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-futuristic-primary">
       <div className="container mx-auto px-4 py-8">
         <ScrollReveal direction="up">
           <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 backdrop-blur-sm mb-6">
-              <Zap className="w-4 h-4 text-cyan-400" />
-              <span className="text-cyan-300 text-sm font-semibold tracking-wide">Layanan Profesional</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-futuristic-accent/30 bg-futuristic-accent/10 backdrop-blur-sm mb-6">
+              <Zap className="w-4 h-4 text-futuristic-accent" />
+              <span className="text-futuristic-text-primary text-sm font-semibold tracking-wide">Layanan Profesional</span>
             </div>
-            <h1 className="text-3xl lg:text-4xl font-bold mb-4 text-white tracking-tight">Layanan Kami</h1>
-            <p className="text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed tracking-wide">
+            <h1 className="text-3xl lg:text-4xl font-bold mb-4 text-futuristic-text-primary tracking-tight">Layanan Kami</h1>
+            <p className="text-xl text-futuristic-text-secondary max-w-2xl mx-auto leading-relaxed tracking-wide">
               Berbagai layanan teknologi profesional untuk mendukung operasional bisnis Anda
             </p>
           </div>
@@ -70,7 +70,7 @@ export default function LayananPage() {
         <ScrollReveal direction="up" delay={200}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {services.map((service, index) => (
-              <Card key={service.id} className="bg-white/5 border-white/10 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 group">
+              <Card key={service.id} className="bg-futuristic-secondary/50 border-futuristic-border backdrop-blur-sm hover:bg-futuristic-secondary/70 transition-all duration-300 group">
                 <CardHeader className="relative">
                   {service.popular && (
                     <Badge className="absolute top-4 right-4 bg-gradient-to-r from-yellow-500 to-orange-500 text-white">
@@ -79,21 +79,21 @@ export default function LayananPage() {
                     </Badge>
                   )}
                   <div className="flex items-center gap-3 mb-4">
-                    <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${service.gradient || 'from-cyan-500 to-blue-500'} shadow-lg`}></div>
-                    <CardTitle className="text-xl text-white">{service.title}</CardTitle>
+                    <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${service.gradient || 'from-futuristic-accent to-futuristic-cyan'} shadow-lg`}></div>
+                    <CardTitle className="text-xl text-futuristic-text-primary">{service.title}</CardTitle>
                   </div>
-                  <CardDescription className="text-slate-300 leading-relaxed">
+                  <CardDescription className="text-futuristic-text-secondary leading-relaxed">
                     {service.description}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
                   {service.features && service.features.length > 0 && (
                     <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-cyan-400 mb-3">Fitur Utama:</h4>
+                      <h4 className="text-sm font-semibold text-futuristic-accent mb-3">Fitur Utama:</h4>
                       <div className="grid grid-cols-1 gap-2">
                         {service.features.map((feature, idx) => (
-                          <div key={idx} className="flex items-center gap-2 text-slate-300 text-sm">
-                            <div className="w-1.5 h-1.5 bg-cyan-400 rounded-full" />
+                          <div key={idx} className="flex items-center gap-2 text-futuristic-text-secondary text-sm">
+                            <div className="w-1.5 h-1.5 bg-futuristic-accent rounded-full" />
                             <span>{feature}</span>
                           </div>
                         ))}
@@ -101,13 +101,13 @@ export default function LayananPage() {
                     </div>
                   )}
                   
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-600">
+                  <div className="flex items-center justify-between pt-4 border-t border-futuristic-border">
                     <div>
-                      <span className="text-2xl font-bold text-cyan-400">{service.price}</span>
+                      <span className="text-2xl font-bold text-futuristic-accent">{service.price}</span>
                     </div>
                     <Button
                       size="sm"
-                      className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white border-0 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                      className="bg-gradient-to-r from-futuristic-accent to-futuristic-cyan hover:from-futuristic-accent-hover hover:to-futuristic-cyan text-futuristic-text-primary border-0 shadow-lg hover:shadow-futuristic-glow transition-all duration-300 transform hover:scale-105"
                       asChild
                     >
                       <Link href="/booking">
@@ -125,20 +125,20 @@ export default function LayananPage() {
         {/* Additional Info */}
         <ScrollReveal direction="up" delay={400}>
           <div className="grid md:grid-cols-3 gap-6 mb-12">
-            <div className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
-              <Clock className="w-8 h-8 text-cyan-400 mx-auto mb-3" />
-              <h3 className="text-lg font-semibold text-white mb-2">Response Cepat</h3>
-              <p className="text-slate-300 text-sm">Dukungan teknis 24/7 dengan response time &lt; 2 jam</p>
+            <div className="text-center p-6 rounded-2xl bg-futuristic-secondary/50 backdrop-blur-sm border border-futuristic-border hover:bg-futuristic-secondary/70 transition-all duration-300">
+              <Clock className="w-8 h-8 text-futuristic-accent mx-auto mb-3" />
+              <h3 className="text-lg font-semibold text-futuristic-text-primary mb-2">Response Cepat</h3>
+              <p className="text-futuristic-text-secondary text-sm">Dukungan teknis 24/7 dengan response time &lt; 2 jam</p>
             </div>
-            <div className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
-              <Shield className="w-8 h-8 text-blue-400 mx-auto mb-3" />
-              <h3 className="text-lg font-semibold text-white mb-2">Garansi Layanan</h3>
-              <p className="text-slate-300 text-sm">Garansi 30 hari untuk semua layanan yang kami berikan</p>
+            <div className="text-center p-6 rounded-2xl bg-futuristic-secondary/50 backdrop-blur-sm border border-futuristic-border hover:bg-futuristic-secondary/70 transition-all duration-300">
+              <Shield className="w-8 h-8 text-futuristic-cyan mx-auto mb-3" />
+              <h3 className="text-lg font-semibold text-futuristic-text-primary mb-2">Garansi Layanan</h3>
+              <p className="text-futuristic-text-secondary text-sm">Garansi 30 hari untuk semua layanan yang kami berikan</p>
             </div>
-            <div className="text-center p-6 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
-              <Zap className="w-8 h-8 text-purple-400 mx-auto mb-3" />
-              <h3 className="text-lg font-semibold text-white mb-2">Solusi Terbaik</h3>
-              <p className="text-slate-300 text-sm">Tim ahli berpengalaman dengan solusi yang tepat sasaran</p>
+            <div className="text-center p-6 rounded-2xl bg-futuristic-secondary/50 backdrop-blur-sm border border-futuristic-border hover:bg-futuristic-secondary/70 transition-all duration-300">
+              <Zap className="w-8 h-8 text-futuristic-accent-hover mx-auto mb-3" />
+              <h3 className="text-lg font-semibold text-futuristic-text-primary mb-2">Solusi Terbaik</h3>
+              <p className="text-futuristic-text-secondary text-sm">Tim ahli berpengalaman dengan solusi yang tepat sasaran</p>
             </div>
           </div>
         </ScrollReveal>
@@ -146,16 +146,16 @@ export default function LayananPage() {
         {/* CTA Section */}
         <ScrollReveal direction="up" delay={600}>
           <div className="text-center">
-            <Card className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border-cyan-500/20 backdrop-blur-sm">
+            <Card className="bg-gradient-to-r from-futuristic-accent/10 to-futuristic-cyan/10 border-futuristic-accent/20 backdrop-blur-sm">
               <CardContent className="p-8">
-                <h2 className="text-2xl font-bold text-white mb-4">Siap untuk Memulai?</h2>
-                <p className="text-slate-300 mb-6 max-w-md mx-auto">
+                <h2 className="text-2xl font-bold text-futuristic-text-primary mb-4">Siap untuk Memulai?</h2>
+                <p className="text-futuristic-text-secondary mb-6 max-w-md mx-auto">
                   Hubungi kami sekarang untuk konsultasi gratis dan dapatkan solusi terbaik untuk kebutuhan teknologi Anda.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button
                     size="lg"
-                    className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                    className="bg-gradient-to-r from-futuristic-accent to-futuristic-cyan hover:from-futuristic-accent-hover hover:to-futuristic-cyan text-futuristic-text-primary shadow-lg hover:shadow-futuristic-glow transition-all duration-300 transform hover:scale-105"
                     asChild
                   >
                     <Link href="/booking">
@@ -166,7 +166,7 @@ export default function LayananPage() {
                   <Button
                     size="lg"
                     variant="outline"
-                    className="border-white/30 text-white hover:bg-white/10 backdrop-blur-sm"
+                    className="border-futuristic-text-primary/30 text-futuristic-text-primary hover:bg-futuristic-secondary/50 backdrop-blur-sm"
                     asChild
                   >
                     <Link href="/contact">

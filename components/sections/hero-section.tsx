@@ -9,54 +9,78 @@ import Image from "next/image"
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-black">
-      {/* LightRays Background */}
-      <div className="absolute inset-0 pointer-events-none">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-futuristic-primary">
+      {/* Enhanced Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/hero-bg.jpg"
+          alt="Hero Background"
+          fill
+          className="object-cover object-center scale-110 animate-slow-zoom"
+          priority
+          sizes="100vw"
+        />
+        {/* Enhanced overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-futuristic-primary/90 via-futuristic-primary/70 to-futuristic-primary/95"></div>
+      </div>
+
+      {/* Enhanced LightRays Background */}
+      <div className="absolute inset-0 pointer-events-none z-10">
         <LightRays
           raysOrigin="top-center"
-          raysColor="#06b6d4"
-          raysSpeed={0.4}
-          lightSpread={2.0}
-          rayLength={2.5}
+          raysColor="#7F5AF0"
+          raysSpeed={0.6}
+          lightSpread={1.5}
+          rayLength={3.0}
           pulsating={true}
-          fadeDistance={1.5}
-          saturation={1.2}
+          fadeDistance={2.0}
+          saturation={1.4}
           followMouse={true}
-          mouseInfluence={0.15}
-          noiseAmount={0.1}
-          distortion={0.05}
-          className="opacity-30"
+          mouseInfluence={0.25}
+          noiseAmount={0.15}
+          distortion={0.08}
+          className="opacity-40"
         />
       </div>
 
-      {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-800/60 to-black/90"></div>
-
-      {/* Floating Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-1 h-1 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
-        <div className="absolute bottom-40 left-20 w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse" style={{animationDelay: '2s'}}></div>
-        <div className="absolute bottom-20 right-10 w-1 h-1 bg-green-400 rounded-full animate-pulse" style={{animationDelay: '3s'}}></div>
+      {/* Additional Interactive Background Elements */}
+      <div className="absolute inset-0 overflow-hidden z-20">
+        {/* Animated Grid Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 bg-gradient-to-r from-futuristic-accent/20 via-transparent to-futuristic-cyan/20 animate-pulse"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-futuristic-accent/10 to-transparent animate-pulse" style={{animationDelay: '2s'}}></div>
+        </div>
+        
+        {/* Enhanced Floating Elements */}
+        <div className="absolute top-20 left-10 w-3 h-3 bg-futuristic-accent rounded-full animate-pulse shadow-lg shadow-futuristic-accent/50"></div>
+        <div className="absolute top-40 right-20 w-2 h-2 bg-futuristic-cyan rounded-full animate-pulse shadow-lg shadow-futuristic-cyan/50" style={{animationDelay: '1s'}}></div>
+        <div className="absolute bottom-40 left-20 w-2.5 h-2.5 bg-futuristic-accent-hover rounded-full animate-pulse shadow-lg shadow-futuristic-accent-hover/50" style={{animationDelay: '2s'}}></div>
+        <div className="absolute bottom-20 right-10 w-2 h-2 bg-futuristic-cyan rounded-full animate-pulse shadow-lg shadow-futuristic-cyan/50" style={{animationDelay: '3s'}}></div>
+        
+        {/* Additional floating particles */}
+        <div className="absolute top-1/3 left-1/4 w-1 h-1 bg-futuristic-accent rounded-full animate-float"></div>
+        <div className="absolute top-2/3 right-1/3 w-1.5 h-1.5 bg-futuristic-cyan rounded-full animate-float-delay"></div>
+        <div className="absolute bottom-1/3 left-1/3 w-1 h-1 bg-futuristic-accent-hover rounded-full animate-float-delay-2"></div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Content */}
+      <div className="relative z-40 container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center min-h-screen py-8 lg:py-0">
           {/* Left Content */}
           <div className="text-center lg:text-left">
             {/* Badge */}
             <ScrollReveal direction="up">
-              <div className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-cyan-500/20 to-blue-500/20 border border-cyan-500/30 text-cyan-300 text-sm font-semibold mb-8 backdrop-blur-sm shadow-lg">
-                <Sparkles className="w-4 h-4 mr-2" />
+              <div className="inline-flex items-center px-6 py-3 rounded-full bg-futuristic-secondary/80 border border-futuristic-accent/30 text-futuristic-text-primary text-sm font-medium mb-8 backdrop-blur-sm shadow-lg">
+                <Sparkles className="w-4 h-4 mr-2 text-futuristic-accent" />
                 Layanan Teknologi Terpercaya
               </div>
             </ScrollReveal>
 
             {/* Main Title */}
             <ScrollReveal direction="up" delay={200}>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-futuristic-text-primary mb-8 leading-tight">
                 Solusi Digital
-                <span className="block bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                <span className="block text-futuristic-accent">
                   untuk Bisnis Anda
                 </span>
               </h1>
@@ -64,7 +88,7 @@ export function HeroSection() {
 
             {/* Description */}
             <ScrollReveal direction="up" delay={400}>
-              <p className="text-xl sm:text-2xl text-slate-300 mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-xl sm:text-2xl text-futuristic-text-secondary mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
                 Kami menyediakan layanan teknologi terpadu untuk membantu bisnis Anda berkembang di era digital. 
                 Dari instalasi sistem hingga dukungan teknis 24/7.
               </p>
@@ -76,7 +100,7 @@ export function HeroSection() {
                 <Button
                   asChild
                   size="lg"
-                  className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 text-lg px-10 py-6 rounded-xl font-semibold group"
+                  className="bg-futuristic-accent hover:bg-futuristic-accent-hover text-futuristic-text-primary border border-futuristic-accent hover:border-futuristic-accent-hover transition-all duration-300 text-lg px-10 py-6 rounded-lg font-medium group shadow-lg hover:shadow-futuristic-glow"
                 >
                   <Link href="/booking" className="flex items-center">
                     Mulai Konsultasi
@@ -87,7 +111,7 @@ export function HeroSection() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="border-2 border-slate-600 text-slate-300 hover:bg-slate-800 hover:text-white text-lg px-10 py-6 rounded-xl font-semibold backdrop-blur-sm"
+                  className="border border-futuristic-text-primary/30 text-futuristic-text-primary hover:bg-futuristic-secondary hover:text-futuristic-text-primary text-lg px-10 py-6 rounded-lg font-medium backdrop-blur-sm hover:border-futuristic-accent/50"
                 >
                   <Link href="/layanan" className="flex items-center">
                     <Play className="mr-3 h-5 w-5" />
@@ -100,21 +124,21 @@ export function HeroSection() {
             {/* Stats */}
             <ScrollReveal direction="up" delay={800}>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto lg:mx-0">
-                <div className="text-center p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
-                  <div className="text-2xl md:text-3xl font-bold text-white mb-2">500+</div>
-                  <div className="text-xs text-slate-400 font-medium">Klien Puas</div>
+                <div className="text-center p-4 rounded-xl bg-futuristic-secondary/50 backdrop-blur-sm border border-futuristic-border hover:bg-futuristic-secondary/70 transition-all duration-300">
+                  <div className="text-2xl md:text-3xl font-bold text-futuristic-text-primary mb-2">500+</div>
+                  <div className="text-xs text-futuristic-text-secondary font-medium">Klien Puas</div>
                 </div>
-                <div className="text-center p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
-                  <div className="text-2xl md:text-3xl font-bold text-white mb-2">24/7</div>
-                  <div className="text-xs text-slate-400 font-medium">Dukungan</div>
+                <div className="text-center p-4 rounded-xl bg-futuristic-secondary/50 backdrop-blur-sm border border-futuristic-border hover:bg-futuristic-secondary/70 transition-all duration-300">
+                  <div className="text-2xl md:text-3xl font-bold text-futuristic-text-primary mb-2">24/7</div>
+                  <div className="text-xs text-futuristic-text-secondary font-medium">Dukungan</div>
                 </div>
-                <div className="text-center p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
-                  <div className="text-2xl md:text-3xl font-bold text-white mb-2">99%</div>
-                  <div className="text-xs text-slate-400 font-medium">Uptime</div>
+                <div className="text-center p-4 rounded-xl bg-futuristic-secondary/50 backdrop-blur-sm border border-futuristic-border hover:bg-futuristic-secondary/70 transition-all duration-300">
+                  <div className="text-2xl md:text-3xl font-bold text-futuristic-text-primary mb-2">99%</div>
+                  <div className="text-xs text-futuristic-text-secondary font-medium">Uptime</div>
                 </div>
-                <div className="text-center p-4 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
-                  <div className="text-2xl md:text-3xl font-bold text-white mb-2">5★</div>
-                  <div className="text-xs text-slate-400 font-medium">Rating</div>
+                <div className="text-center p-4 rounded-xl bg-futuristic-secondary/50 backdrop-blur-sm border border-futuristic-border hover:bg-futuristic-secondary/70 transition-all duration-300">
+                  <div className="text-2xl md:text-3xl font-bold text-futuristic-text-primary mb-2">5★</div>
+                  <div className="text-xs text-futuristic-text-secondary font-medium">Rating</div>
                 </div>
               </div>
             </ScrollReveal>
@@ -127,21 +151,21 @@ export function HeroSection() {
                 {/* Main Container */}
                 <div className="relative w-96 h-96">
                   {/* Background Glow */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/30 via-blue-500/20 to-purple-500/30 rounded-3xl blur-3xl animate-pulse"></div>
+                  <div className="absolute inset-0 bg-futuristic-accent/20 rounded-3xl blur-3xl animate-pulse"></div>
                   
                   {/* Main Card */}
-                  <div className="relative w-full h-full bg-gradient-to-br from-slate-800/80 to-slate-900/80 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl overflow-hidden">
+                  <div className="relative w-full h-full bg-futuristic-secondary/90 backdrop-blur-xl rounded-3xl border border-futuristic-accent/30 shadow-2xl overflow-hidden">
                     {/* Header */}
                     <div className="absolute top-6 left-6 right-6">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
-                          <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
-                          <div className="text-white text-sm font-medium">System Online</div>
+                          <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                          <div className="text-futuristic-text-primary text-sm font-medium">System Online</div>
                         </div>
                         <div className="flex space-x-2">
-                          <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-                          <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
-                          <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
+                          <div className="w-2 h-2 bg-futuristic-accent rounded-full animate-pulse"></div>
+                          <div className="w-2 h-2 bg-futuristic-cyan rounded-full animate-pulse" style={{animationDelay: '0.5s'}}></div>
+                          <div className="w-2 h-2 bg-futuristic-accent-hover rounded-full animate-pulse" style={{animationDelay: '1s'}}></div>
                         </div>
                       </div>
                     </div>
@@ -150,53 +174,53 @@ export function HeroSection() {
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="relative">
                         {/* Server Tower */}
-                        <div className="w-40 h-56 bg-gradient-to-b from-slate-700 via-slate-800 to-slate-900 rounded-2xl shadow-2xl border border-slate-600 relative overflow-hidden">
+                        <div className="w-40 h-56 bg-futuristic-primary rounded-2xl shadow-2xl border border-futuristic-border relative overflow-hidden">
                           {/* Server Lights */}
-                          <div className="absolute top-6 left-6 w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg"></div>
-                          <div className="absolute top-12 left-6 w-3 h-3 bg-blue-400 rounded-full animate-pulse shadow-lg" style={{animationDelay: '1s'}}></div>
-                          <div className="absolute top-18 left-6 w-3 h-3 bg-cyan-400 rounded-full animate-pulse shadow-lg" style={{animationDelay: '2s'}}></div>
+                          <div className="absolute top-6 left-6 w-3 h-3 bg-green-500 rounded-full animate-pulse shadow-lg"></div>
+                          <div className="absolute top-12 left-6 w-3 h-3 bg-futuristic-accent rounded-full animate-pulse shadow-lg" style={{animationDelay: '1s'}}></div>
+                          <div className="absolute top-18 left-6 w-3 h-3 bg-futuristic-cyan rounded-full animate-pulse shadow-lg" style={{animationDelay: '2s'}}></div>
                           
                           {/* Server Details */}
-                          <div className="absolute bottom-6 left-4 right-4 h-12 bg-slate-600 rounded-lg"></div>
-                          <div className="absolute bottom-20 left-4 right-4 h-3 bg-slate-600 rounded"></div>
-                          <div className="absolute bottom-28 left-4 right-4 h-3 bg-slate-600 rounded"></div>
+                          <div className="absolute bottom-6 left-4 right-4 h-12 bg-futuristic-secondary rounded-lg"></div>
+                          <div className="absolute bottom-20 left-4 right-4 h-3 bg-futuristic-secondary rounded"></div>
+                          <div className="absolute bottom-28 left-4 right-4 h-3 bg-futuristic-secondary rounded"></div>
                           
                           {/* Data Flow */}
                           <div className="absolute inset-0">
-                            <div className="absolute top-1/4 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse"></div>
-                            <div className="absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-blue-400 to-transparent animate-pulse" style={{animationDelay: '1s'}}></div>
-                            <div className="absolute top-3/4 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-purple-400 to-transparent animate-pulse" style={{animationDelay: '2s'}}></div>
+                            <div className="absolute top-1/4 left-0 w-full h-0.5 bg-futuristic-accent animate-pulse"></div>
+                            <div className="absolute top-1/2 left-0 w-full h-0.5 bg-futuristic-cyan animate-pulse" style={{animationDelay: '1s'}}></div>
+                            <div className="absolute top-3/4 left-0 w-full h-0.5 bg-futuristic-accent-hover animate-pulse" style={{animationDelay: '2s'}}></div>
                           </div>
                         </div>
                         
                         {/* Floating Elements */}
-                        <div className="absolute -top-12 -right-12 w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl shadow-2xl animate-float flex items-center justify-center">
-                          <Monitor className="w-10 h-10 text-white" />
+                        <div className="absolute -top-12 -right-12 w-20 h-20 bg-futuristic-accent rounded-2xl shadow-2xl animate-float flex items-center justify-center">
+                          <Monitor className="w-10 h-10 text-futuristic-text-primary" />
                         </div>
                         
-                        <div className="absolute -bottom-8 -left-8 w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl shadow-2xl animate-float-delay flex items-center justify-center">
-                          <Settings className="w-8 h-8 text-white" />
+                        <div className="absolute -bottom-8 -left-8 w-16 h-16 bg-futuristic-secondary rounded-xl shadow-2xl animate-float-delay flex items-center justify-center">
+                          <Settings className="w-8 h-8 text-futuristic-text-primary" />
                         </div>
                         
-                        <div className="absolute top-1/2 -right-16 w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl shadow-2xl animate-float-delay-2 flex items-center justify-center">
-                          <Wrench className="w-7 h-7 text-white" />
+                        <div className="absolute top-1/2 -right-16 w-14 h-14 bg-futuristic-accent-hover rounded-xl shadow-2xl animate-float-delay-2 flex items-center justify-center">
+                          <Wrench className="w-7 h-7 text-futuristic-text-primary" />
                         </div>
                       </div>
                     </div>
 
                     {/* Status Indicators */}
                     <div className="absolute bottom-6 left-6 right-6">
-                      <div className="flex items-center justify-between text-xs text-slate-400">
+                      <div className="flex items-center justify-between text-xs text-futuristic-text-secondary">
                         <div className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                          <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                           <span>CPU: 45%</span>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                          <div className="w-2 h-2 bg-futuristic-accent rounded-full"></div>
                           <span>RAM: 62%</span>
                         </div>
                         <div className="flex items-center space-x-2">
-                          <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
+                          <div className="w-2 h-2 bg-futuristic-cyan rounded-full"></div>
                           <span>NET: 78%</span>
                         </div>
                       </div>
@@ -205,14 +229,14 @@ export function HeroSection() {
                 </div>
 
                 {/* Decorative Rings */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] border-2 border-cyan-500/20 rounded-full animate-spin-slow"></div>
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] border border-cyan-500/10 rounded-full animate-spin-slow-reverse"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] border border-futuristic-accent/20 rounded-full animate-spin-slow"></div>
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[380px] h-[380px] border border-futuristic-accent/10 rounded-full animate-spin-slow-reverse"></div>
                 
                 {/* Floating Particles */}
-                <div className="absolute top-16 left-16 w-3 h-3 bg-cyan-400 rounded-full animate-pulse shadow-lg"></div>
-                <div className="absolute top-32 right-32 w-2 h-2 bg-blue-400 rounded-full animate-pulse shadow-lg" style={{animationDelay: '1s'}}></div>
-                <div className="absolute bottom-32 left-32 w-2.5 h-2.5 bg-purple-400 rounded-full animate-pulse shadow-lg" style={{animationDelay: '2s'}}></div>
-                <div className="absolute bottom-16 right-16 w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-lg" style={{animationDelay: '3s'}}></div>
+                <div className="absolute top-16 left-16 w-3 h-3 bg-futuristic-accent rounded-full animate-pulse shadow-lg"></div>
+                <div className="absolute top-32 right-32 w-2 h-2 bg-futuristic-cyan rounded-full animate-pulse shadow-lg" style={{animationDelay: '1s'}}></div>
+                <div className="absolute bottom-32 left-32 w-2.5 h-2.5 bg-futuristic-accent-hover rounded-full animate-pulse shadow-lg" style={{animationDelay: '2s'}}></div>
+                <div className="absolute bottom-16 right-16 w-2 h-2 bg-futuristic-cyan rounded-full animate-pulse shadow-lg" style={{animationDelay: '3s'}}></div>
               </div>
             </ScrollReveal>
           </div>

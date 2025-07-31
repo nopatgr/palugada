@@ -23,33 +23,33 @@ export function CTASection() {
   ]
 
   return (
-    <section className="py-24 bg-gradient-to-br from-slate-50 via-white to-slate-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative overflow-hidden">
+    <section className="py-24 bg-futuristic-primary relative overflow-hidden">
       {/* Background Elements */}
-      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-blue-500/5 to-purple-500/5" />
-      <div className="absolute top-0 left-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
+      <div className="absolute inset-0 bg-futuristic-secondary/5" />
+      <div className="absolute top-0 left-0 w-96 h-96 bg-futuristic-accent/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-futuristic-cyan/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-5xl mx-auto text-center">
           {/* Header */}
           <ScrollReveal direction="up">
-            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-cyan-500/30 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 backdrop-blur-sm mb-8 shadow-lg">
-              <Zap className="w-4 h-4 text-cyan-400" />
-              <span className="text-cyan-600 dark:text-cyan-400 text-sm font-semibold tracking-wide">Layanan Profesional</span>
+            <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-futuristic-accent/30 bg-futuristic-secondary/80 backdrop-blur-sm mb-8 shadow-lg">
+              <Zap className="w-4 h-4 text-futuristic-accent" />
+              <span className="text-futuristic-text-primary text-sm font-medium tracking-wide">Layanan Profesional</span>
             </div>
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={200}>
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white mb-8 leading-tight">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-futuristic-text-primary mb-8 leading-tight">
               Siap Memulai
-              <span className="block bg-gradient-to-r from-cyan-600 via-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <span className="block text-futuristic-accent">
                 Proyek Hardware Anda?
               </span>
             </h2>
           </ScrollReveal>
 
           <ScrollReveal direction="up" delay={400}>
-            <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl text-futuristic-text-secondary mb-12 max-w-3xl mx-auto leading-relaxed">
               Konsultasikan kebutuhan hardware Anda dengan tim ahli kami dan dapatkan solusi terbaik untuk mengoptimalkan sistem Anda.
             </p>
           </ScrollReveal>
@@ -59,7 +59,7 @@ export function CTASection() {
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 px-10 py-6 text-xl font-semibold rounded-xl group"
+                className="bg-futuristic-accent hover:bg-futuristic-accent-hover text-futuristic-text-primary border border-futuristic-accent hover:border-futuristic-accent-hover transition-all duration-300 transform hover:scale-105 px-10 py-6 text-xl font-medium rounded-lg group shadow-lg hover:shadow-futuristic-glow"
                 asChild
               >
                 <Link href="/booking" className="flex items-center">
@@ -70,7 +70,7 @@ export function CTASection() {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-2 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 hover:text-slate-900 dark:hover:text-white px-10 py-6 text-xl font-semibold rounded-xl backdrop-blur-sm"
+                className="border border-futuristic-text-primary/30 text-futuristic-text-primary hover:bg-futuristic-secondary hover:text-futuristic-text-primary px-10 py-6 text-xl font-medium rounded-lg backdrop-blur-sm hover:border-futuristic-accent/50"
                 asChild
               >
                 <Link href="/layanan">
@@ -88,13 +88,13 @@ export function CTASection() {
                 return (
                   <div
                     key={index}
-                    className="p-8 rounded-3xl bg-white/60 dark:bg-slate-800/60 backdrop-blur-sm border border-white/30 dark:border-slate-700/30 hover:shadow-2xl transition-all duration-500 group hover:-translate-y-2"
+                    className="p-8 rounded-3xl bg-futuristic-secondary/60 backdrop-blur-sm border border-futuristic-border/50 hover:shadow-xl transition-all duration-500 group hover:-translate-y-2"
                   >
-                    <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
-                      <IconComponent className="w-8 h-8 text-white" />
+                    <div className="w-16 h-16 bg-futuristic-accent rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                      <IconComponent className="w-8 h-8 text-futuristic-text-primary" />
                     </div>
-                    <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-4">{feature.title}</h3>
-                    <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{feature.description}</p>
+                    <h3 className="text-xl font-semibold text-futuristic-text-primary mb-4">{feature.title}</h3>
+                    <p className="text-futuristic-text-secondary leading-relaxed">{feature.description}</p>
                   </div>
                 )
               })}
@@ -103,14 +103,14 @@ export function CTASection() {
 
           {/* Additional Info */}
           <ScrollReveal direction="up" delay={1000}>
-            <div className="mt-16 p-8 rounded-3xl bg-gradient-to-r from-cyan-500/20 to-blue-500/20 dark:from-cyan-500/10 dark:to-blue-500/10 border border-cyan-500/30 dark:border-cyan-500/20 backdrop-blur-sm">
+            <div className="mt-16 p-8 rounded-3xl bg-futuristic-secondary/50 border border-futuristic-border/50 backdrop-blur-sm">
               <div className="flex items-center justify-center mb-4">
-                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mr-4">
-                  <CheckCircle className="w-6 h-6 text-white" />
+                <div className="w-12 h-12 bg-futuristic-accent rounded-full flex items-center justify-center mr-4">
+                  <CheckCircle className="w-6 h-6 text-futuristic-text-primary" />
                 </div>
-                <h4 className="text-2xl font-bold text-slate-900 dark:text-white">Gratis Konsultasi</h4>
+                <h4 className="text-2xl font-bold text-futuristic-text-primary">Gratis Konsultasi</h4>
               </div>
-              <p className="text-slate-700 dark:text-slate-300 text-lg max-w-2xl mx-auto">
+              <p className="text-futuristic-text-secondary text-lg max-w-2xl mx-auto">
                 Tim ahli kami siap membantu menganalisis kebutuhan hardware Anda tanpa biaya. 
                 Dapatkan solusi terbaik untuk mengoptimalkan performa sistem Anda.
               </p>

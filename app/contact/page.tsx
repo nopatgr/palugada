@@ -35,7 +35,7 @@ export default function ContactPage() {
       value: "+62 812-3456-7890",
       action: "tel:+6281234567890",
       available: "24/7",
-      color: "from-cyan-500 to-blue-500"
+      color: "from-futuristic-accent to-futuristic-cyan"
     },
     {
       icon: MessageCircle,
@@ -44,7 +44,7 @@ export default function ContactPage() {
       value: "+62 812-3456-7890",
       action: "https://wa.me/6281234567890",
       available: "24/7",
-      color: "from-blue-500 to-purple-500"
+      color: "from-futuristic-cyan to-futuristic-accent"
     },
     {
       icon: Mail,
@@ -53,7 +53,7 @@ export default function ContactPage() {
       value: "hello@palugadadigital.com",
       action: "mailto:hello@palugadadigital.com",
       available: "Respon dalam 24 jam",
-      color: "from-purple-500 to-cyan-500"
+      color: "from-futuristic-accent to-futuristic-accent-hover"
     },
   ];
 
@@ -95,21 +95,21 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen bg-futuristic-primary">
       {/* Header */}
       <section className="relative py-20 mt-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-blue-600/10 to-purple-600/10"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(59,130,246,0.1),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-futuristic-accent/10 via-futuristic-cyan/10 to-futuristic-accent-hover/10"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(127,90,240,0.1),transparent_50%)]"></div>
         <div className="container px-4 mx-auto relative z-10">
           <div className="text-center">
-            <div className="inline-flex items-center px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 backdrop-blur-sm mb-6">
-              <MessageSquare className="w-4 h-4 mr-2 text-cyan-400" />
-              <span className="text-cyan-300 text-sm font-semibold tracking-wide">Get In Touch</span>
+            <div className="inline-flex items-center px-4 py-2 rounded-full border border-futuristic-accent/30 bg-futuristic-accent/10 backdrop-blur-sm mb-6">
+              <MessageSquare className="w-4 h-4 mr-2 text-futuristic-accent" />
+              <span className="text-futuristic-text-primary text-sm font-semibold tracking-wide">Get In Touch</span>
             </div>
-            <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-white">
-              Hubungi <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">Kami</span>
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-futuristic-text-primary">
+              Hubungi <span className="bg-gradient-to-r from-futuristic-accent via-futuristic-cyan to-futuristic-accent-hover bg-clip-text text-transparent">Kami</span>
             </h1>
-            <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed tracking-wide">
+            <p className="text-xl text-futuristic-text-secondary max-w-3xl mx-auto leading-relaxed tracking-wide">
               Siap membantu mewujudkan kebutuhan hardware Anda. Hubungi tim ahli kami sekarang juga!
             </p>
           </div>
@@ -120,10 +120,10 @@ export default function ContactPage() {
         {/* Contact Methods */}
         <section className="mb-16">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-white">
-              Cara Menghubungi <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Kami</span>
+            <h2 className="text-3xl font-bold mb-4 text-futuristic-text-primary">
+              Cara Menghubungi <span className="bg-gradient-to-r from-futuristic-accent to-futuristic-cyan bg-clip-text text-transparent">Kami</span>
             </h2>
-            <p className="text-slate-300 max-w-2xl mx-auto tracking-wide">
+            <p className="text-futuristic-text-secondary max-w-2xl mx-auto tracking-wide">
               Pilih cara yang paling nyaman untuk Anda berkomunikasi dengan tim hardware kami
             </p>
           </div>
@@ -132,28 +132,28 @@ export default function ContactPage() {
             {contactMethods.map((method, index) => (
               <Card
                 key={index}
-                className="group text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-slate-800 to-slate-700 backdrop-blur-sm border-0 shadow-xl"
+                className="group text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-futuristic-secondary/90 backdrop-blur-sm border border-futuristic-border shadow-xl"
               >
                 <CardHeader>
                   <div className={`mx-auto w-16 h-16 bg-gradient-to-r ${method.color} rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                    <method.icon className="h-8 w-8 text-white" />
+                    <method.icon className="h-8 w-8 text-futuristic-text-primary" />
                   </div>
-                  <CardTitle className="text-lg text-white tracking-wide group-hover:text-cyan-300 transition-colors">
+                  <CardTitle className="text-lg text-futuristic-text-primary tracking-wide group-hover:text-futuristic-accent transition-colors">
                     {method.title}
                   </CardTitle>
-                  <CardDescription className="text-slate-300 tracking-wide">
+                  <CardDescription className="text-futuristic-text-secondary tracking-wide">
                     {method.description}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="font-medium mb-2 text-cyan-400">
+                  <p className="font-medium mb-2 text-futuristic-accent">
                     {method.value}
                   </p>
-                  <p className="text-sm text-slate-400 mb-4 tracking-wide">
+                  <p className="text-sm text-futuristic-text-secondary mb-4 tracking-wide">
                     {method.available}
                   </p>
                   <Button
-                    className={`w-full bg-gradient-to-r ${method.color} hover:opacity-90 text-white shadow-xl hover:shadow-2xl transition-all duration-300 font-semibold tracking-wide`}
+                    className={`w-full bg-gradient-to-r ${method.color} hover:opacity-90 text-futuristic-text-primary shadow-xl hover:shadow-futuristic-glow transition-all duration-300 font-semibold tracking-wide`}
                     asChild
                   >
                     <a
@@ -179,31 +179,31 @@ export default function ContactPage() {
 
           <div className="space-y-6">
             {/* Office Location */}
-            <Card className="bg-gradient-to-br from-slate-800 to-slate-700 backdrop-blur-sm border-0 shadow-xl">
+            <Card className="bg-futuristic-secondary/90 backdrop-blur-sm border border-futuristic-border shadow-xl">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-white tracking-wide">
-                  <MapPin className="h-5 w-5 text-cyan-400" />
+                <CardTitle className="flex items-center gap-2 text-futuristic-text-primary tracking-wide">
+                  <MapPin className="h-5 w-5 text-futuristic-accent" />
                   Lokasi Kantor
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <h4 className="font-semibold text-white tracking-wide">Bekasi</h4>
-                  <p className="text-sm text-slate-300 mt-1 tracking-wide">
+                  <h4 className="font-semibold text-futuristic-text-primary tracking-wide">Bekasi</h4>
+                  <p className="text-sm text-futuristic-text-secondary mt-1 tracking-wide">
                     Jalan Pisang Batu Kerta Mukti
                   </p>
-                  <p className="text-sm text-slate-300 tracking-wide">
+                  <p className="text-sm text-futuristic-text-secondary tracking-wide">
                     Cibitung, Kabupaten Bekasi
                   </p>
-                  <p className="text-sm text-cyan-400 mt-2 tracking-wide">
+                  <p className="text-sm text-futuristic-accent mt-2 tracking-wide">
                     +62 812-3456-7890
                   </p>
-                  <p className="text-sm text-cyan-400 tracking-wide">
+                  <p className="text-sm text-futuristic-accent tracking-wide">
                     hello@palugadadigital.com
                   </p>
                   <div className="flex items-center gap-2 mt-2">
-                    <Clock className="h-4 w-4 text-slate-400" />
-                    <p className="text-xs text-slate-400 tracking-wide">
+                    <Clock className="h-4 w-4 text-futuristic-text-secondary" />
+                    <p className="text-xs text-futuristic-text-secondary tracking-wide">
                       Senin - Jumat: 09:00 - 18:00
                     </p>
                   </div>
@@ -212,40 +212,40 @@ export default function ContactPage() {
             </Card>
 
             {/* Support Info */}
-            <Card className="bg-gradient-to-br from-slate-800 to-slate-700 backdrop-blur-sm border-0 shadow-xl">
+            <Card className="bg-futuristic-secondary/90 backdrop-blur-sm border border-futuristic-border shadow-xl">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-white tracking-wide">
-                  <Shield className="h-5 w-5 text-cyan-400" />
+                <CardTitle className="flex items-center gap-2 text-futuristic-text-primary tracking-wide">
+                  <Shield className="h-5 w-5 text-futuristic-accent" />
                   Support Hardware
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg flex items-center justify-center">
-                      <Headphones className="h-4 w-4 text-white" />
+                    <div className="w-8 h-8 bg-gradient-to-r from-futuristic-accent to-futuristic-cyan rounded-lg flex items-center justify-center">
+                      <Headphones className="h-4 w-4 text-futuristic-text-primary" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-sm text-white tracking-wide">Technical Support</h4>
-                      <p className="text-xs text-slate-400 tracking-wide">24/7 Hardware Support</p>
+                      <h4 className="font-medium text-sm text-futuristic-text-primary tracking-wide">Technical Support</h4>
+                      <p className="text-xs text-futuristic-text-secondary tracking-wide">24/7 Hardware Support</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
-                      <Users className="h-4 w-4 text-white" />
+                    <div className="w-8 h-8 bg-gradient-to-r from-futuristic-cyan to-futuristic-accent rounded-lg flex items-center justify-center">
+                      <Users className="h-4 w-4 text-futuristic-text-primary" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-sm text-white tracking-wide">Sales & Consultation</h4>
-                      <p className="text-xs text-slate-400 tracking-wide">Hardware Solutions</p>
+                      <h4 className="font-medium text-sm text-futuristic-text-primary tracking-wide">Sales & Consultation</h4>
+                      <p className="text-xs text-futuristic-text-secondary tracking-wide">Hardware Solutions</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-lg flex items-center justify-center">
-                      <Building className="h-4 w-4 text-white" />
+                    <div className="w-8 h-8 bg-gradient-to-r from-futuristic-accent to-futuristic-accent-hover rounded-lg flex items-center justify-center">
+                      <Building className="h-4 w-4 text-futuristic-text-primary" />
                     </div>
                     <div>
-                      <h4 className="font-medium text-sm text-white tracking-wide">Partnership</h4>
-                      <p className="text-xs text-slate-400 tracking-wide">Business Collaboration</p>
+                      <h4 className="font-medium text-sm text-futuristic-text-primary tracking-wide">Partnership</h4>
+                      <p className="text-xs text-futuristic-text-secondary tracking-wide">Business Collaboration</p>
                     </div>
                   </div>
                 </div>
@@ -257,10 +257,10 @@ export default function ContactPage() {
         {/* FAQ Section with Accordion */}
         <section id="faq" className="mb-16">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4 text-white">
-              Frequently Asked <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Questions</span>
+            <h2 className="text-3xl font-bold mb-4 text-futuristic-text-primary">
+              Frequently Asked <span className="bg-gradient-to-r from-futuristic-accent to-futuristic-cyan bg-clip-text text-transparent">Questions</span>
             </h2>
-            <p className="text-slate-300 max-w-2xl mx-auto tracking-wide">
+            <p className="text-futuristic-text-secondary max-w-2xl mx-auto tracking-wide">
               Pertanyaan yang sering diajukan oleh klien hardware kami
             </p>
           </div>
@@ -269,18 +269,18 @@ export default function ContactPage() {
             {faqs.map((faq, index) => (
               <Card
                 key={index}
-                className="bg-gradient-to-br from-slate-800 to-slate-700 backdrop-blur-sm border-0 shadow-xl overflow-hidden group"
+                className="bg-futuristic-secondary/90 backdrop-blur-sm border border-futuristic-border shadow-xl overflow-hidden group"
               >
                 <button
                   onClick={() => toggleFAQ(index)}
-                  className="w-full text-left p-6 hover:bg-slate-700/50 transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500/20"
+                  className="w-full text-left p-6 hover:bg-futuristic-secondary/70 transition-colors focus:outline-none focus:ring-2 focus:ring-futuristic-accent/20"
                 >
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-white tracking-wide pr-4 group-hover:text-cyan-300 transition-colors">
+                    <h3 className="text-lg font-semibold text-futuristic-text-primary tracking-wide pr-4 group-hover:text-futuristic-accent transition-colors">
                       {faq.question}
                     </h3>
                     <ChevronDown
-                      className={`h-5 w-5 text-cyan-400 transition-transform duration-300 flex-shrink-0 ${
+                      className={`h-5 w-5 text-futuristic-accent transition-transform duration-300 flex-shrink-0 ${
                         openFAQ === index ? "rotate-180" : ""
                       }`}
                     />
@@ -294,8 +294,8 @@ export default function ContactPage() {
                   }`}
                 >
                   <div className="px-6 pb-6">
-                    <div className="border-t border-slate-600 pt-4">
-                      <p className="text-slate-300 leading-relaxed tracking-wide">
+                    <div className="border-t border-futuristic-border pt-4">
+                      <p className="text-futuristic-text-secondary leading-relaxed tracking-wide">
                         {faq.answer}
                       </p>
                     </div>
@@ -308,10 +308,10 @@ export default function ContactPage() {
 
         {/* Map Section */}
         <section>
-          <Card className="bg-gradient-to-br from-slate-800 to-slate-700 backdrop-blur-sm border-0 shadow-xl">
+          <Card className="bg-futuristic-secondary/90 backdrop-blur-sm border border-futuristic-border shadow-xl">
             <CardHeader>
-              <CardTitle className="text-white tracking-wide">Lokasi Kami</CardTitle>
-              <CardDescription className="text-slate-300 tracking-wide">
+              <CardTitle className="text-futuristic-text-primary tracking-wide">Lokasi Kami</CardTitle>
+              <CardDescription className="text-futuristic-text-secondary tracking-wide">
                 Kunjungi kantor kami di Bekasi untuk konsultasi hardware
               </CardDescription>
             </CardHeader>
@@ -333,19 +333,19 @@ export default function ContactPage() {
       </div>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-slate-800 to-slate-700">
+      <section className="py-16 bg-futuristic-secondary/30">
         <div className="container px-4 mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4 text-white">
-            Siap Memulai <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">Project Hardware</span> Anda?
+          <h2 className="text-3xl font-bold mb-4 text-futuristic-text-primary">
+            Siap Memulai <span className="bg-gradient-to-r from-futuristic-accent to-futuristic-cyan bg-clip-text text-transparent">Project Hardware</span> Anda?
           </h2>
-          <p className="text-xl mb-8 text-slate-300 max-w-2xl mx-auto tracking-wide">
+          <p className="text-xl mb-8 text-futuristic-text-secondary max-w-2xl mx-auto tracking-wide">
             Jangan ragu untuk menghubungi kami. Tim ahli hardware kami siap membantu
             mewujudkan kebutuhan teknologi Anda.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-500/90 hover:via-blue-600/90 hover:to-purple-600/90 text-white shadow-xl hover:shadow-2xl transition-all duration-300 px-8 py-3 font-semibold tracking-wide"
+              className="bg-gradient-to-r from-futuristic-accent via-futuristic-cyan to-futuristic-accent-hover hover:from-futuristic-accent/90 hover:via-futuristic-cyan/90 hover:to-futuristic-accent-hover/90 text-futuristic-text-primary shadow-xl hover:shadow-futuristic-glow transition-all duration-300 px-8 py-3 font-semibold tracking-wide"
               asChild
             >
               <a
@@ -360,7 +360,7 @@ export default function ContactPage() {
             <Button
               size="lg"
               variant="outline"
-              className="text-white border-slate-600 hover:bg-slate-700/50 bg-slate-800/50 backdrop-blur-sm shadow-xl hover:shadow-2xl transition-all duration-300 px-8 py-3 font-semibold tracking-wide"
+              className="text-futuristic-text-primary border-futuristic-border hover:bg-futuristic-secondary/50 bg-futuristic-secondary/50 backdrop-blur-sm shadow-xl hover:shadow-futuristic-glow transition-all duration-300 px-8 py-3 font-semibold tracking-wide"
               asChild
             >
               <a href="tel:+6281234567890">
