@@ -6,4 +6,4 @@
 
 <b>!Masih perlu Perbaikan Fitur dan Api<b>
 
-Link Deploy vercel: ` palugada-three.vercel.app `
+Link Deploy vercel:  [Website][palugada-three.vercel.app]
