@@ -6,4 +6,6 @@
 
 <b>!Masih perlu Perbaikan Fitur dan Api<b>
 
-Link Deploy vercel:  [Website](palugada-three.vercel.app)
+## 🚀 Live Demo
+
+Klik untuk melihat website yang sudah dideploy di Vercel 👉 [palugada-three.vercel.app](https://palugada-three.vercel.app)
