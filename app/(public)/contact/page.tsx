@@ -35,7 +35,7 @@ export default function ContactPage() {
       value: "+62 857-7710-1676",
       action: "tel:+6285777101676",
       available: "24/7",
-      color: "from-futuristic-accent to-futuristic-cyan"
+      color: "from-blue-400 to-blue-600"
     },
     {
       icon: MessageCircle,
@@ -44,7 +44,7 @@ export default function ContactPage() {
       value: "+62 857-7710-1676",
       action: "https://wa.me/6285777101676",
       available: "24/7",
-      color: "from-futuristic-cyan to-futuristic-accent"
+      color: "from-blue-400 to-blue-600"
     },
     {
       icon: Mail,
@@ -53,7 +53,7 @@ export default function ContactPage() {
       value: "services@palugada.biz.id",
       action: "mailto:services@palugada.biz.id",
       available: "Respon dalam 24 jam",
-      color: "from-futuristic-accent to-futuristic-accent-hover"
+      color: "from-blue-400 to-blue-600"
     },
   ];
 
@@ -95,9 +95,9 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="min-h-screen bg-futuristic-primary">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Header */}
-      <section className="relative py-20 mt-20 overflow-hidden">
+      <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-futuristic-accent/10 via-futuristic-cyan/10 to-futuristic-accent-hover/10"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(127,90,240,0.1),transparent_50%)]"></div>
         <div className="container px-4 mx-auto relative z-10">
@@ -132,7 +132,7 @@ export default function ContactPage() {
             {contactMethods.map((method, index) => (
               <Card
                 key={index}
-                className="group text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-futuristic-secondary/90 backdrop-blur-sm border border-futuristic-border shadow-xl"
+                className="group text-center hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-futuristic-secondary/50 border-futuristic-border backdrop-blur-sm shadow-xl"
               >
                 <CardHeader>
                   <div className={`mx-auto w-16 h-16 bg-gradient-to-r ${method.color} rounded-xl flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
@@ -146,7 +146,7 @@ export default function ContactPage() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <p className="font-medium mb-2 text-futuristic-accent">
+                  <p className="font-medium mb-2 text-blue-400 to-blue-600">
                     {method.value}
                   </p>
                   <p className="text-sm text-futuristic-text-secondary mb-4 tracking-wide">
@@ -182,7 +182,7 @@ export default function ContactPage() {
             <Card className="bg-futuristic-secondary/90 backdrop-blur-sm border border-futuristic-border shadow-xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-futuristic-text-primary tracking-wide">
-                  <MapPin className="h-5 w-5 text-futuristic-accent" />
+                  <MapPin className="h-5 w-5 text-blue-400 to-blue-600" />
                   Lokasi Kantor
                 </CardTitle>
               </CardHeader>
@@ -195,10 +195,10 @@ export default function ContactPage() {
                   <p className="text-sm text-futuristic-text-secondary tracking-wide">
                     Cibitung, Kabupaten Bekasi
                   </p>
-                  <p className="text-sm text-futuristic-accent mt-2 tracking-wide">
+                  <p className="text-sm text-blue-400 to-blue-600 mt-2 tracking-wide">
                     +62 857-7710-1676
                   </p>
-                  <p className="text-sm text-futuristic-accent tracking-wide">
+                  <p className="text-sm text-blue-400 to-blue-600 tracking-wide">
                     services@palugada.biz.id
                   </p>
                   <div className="flex items-center gap-2 mt-2">
@@ -215,7 +215,7 @@ export default function ContactPage() {
             <Card className="bg-futuristic-secondary/90 backdrop-blur-sm border border-futuristic-border shadow-xl">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-futuristic-text-primary tracking-wide">
-                  <Shield className="h-5 w-5 text-futuristic-accent" />
+                  <Shield className="h-5 w-5 text-blue-400 to-blue-600" />
                   Support Hardware
                 </CardTitle>
               </CardHeader>
@@ -276,11 +276,11 @@ export default function ContactPage() {
                   className="w-full text-left p-6 hover:bg-futuristic-secondary/70 transition-colors focus:outline-none focus:ring-2 focus:ring-futuristic-accent/20"
                 >
                   <div className="flex items-center justify-between">
-                    <h3 className="text-lg font-semibold text-futuristic-text-primary tracking-wide pr-4 group-hover:text-futuristic-accent transition-colors">
+                    <h3 className="text-lg font-semibold text-futuristic-text-primary tracking-wide pr-4 group-hover:text-blue-400 to-blue-600 transition-colors">
                       {faq.question}
                     </h3>
                     <ChevronDown
-                      className={`h-5 w-5 text-futuristic-accent transition-transform duration-300 flex-shrink-0 ${
+                      className={`h-5 w-5 text-blue-400 to-blue-600 transition-transform duration-300 flex-shrink-0 ${
                         openFAQ === index ? "rotate-180" : ""
                       }`}
                     />

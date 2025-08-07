@@ -2,13 +2,14 @@
 
 import { HeroSection } from "@/components/sections/hero-section"
 import { FeaturesSection } from "@/components/sections/features-section"
-import { ServicesSection } from "@/components/sections/services-section"
 import { CTASection } from "@/components/sections/cta-section"
 import { ParticleBackground } from "@/components/ui/particle-background"
 import { FloatingElement } from "@/components/ui/floating-elements"
 import { Notification } from "@/components/ui/interactive-notification"
 import { InteractiveProgress } from "@/components/ui/interactive-progress"
 import { useState, useEffect } from "react"
+import TestimonialPage from "./testimonial/page"
+import { ServicesSection } from '@/components/sections/services-section';
 
 export default function HomePage() {
   const [showPromo, setShowPromo] = useState(false)
@@ -56,14 +57,14 @@ export default function HomePage() {
       </div>
 
       {/* Particle Background */}
-      <ParticleBackground 
+      {/* <ParticleBackground 
         particleCount={30}
         colors={["#06b6d4", "#3b82f6", "#8b5cf6"]}
-        className="opacity-30"
-      />
+        className="opacity-30 "
+      /> */}
       
       {/* Floating Elements */}
-      <div className="fixed inset-0 pointer-events-none z-10">
+      {/* <div className="fixed inset-0 pointer-events-none z-10">
         <FloatingElement
           className="absolute top-20 left-10 text-cyan-400 opacity-20"
           delay={1000}
@@ -87,7 +88,7 @@ export default function HomePage() {
         >
           <div className="w-5 h-5 bg-purple-400 rounded-full blur-sm"></div>
         </FloatingElement>
-      </div>
+      </div> */}
 
       {/* Floating Promo Notification */}
       {showPromo && (

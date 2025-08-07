@@ -13,14 +13,13 @@ export default function TestimonialPage() {
       name: "Budi Santoso",
       position: "CEO",
       company: "PT Maju Bersama",
-      avatar: "/placeholder.svg?height=60&width=60&text=BS",
       rating: 5,
       service: "OS Installation",
       serviceIcon: Monitor,
       testimonial:
         "Palugada Digital berhasil menginstall dan mengkonfigurasi sistem operasi dengan sangat profesional. Tim mereka sangat responsif dan memahami kebutuhan hardware kami. Highly recommended!",
       project: "Windows Server Installation",
-      completedAt: "Januari 2024",
+      completedAt: "Januari 2025",
       color: "from-futuristic-accent to-futuristic-cyan"
     },
     {
@@ -35,7 +34,7 @@ export default function TestimonialPage() {
       testimonial:
         "Setup software yang dilakukan sangat user-friendly dan fitur-fiturnya lengkap. Performa sistem kami meningkat 200% setelah menggunakan konfigurasi hardware yang optimal.",
       project: "Business Software Configuration",
-      completedAt: "Februari 2024",
+      completedAt: "Februari 2025",
       color: "from-futuristic-cyan to-futuristic-accent"
     },
     {
@@ -50,7 +49,7 @@ export default function TestimonialPage() {
       testimonial:
         "Dukungan teknis hardware yang diberikan sangat responsif dan profesional. Masalah sistem kami terselesaikan dengan cepat dan tidak mengganggu operasional bisnis.",
       project: "24/7 Technical Support",
-      completedAt: "Maret 2024",
+      completedAt: "Maret 2025",
       color: "from-futuristic-accent to-futuristic-accent-hover"
     },
     {
@@ -65,7 +64,7 @@ export default function TestimonialPage() {
       testimonial:
         "Upgrade hardware yang dilakukan sangat smooth dan hasilnya luar biasa. Performa server kami meningkat drastis dan lebih stabil untuk menangani traffic tinggi.",
       project: "Server Hardware Upgrade",
-      completedAt: "April 2024",
+      completedAt: "April 2025",
       color: "from-futuristic-cyan to-futuristic-accent"
     },
     {
@@ -80,7 +79,7 @@ export default function TestimonialPage() {
       testimonial:
         "Setup jaringan yang dilakukan sangat profesional dan sesuai standar enterprise. Keamanan dan performa jaringan kami sekarang sangat optimal.",
       project: "Enterprise Network Setup",
-      completedAt: "Mei 2024",
+      completedAt: "February 2025",
       color: "from-futuristic-accent to-futuristic-cyan"
     },
     {
@@ -95,7 +94,7 @@ export default function TestimonialPage() {
       testimonial:
         "Implementasi keamanan hardware yang dilakukan sangat komprehensif. Sistem kami sekarang terlindungi dengan baik dari berbagai ancaman digital.",
       project: "Security Hardware Implementation",
-      completedAt: "Juni 2024",
+      completedAt: "Juni 2025",
       color: "from-futuristic-accent-hover to-futuristic-accent"
     },
   ]
@@ -108,9 +107,9 @@ export default function TestimonialPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-futuristic-primary">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Header */}
-      <section className="relative py-20 mt-20 overflow-hidden">
+      <section className="relative py-20 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-futuristic-accent/10 via-futuristic-cyan/10 to-futuristic-accent-hover/10"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(127,90,240,0.1),transparent_50%)]"></div>
         <div className="container px-4 mx-auto relative z-10">
@@ -161,11 +160,11 @@ export default function TestimonialPage() {
               const ServiceIcon = testimonial.serviceIcon
               return (
                 <ScrollReveal key={testimonial.id} direction="up" delay={index * 200}>
-                  <Card className="group relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-futuristic-secondary/90 backdrop-blur-sm border border-futuristic-border shadow-xl">
+                  <Card className="group relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-futuristic-secondary/50 border-futuristic-border backdrop-blur-sm border shadow-xl">
                     <CardHeader className="pb-4">
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex items-center gap-3">
-                          <Avatar className="ring-2 ring-futuristic-accent/20">
+                          {/* <Avatar className="ring-2 ring-futuristic-accent/20">
                             <AvatarImage src={testimonial.avatar || "/placeholder.svg"} alt={testimonial.name} />
                             <AvatarFallback className="bg-gradient-to-r from-futuristic-accent to-futuristic-cyan text-futuristic-text-primary">
                               {testimonial.name
@@ -173,7 +172,7 @@ export default function TestimonialPage() {
                                 .map((n) => n[0])
                                 .join("")}
                             </AvatarFallback>
-                          </Avatar>
+                          </Avatar> */}
                           <div>
                             <CardTitle className="text-lg text-futuristic-text-primary tracking-wide group-hover:text-futuristic-accent transition-colors">{testimonial.name}</CardTitle>
                             <CardDescription className="text-futuristic-text-secondary tracking-wide">

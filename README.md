@@ -1,236 +1,128 @@
-# Palugada Digital - Website Layanan Teknologi
+# Palugada - Sistem Admin Layanan
 
-Website profesional untuk layanan teknologi dengan admin dashboard lengkap dan integrasi WhatsApp & Email.
+## Fitur Admin
 
-## 🚀 Fitur Utama
+### 1. Sistem Autentikasi
+- Login admin dengan email dan password
+- Proteksi halaman admin dengan role-based access
+- Redirect otomatis ke halaman login jika bukan admin
 
-### ✅ **Halaman Admin (Dashboard)**
-- **Layout Khusus**: Halaman admin tanpa navbar dan footer
-- **Manajemen Layanan**: CRUD lengkap untuk layanan
-- **Manajemen Booking**: Lihat dan kelola booking pelanggan
-- **Manajemen Testimonial**: Review dan approve testimonial
-- **Statistik Real-time**: Dashboard dengan data aktual
-- **UI Modern**: Desain responsif dengan tema gelap
+### 2. Manajemen Layanan
+- **List Layanan**: `/admin/layanan`
+  - Menampilkan semua layanan dalam bentuk card
+  - Tombol edit dan delete untuk setiap layanan
+  - Tombol "Tambah Layanan" untuk menambah layanan baru
 
-### ✅ **API Terintegrasi**
-- **Booking API**: Terintegrasi dengan WhatsApp dan Email
-- **Services API**: CRUD untuk layanan
-- **Testimonials API**: CRUD untuk testimonial
-- **Email Otomatis**: Konfirmasi booking via email
-- **WhatsApp Integration**: Link WhatsApp otomatis
+- **Tambah Layanan**: `/admin/layanan/new`
+  - Form input: name, description, image (opsional)
+  - Validasi form
+  - POST ke `/api/layanan`
 
-### ✅ **Halaman Terintegrasi**
-- **Halaman Layanan**: Menampilkan layanan dari admin
-- **Halaman Booking**: Form booking dengan validasi
-- **Halaman Testimonial**: Menampilkan testimonial yang disetujui
-- **Responsive Design**: Optimal di semua perangkat
+- **Edit Layanan**: `/admin/layanan/[id]/edit`
+  - Form edit dengan data yang sudah terisi
+  - PUT ke `/api/layanan/[id]`
 
-## 🛠️ Teknologi yang Digunakan
+### 3. API Endpoints
 
-- **Next.js 15**: Framework React terbaru
-- **React 19**: Library UI terbaru
-- **TypeScript**: Type safety
-- **Tailwind CSS**: Styling modern
-- **Radix UI**: Komponen UI yang accessible
-- **Nodemailer**: Email integration
-- **Sonner**: Toast notifications
+#### GET `/api/layanan`
+- Mengambil semua data layanan
+- Diurutkan berdasarkan createdAt desc
 
-## 📦 Instalasi
+#### POST `/api/layanan`
+- Membuat layanan baru
+- Validasi: name dan description required
+- Hanya admin yang bisa akses
 
-1. **Clone repository**
-```bash
-git clone <repository-url>
-cd palugada
+#### PUT `/api/layanan/[id]`
+- Update layanan berdasarkan ID
+- Validasi: name dan description required
+- Hanya admin yang bisa akses
+
+#### DELETE `/api/layanan/[id]`
+- Hapus layanan berdasarkan ID
+- Hanya admin yang bisa akses
+
+### 4. Database Schema
+
+```prisma
+model Layanan {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  image       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
 ```
 
-2. **Install dependencies**
+### 5. Struktur Folder
+
+```
+app/
+├── admin/
+│   ├── layanan/
+│   │   ├── page.tsx              # List layanan
+│   │   ├── new/
+│   │   │   └── page.tsx          # Form tambah layanan
+│   │   └── [id]/
+│   │       └── edit/
+│   │           └── page.tsx      # Form edit layanan
+│   └── page.tsx                  # Dashboard admin
+├── api/
+│   └── layanan/
+│       ├── route.ts              # GET, POST
+│       └── [id]/
+│           └── route.ts          # PUT, DELETE
+```
+
+### 6. Teknologi yang Digunakan
+
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **UI Components**: Radix UI, Tailwind CSS
+- **Authentication**: NextAuth.js
+- **Database**: PostgreSQL (Supabase)
+- **ORM**: Prisma
+- **Form Handling**: React Hook Form + Zod
+- **Styling**: Tailwind CSS
+
+### 7. Cara Menjalankan
+
+1. Install dependencies:
 ```bash
 npm install
-# atau
-pnpm install
 ```
 
-3. **Setup environment variables**
-Buat file `.env.local` dengan konfigurasi berikut:
-```env
-# Email Configuration
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASS=your-app-password
-ADMIN_EMAIL=services@palugada.biz.id
-
-# WhatsApp Configuration
-ADMIN_PHONE=6285777101676
-
-# NextAuth Configuration (if needed)
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=your-secret-key
+2. Setup database:
+```bash
+npx prisma db push
 ```
 
-**Untuk Testing (tanpa email real):**
-```env
-# Email Configuration (dummy values untuk testing)
-EMAIL_USER=test@example.com
-EMAIL_PASS=test-password
-ADMIN_EMAIL=services@palugada.biz.id
-
-# WhatsApp Configuration
-ADMIN_PHONE=6285777101676
-```
-
-4. **Jalankan development server**
+3. Jalankan development server:
 ```bash
 npm run dev
-# atau
-pnpm dev
 ```
 
-5. **Akses website**
-- **Website Utama**: http://localhost:3000
-- **Admin Dashboard**: http://localhost:3000/admin
-
-## 🔧 Troubleshooting
-
-### **Error Nodemailer**
-Jika muncul error nodemailer, pastikan:
-1. File `.env.local` sudah dibuat
-2. Install types: `npm install --save-dev @types/nodemailer`
-3. Restart development server
-
-### **PowerShell Execution Policy**
-Jika ada error PowerShell, jalankan:
-```powershell
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+4. Akses admin panel:
+```
+http://localhost:3000/admin
 ```
 
-### **Admin Page Masih Muncul Navbar/Footer**
-Pastikan file `app/admin/layout.tsx` sudah benar dan restart server.
+### 8. Fitur Keamanan
 
-## 🎯 Fitur Detail
+- Role-based access control
+- Session management dengan NextAuth
+- Validasi input di frontend dan backend
+- Error handling yang proper
+- Loading states untuk UX yang lebih baik
 
-### **Admin Dashboard**
-- **Dashboard Statistik**: Total layanan, booking, testimonial
-- **Manajemen Layanan**: 
-  - Tambah layanan baru
-  - Edit layanan existing
-  - Hapus layanan
-  - Set status aktif/nonaktif
-- **Manajemen Booking**:
-  - Lihat semua booking
-  - Update status booking
-  - Filter berdasarkan status
-- **Manajemen Testimonial**:
-  - Review testimonial baru
-  - Approve/reject testimonial
-  - Edit testimonial
+### 9. Status Implementasi
 
-### **API Endpoints**
-- `POST /api/booking` - Buat booking baru
-- `GET /api/booking` - Ambil data booking
-- `GET /api/services` - Ambil data layanan
-- `POST /api/services` - Tambah layanan baru
-- `PUT /api/services` - Update layanan
-- `DELETE /api/services` - Hapus layanan
-- `GET /api/testimonials` - Ambil testimonial
-- `POST /api/testimonials` - Tambah testimonial
-- `PUT /api/testimonials` - Update testimonial
-- `DELETE /api/testimonials` - Hapus testimonial
+✅ Database schema sudah dibuat  
+✅ API endpoints sudah dibuat  
+✅ Halaman admin sudah dibuat  
+✅ Autentikasi sudah diintegrasikan  
+✅ Form validation sudah diterapkan  
+✅ Error handling sudah diterapkan  
+✅ UI/UX sudah dioptimalkan  
 
-### **Integrasi WhatsApp & Email**
-- **Email Otomatis**: 
-  - Email konfirmasi ke admin
-  - Email konfirmasi ke pelanggan
-  - Template email yang profesional
-- **WhatsApp Integration**:
-  - Link WhatsApp otomatis
-  - Pesan booking terformat
-  - Redirect otomatis setelah booking
-
-## 📱 Responsive Design
-
-- **Mobile First**: Optimized untuk mobile
-- **Tablet**: Layout yang optimal untuk tablet
-- **Desktop**: Full experience di desktop
-- **Hero Section**: Video background responsif
-- **Carousel**: Komponen carousel yang fixed
-
-## 🔧 Konfigurasi Email
-
-Untuk menggunakan fitur email, setup Gmail App Password:
-
-1. Buka Google Account Settings
-2. Aktifkan 2-Factor Authentication
-3. Generate App Password
-4. Gunakan App Password di EMAIL_PASS
-
-## 🎨 Customization
-
-### **Menambah Layanan Baru**
-1. Buka halaman admin: `/admin`
-2. Klik "Tambah Layanan"
-3. Isi form dengan detail layanan
-4. Layanan akan otomatis muncul di halaman `/layanan`
-
-### **Mengubah Tema**
-- Edit file `components/theme-provider.tsx`
-- Modifikasi warna di `tailwind.config.ts`
-- Update CSS variables di `globals.css`
-
-### **Menambah Fitur Baru**
-- Buat API endpoint baru di `app/api/`
-- Buat halaman baru di `app/`
-- Update navigation di `components/layout/navbar.tsx`
-
-## 🚀 Deployment
-
-### **Vercel (Recommended)**
-```bash
-npm run build
-vercel --prod
-```
-
-### **Netlify**
-```bash
-npm run build
-# Upload folder .next ke Netlify
-```
-
-### **Docker**
-```dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
-RUN npm run build
-EXPOSE 3000
-CMD ["npm", "start"]
-```
-
-## 📊 Monitoring
-
-- **Error Tracking**: Console logging untuk debugging
-- **Performance**: Optimized images dan lazy loading
-- **SEO**: Meta tags dan structured data
-- **Analytics**: Ready untuk Google Analytics
-
-## 🤝 Contributing
-
-1. Fork repository
-2. Buat feature branch: `git checkout -b feature/baru`
-3. Commit changes: `git commit -am 'Add feature baru'`
-4. Push branch: `git push origin feature/baru`
-5. Submit Pull Request
-
-## 📄 License
-
-MIT License - lihat file LICENSE untuk detail
-
-## 📞 Support
-
-- **Email**: services@palugada.biz.id
-- **WhatsApp**: +62 857-7710-1676
-- **Website**: https://palugada.com
-
----
-
-**Dibuat dengan ❤️ oleh Tim Palugada Digital**
+Sistem admin layanan sudah siap digunakan!

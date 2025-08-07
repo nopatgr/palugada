@@ -26,3 +26,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 firebase.ts
+/lib/generated/prisma
+
+/lib/generated/prisma

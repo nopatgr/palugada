@@ -88,10 +88,10 @@ export default function ProdukPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-futuristic-primary">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
       {/* Header */}
-      <section className="relative py-20 mt-20 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-futuristic-accent/10 via-futuristic-cyan/10 to-futuristic-accent-hover/10"></div>
+      <section className="relative py-20 overflow-hidden">
+        <div className="absolute inset-0 bg-slate-800/50 backdrop-blur"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(127,90,240,0.1),transparent_50%)]"></div>
         <div className="container px-4 mx-auto relative z-10">
           <ScrollReveal direction="up">
@@ -119,7 +119,7 @@ export default function ProdukPage() {
               const IconComponent = product.icon
               return (
                 <ScrollReveal key={product.id} direction="up" delay={index * 200}>
-                  <Card className="group overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-futuristic-secondary/90 backdrop-blur-sm border border-futuristic-border shadow-xl">
+                  <Card className="group overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-futuristic-secondary/50 border-futuristic-border backdrop-blur-sm shadow-xl">
                     <div className="aspect-video overflow-hidden relative">
                       <div className="absolute inset-0 bg-futuristic-secondary/50"></div>
                       <div className="absolute inset-0 flex items-center justify-center">

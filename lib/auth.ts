@@ -1,93 +1,60 @@
-import { NextAuthOptions } from 'next-auth'
-import CredentialsProvider from 'next-auth/providers/credentials'
-import bcrypt from 'bcrypt'
-import { AdminUser } from '../types/admin'
+// lib/auth.ts
+import { AuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { prisma } from "@/lib/prisma";
+import { compare } from "bcryptjs";
 
-// Data admin statis
-const adminUsers: AdminUser[] = [
-  {
-    id: '1',
-    email: 'admin@company.com',
-    password: '$2a$12$0gzlKHG6mvotmgmgYNCrZe0iLhqpfuwXmUmRtVkX67h6RHZWnM.2G', // password: admin123
-    name: 'Admin Company',
-    role: 'admin'
-  }
-]
-
-export const authOptions: NextAuthOptions = {
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
-      id: 'credentials',
-      name: 'credentials',
+      name: "Admin Login",
       credentials: {
-        email: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' }
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, req) {
-        try {
-          if (!credentials?.email || !credentials?.password) {
-            console.log('Missing credentials')
-            return null
-          }
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) return null;
 
-          console.log('Attempting login for:', credentials.email)
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email },
+        });
 
-          const admin = adminUsers.find(user => user.email === credentials.email)
+        if (!user || !user.password) return null;
 
-          if (!admin) {
-            console.log('Admin not found')
-            return null
-          }
+        const isValid = await compare(credentials.password, user.password);
 
-          const isPasswordValid = await bcrypt.compare(
-            credentials.password,
-            admin.password
-          )
+        if (!isValid) return null;
 
-          if (!isPasswordValid) {
-            console.log('Invalid password')
-            return null
-          }
-
-          console.log('Login successful for:', admin.email)
-          
-          return {
-            id: admin.id,
-            email: admin.email,
-            name: admin.name,
-            role: admin.role,
-          }
-        } catch (error) {
-          console.error('Auth error:', error)
-          return null
-        }
-      }
-    })
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          role: user.role,
+        };
+      },
+    }),
   ],
-  session: {
-    strategy: 'jwt',
-    maxAge: 24 * 60 * 60, // 24 hours
-  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role
-        token.id = user.id
+        token.id = user.id;
+        token.role = (user as any).role;
       }
-      return token
+      return token;
     },
     async session({ session, token }) {
-      if (token && session.user) {
-        session.user.id = token.id as string
-        session.user.role = token.role as string
+      if (token) {
+        session.user.id = token.id as string;
+        session.user.role = token.role as string;
       }
-      return session
+      return session;
     },
   },
   pages: {
-    signIn: '/admin/login',
-    error: '/admin/login',
+    signIn: "/admin",
   },
-  debug: process.env.NODE_ENV === 'development',
+  session: {
+    strategy: "jwt",
+  },
   secret: process.env.NEXTAUTH_SECRET,
-}
+};

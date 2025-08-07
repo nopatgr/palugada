@@ -79,7 +79,7 @@ ${formData.phone}`)
 
   if (isSubmitted) {
     return (
-      <Card className="bg-white border-0 shadow-lg">
+      <Card className="bg-futuristic-secondary/50 backdrop-blur-sm">
         <CardContent className="pt-6">
           <div className="text-center space-y-6">
             <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
@@ -124,10 +124,10 @@ ${formData.phone}`)
   }
 
   return (
-    <Card className="bg-white border-0 shadow-lg">
+    <Card className="bg-futuristic-secondary/50 border-futuristic-border backdrop-blur-sm">
       <CardHeader>
-        <CardTitle className="text-[#1E3A8A]">Kirim Pesan</CardTitle>
-        <CardDescription className="text-[#1E3A8A]/70">
+        <CardTitle className="text-[#fafafa]">Kirim Pesan</CardTitle>
+        <CardDescription className="text-[#fafafa]/70">
           Isi form di bawah ini dan kami akan merespons dalam 24 jam
         </CardDescription>
       </CardHeader>
@@ -135,19 +135,19 @@ ${formData.phone}`)
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-[#1E3A8A]">
+              <Label htmlFor="name" className="text-[fafafa]">
                 Nama Lengkap *
               </Label>
               <Input
                 id="name"
                 value={formData.name}
                 onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
-                className="border-[#E5E7EB] focus:border-[#3B82F6] focus:ring-[#3B82F6]"
+                className="border-[#262e3f] focus:border-[#3B82F6] focus:ring-[#3B82F6]"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-[#1E3A8A]">
+              <Label htmlFor="email" className="text-[fafafa]">
                 Email *
               </Label>
               <Input
@@ -163,7 +163,7 @@ ${formData.phone}`)
 
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="phone" className="text-[#1E3A8A]">
+              <Label htmlFor="phone" className="text-[fafafa]">
                 No. WhatsApp *
               </Label>
               <Input
@@ -175,7 +175,7 @@ ${formData.phone}`)
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="subject" className="text-[#1E3A8A]">
+              <Label htmlFor="subject" className="text-[fafafa]">
                 Subjek *
               </Label>
               <Input
@@ -190,7 +190,7 @@ ${formData.phone}`)
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="message" className="text-[#1E3A8A]">
+            <Label htmlFor="message" className="text-[fafafa]">
               Pesan *
             </Label>
             <Textarea
@@ -207,7 +207,7 @@ ${formData.phone}`)
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Button
               type="submit"
-              className="bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] hover:from-[#1E3A8A]/90 hover:to-[#3B82F6]/90 text-white shadow-lg"
+              className="bg-gradient-to-r from-[#1E3A8A] to-[#3B82F6] hover:from-[#1E3A8A]]/90 hover:to-[#3B82F6]/90 text-white shadow-lg"
               disabled={isSubmitting}
             >
               {isSubmitting ? (

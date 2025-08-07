@@ -19,46 +19,46 @@ interface FeaturesSectionProps {
 
 export function FeaturesSection({
   title = "Mengapa Memilih Kami?",
-  subtitle = "Kami berkomitmen memberikan layanan terbaik dengan standar kualitas tinggi dan pengalaman yang memuaskan",
+  subtitle = "Kami berkomitmen memberikan layanan digital yang cepat, aman, dan berkualitas tinggi untuk mendukung kesuksesan bisnis anda",
   features = [
     {
       icon: Zap,
-      title: "Fast & Reliable",
-      description: "Solusi digital yang cepat dan dapat diandalkan untuk bisnis Anda dengan response time yang optimal",
+      title: "Cepat & Andal",
+      description: "Solusi digital yang cepat dan responsif dengan performa yang kosisten dan dapat diandalkan",
       gradient: "from-cyan-500 to-blue-500",
       delay: 200
     },
     {
       icon: Users,
-      title: "Expert Team",
+      title: "Tim Ahli Berpengalaman",
       description: "Tim ahli berpengalaman dalam berbagai bidang teknologi digital dengan sertifikasi profesional",
       gradient: "from-blue-500 to-purple-500",
       delay: 400
     },
     {
       icon: Shield,
-      title: "Secure & Safe",
+      title: "Keamanan Data Terjamin",
       description: "Keamanan data dan privasi adalah prioritas utama kami dengan protokol keamanan tingkat tinggi",
       gradient: "from-purple-500 to-cyan-500",
       delay: 600
     },
     {
       icon: Award,
-      title: "Quality Guaranteed",
+      title: "Kualitas Terbaik",
       description: "Kualitas layanan terjamin dengan standar internasional dan garansi kepuasan pelanggan",
       gradient: "from-green-500 to-emerald-500",
       delay: 800
     },
     {
       icon: Clock,
-      title: "24/7 Support",
+      title: "Layanan 24/7",
       description: "Dukungan teknis tersedia 24/7 untuk memastikan sistem Anda berjalan optimal setiap saat",
       gradient: "from-yellow-500 to-orange-500",
       delay: 1000
     },
     {
       icon: Heart,
-      title: "Customer First",
+      title: "Fokus pada Kepuasan Pelanggan",
       description: "Kepuasan pelanggan adalah prioritas utama kami dengan layanan yang personalized",
       gradient: "from-pink-500 to-rose-500",
       delay: 1200

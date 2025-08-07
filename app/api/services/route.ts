@@ -1,45 +1,62 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-// Mock database untuk services
+//  database untuk services
+
 let services = [
   {
     id: '1',
-    title: 'OS Installation',
+    title: 'Operasi Sistem',
     description: 'Instalasi sistem operasi Windows, macOS, dan Linux dengan konfigurasi optimal untuk performa maksimal',
-    image: '/images/software-development.jpeg',
+    image: '/images/herobg.jpg',
     gradient: 'from-cyan-500 to-blue-500',
     popular: true,
-    features: ['Windows 10/11', 'macOS', 'Linux Ubuntu', 'Driver Installation'],
-    price: 'Mulai Rp 150K',
+    features: ['Pembersihan junk file & cache', 'Deep cleaning hardware', 'Install ulang windows/Linux', 'Setup dual boot(windows+linux)'],
+    price: 'Mulai dari Rp100.000',
+    note: "Backup data bersifat opsional dan hanya dilakukan jika diminta.",
     category: 'Software',
     status: 'active',
-    createdAt: '2024-01-15'
+    createdAt: '2025-01-15'
   },
   {
     id: '2',
-    title: 'Software Setup',
+    title: 'Instalasi Software',
     description: 'Setup dan konfigurasi software aplikasi sesuai kebutuhan bisnis Anda dengan dukungan teknis lengkap',
     image: '/images/computer-repair.jpeg',
     gradient: 'from-blue-500 to-purple-500',
-    features: ['Office Suite', 'Design Software', 'Development Tools', 'Security Software'],
+    features: ['Microsoft Office', 'Software akademik (SPSS, Mendelay, Harzing)', 'Aplikasi Editing(Photoshop, Premire)'],
     popular: true,
     price: 'Mulai Rp 200K',
+    note: " Termasuk aktivasi/lisensi. Harga dapat berbeda tergantung versi aplikasi. Disediakan juga panduan aktivasi atau crack bila diperlukan.",
     category: 'Software',
     status: 'active',
-    createdAt: '2024-01-10'
+    createdAt: '2025-01-10'
   },
   {
     id: '3',
-    title: 'Tech Support',
+    title: 'Web Devlopment & Design',
     description: 'Dukungan teknis 24/7 untuk troubleshooting dan maintenance sistem dengan response time cepat',
     image: '/images/tech-support.jpeg',
     gradient: 'from-purple-500 to-cyan-500',
-    features: ['Remote Support', 'On-site Service', 'Preventive Maintenance', 'Emergency Response'],
-    price: 'Mulai Rp 100K/jam',
+    features: ['Company Profile(WordPress)', 'Google Site Sederhana', 'CRUD sederhana(PHP+MySql)', 'Website dengan reactjs(Frontend Only)', 'Fullstack Website(React+NodeJS)', 'Tambah fitur'],
+    price: 'Mulai Rp 900K',
+    note: "Harga menyesuaikan jumlah halaman, fitur, dan tingkat kompleksitas. Tambahan fitur khusus seperti payment gateway, real-time chat, atau integrasi API akan dikenakan biaya tambahan sesuai kebutuhan.",
     category: 'Support',
     status: 'active',
-    createdAt: '2024-01-05'
-  }
+    createdAt: '2025-01-05'
+  },
+  {
+    id: '4',
+    title: 'Dokumen & Tugas',
+    description: 'Dukungan teknis 24/7 untuk troubleshooting dan maintenance sistem dengan response time cepat',
+    image: '/images/tech-support.jpeg',
+    gradient: 'from-purple-500 to-cyan-500',
+    features: ['Edit PDF(Gabung, pisah, convert)', 'PPT Presentasi Custom', 'Bantuan tugas kuliah(Jurnal, skripsi dan tugas harian)', 'Konsultasi IT(online&offline)', 'CV ATS Friendly & Cover Latter'],
+    price: 'Mulai Rp 20K',
+    note: "Harga tergantung tingkat kesulitan dan kebutuhan detail. Semua layanan dapat disesuaikan permintaan, termasuk branding, animasi, watermark, bahasa, dan format file. Waktu pengerjaan dan revisi akan dibicarakan sebelum mulai.",
+    category: 'Support',
+    status: 'active',
+    createdAt: '2025-01-05'
+  },
 ]
 
 export async function GET() {
@@ -83,7 +100,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Tambahkan ke array services
-    services.push(newService)
+    // services.push(newService)
 
     return NextResponse.json({
       success: true,

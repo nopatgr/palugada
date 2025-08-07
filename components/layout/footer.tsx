@@ -14,14 +14,23 @@ import {
   Clock,
   Users,
   Award,
+  Book,
 } from "lucide-react";
 
 export function Footer() {
   const services = [
-    { name: "OS Installation", href: "/layanan#os-installation", icon: Monitor },
-    { name: "Software Setup", href: "/layanan#software-setup", icon: Settings },
-    { name: "Tech Support", href: "/layanan#tech-support", icon: Wrench },
-    { name: "Hardware Upgrade", href: "/layanan#hardware-upgrade", icon: Shield },
+    { name: "Operasi Sistem", href: "/layanan#operasi-sistem", icon: Monitor },
+    {
+      name: "Instalasi Software",
+      href: "/layanan#instalasi-software",
+      icon: Settings,
+    },
+    {
+      name: "Web Development & Design",
+      href: "/layanan#web-design",
+      icon: Wrench,
+    },
+    { name: "Dokumen & Tugas", href: "/layanan#dokumen-tugas", icon: Book },
   ];
 
   const company = [
@@ -40,66 +49,54 @@ export function Footer() {
     { name: "Portfolio", href: "/produk" },
   ];
 
-  const stats = [
-    { value: "100+", label: "Client Puas", icon: Users },
-    { value: "250+", label: "Project Selesai", icon: Award },
-    { value: "24/7", label: "Support", icon: Clock },
-    { value: "98%", label: "Satisfaction", icon: Shield },
-  ];
 
   return (
-    <footer className="bg-futuristic-primary text-futuristic-text-primary border-t border-futuristic-border">
+    <footer className="bg-[#162336] text-futuristic-text-primary relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Stats Section */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 pb-8 border-b border-futuristic-border">
-          {stats.map((stat, index) => {
-            const IconComponent = stat.icon
-            return (
-              <div key={index} className="text-center group">
-                <div className="mx-auto w-12 h-12 bg-futuristic-accent rounded-xl flex items-center justify-center mb-3 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <IconComponent className="h-6 w-6 text-futuristic-text-primary" />
-                </div>
-                <div className="text-2xl font-bold text-futuristic-text-primary mb-1">{stat.value}</div>
-                <div className="text-sm text-futuristic-text-secondary font-medium tracking-wide">{stat.label}</div>
-              </div>
-            )
-          })}
-        </div>
+       
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Company Info */}
           <div className="lg:col-span-2">
             <Link href="/" className="flex items-center space-x-3 mb-6 group">
-              <div className="h-12 w-12 rounded-xl bg-futuristic-accent flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
-                <span className="text-futuristic-text-primary font-bold text-lg tracking-wider">PD</span>
-              </div>
+              {/* <div className="h-12 w-12 rounded-xl bg-futuristic-accent flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform duration-300">
+                <span className="text-futuristic-text-primary font-bold text-lg tracking-wider">
+                  PD
+                </span>
+              </div> */}
               <div className="flex flex-col">
                 <span className="font-bold text-xl text-futuristic-text-primary group-hover:text-futuristic-accent transition-colors tracking-wide">
                   Palugada Digital
                 </span>
-                <span className="text-sm text-futuristic-text-secondary font-medium tracking-wider">Hardware Solutions</span>
+                <span className="text-sm text-futuristic-text-secondary font-medium tracking-wider">
+                  Hardware Solutions
+                </span>
               </div>
             </Link>
             <p className="text-futuristic-text-secondary mb-6 max-w-md leading-relaxed tracking-wide">
               Solusi hardware terpadu untuk mengoptimalkan sistem Anda. Dari
-              instalasi OS hingga upgrade hardware, kami siap membantu mewujudkan
-              kebutuhan teknologi hardware Anda dengan standar profesional.
+              instalasi OS hingga upgrade hardware, kami siap membantu
+              mewujudkan kebutuhan teknologi hardware Anda dengan standar
+              profesional.
             </p>
 
             {/* Contact Info */}
             <div className="space-y-3">
               <div className="flex items-center space-x-3 group">
-                <Phone className="h-5 w-5 text-futuristic-accent group-hover:text-futuristic-accent-hover transition-colors" />
-                <span className="text-futuristic-text-secondary group-hover:text-futuristic-text-primary transition-colors tracking-wide">+62 857-7710-1676</span>
+                <Phone className="h-5 w-5 text-blue-400 group-hover:text-futuristic-accent-hover transition-colors" />
+                <span className="text-futuristic-text-secondary group-hover:text-futuristic-text-primary transition-colors tracking-wide">
+                  +62 857-7710-1676
+                </span>
               </div>
               <div className="flex items-center space-x-3 group">
-                <Mail className="h-5 w-5 text-futuristic-accent group-hover:text-futuristic-accent-hover transition-colors" />
+                <Mail className="h-5 w-5 text-blue-400 group-hover:text-futuristic-accent-hover transition-colors" />
                 <span className="text-futuristic-text-secondary group-hover:text-futuristic-text-primary transition-colors tracking-wide">
                   services@palugada.biz.id
                 </span>
               </div>
               <div className="flex items-start space-x-3 group">
-                <MapPin className="h-5 w-5 text-futuristic-accent mt-0.5 group-hover:text-futuristic-accent-hover transition-colors" />
+                <MapPin className="h-5 w-5 text-blue-400 mt-0.5 group-hover:text-futuristic-accent-hover transition-colors" />
                 <span className="text-futuristic-text-secondary group-hover:text-futuristic-text-primary transition-colors tracking-wide">
                   Jalan Pisang Batu Kerta Mukti
                   <br />
@@ -198,8 +195,8 @@ export function Footer() {
         {/* Bottom Section */}
         <div className="border-t border-futuristic-border mt-12 pt-8">
           <div className="text-center">
-            <div className="text-futuristic-text-secondary text-sm tracking-wide">
-              © 2025 Palugada Digital. All rights reserved. | Hardware Solutions Expert
+            <div className=" text-center py-4 text-sm text-gray-600">
+              &copy; {new Date().getFullYear()} MyCompany. All rights reserved.
             </div>
           </div>
         </div>
