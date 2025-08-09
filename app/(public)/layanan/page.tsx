@@ -90,7 +90,7 @@ export default function LayananPage() {
             {services.map((service, index) => (
               <Card
                 key={service.id}
-                className="bg-gradient-to-r from-futuristic-accent/10 to-futuristic-cyan/10 border-futuristic-accent/20 backdrop-blur-sm hover:bg-futuristic-secondary/70 transition-all duration-300 group"
+                className="bg-futuristic-secondary/50 border-futuristic-border backdrop-blur-sm hover:bg-futuristic-secondary/70 transition-all duration-300 group"
               >
                 <CardHeader className="relative">
                   {service.popular && (
@@ -100,12 +100,7 @@ export default function LayananPage() {
                     </Badge>
                   )}
                   <div className="flex items-center gap-3 mb-4">
-                    <div
-                      className={`w-3 h-3 rounded-full bg-gradient-to-r ${
-                        service.gradient ||
-                        "from-futuristic-accent to-futuristic-cyan"
-                      } shadow-lg`}
-                    ></div>
+                    
                     <CardTitle className="text-xl text-futuristic-text-primary">
                       {service.title}
                     </CardTitle>
@@ -117,7 +112,7 @@ export default function LayananPage() {
                 <CardContent>
                   {service.features && service.features.length > 0 && (
                     <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-[#1a365d] mb-3">
+                      <h4 className="text-sm font-semibold text-[#fafafa] mb-3">
                         Fitur Utama:
                       </h4>
                       <div className="grid grid-cols-1 gap-2">
@@ -126,7 +121,7 @@ export default function LayananPage() {
                             key={idx}
                             className="flex items-center gap-2 text-futuristic-text-secondary text-sm"
                           >
-                            <div className="w-1.5 h-1.5 bg-[#1a365d] rounded-full" />
+                            <div className="w-1.5 h-1.5 bg-[#fafafa] rounded-full" />
                             <span>{feature}</span>
                           </div>
                         ))}
@@ -136,13 +131,13 @@ export default function LayananPage() {
 
                   <div className="flex items-center justify-between pt-4 border-t border-futuristic-border">
                     <div>
-                      <span className="text-2xl font-bold text-[#1a365d]">
+                      <span className="text-2xl font-bold text-[#fafafa]">
                         {service.price}
                       </span>
                     </div>
                     <Button
                       size="sm"
-                      className="bg-gradient-to-r from-[#1a365d] to-futuristic-cyan hover:from-futuristic-accent-hover hover:to-futuristic-cyan text-futuristic-text-primary border-0 shadow-lg hover:shadow-futuristic-glow transition-all duration-300 transform hover:scale-105"
+                      className="bg-gradient-to-r from-blue-600 to-futuristic-cyan hover:from-blue-500 hover:to-blue-400 text-futuristic-text-primary border-0 shadow-lg hover:shadow-futuristic-glow transition-all duration-300 transform hover:scale-105"
                       asChild
                     >
                       <Link href="/booking">

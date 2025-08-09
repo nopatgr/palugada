@@ -59,7 +59,7 @@ export function CTASection() {
             <div className="flex flex-col sm:flex-row gap-6 justify-center mb-16">
               <Button
                 size="lg"
-                className="bg-[#3b82f6] hover:bg-[#3b82f6]-hover text-futuristic-text-primary border border-[#3b82f6] hover:border-[#3b82f6]-hover transition-all duration-300 transform hover:scale-105 px-10 py-6 text-xl font-medium rounded-lg group shadow-lg hover:shadow-futuristic-glow"
+                className="bg-blue-600 hover:bg-[#3b82f6]-hover text-futuristic-text-primary border border-[#3b82f6] hover:border-[#3b82f6]-hover transition-all duration-300 transform hover:scale-105 px-10 py-6 text-xl font-medium rounded-lg group shadow-lg hover:shadow-futuristic-glow"
                 asChild
               >
                 <Link href="/booking" className="flex items-center">
@@ -90,7 +90,7 @@ export function CTASection() {
                     key={index}
                     className="p-8 rounded-3xl bg-futuristic-secondary/60 backdrop-blur-sm border border-futuristic-border/50 hover:shadow-xl transition-all duration-500 group hover:-translate-y-2"
                   >
-                    <div className="w-16 h-16 bg-blue-400 to-blue-600 rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-16 h-16 bg-blue-600  rounded-2xl flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300">
                       <IconComponent className="w-8 h-8 text-futuristic-text-primary" />
                     </div>
                     <h3 className="text-xl font-semibold text-futuristic-text-primary mb-4">{feature.title}</h3>
@@ -105,7 +105,7 @@ export function CTASection() {
           <ScrollReveal direction="up" delay={1000}>
             <div className="mt-16 p-8 rounded-3xl bg-futuristic-secondary/50 border border-futuristic-border/50 backdrop-blur-sm">
               <div className="flex items-center justify-center mb-4">
-                <div className="w-12 h-12 bg-blue-400 to-blue-600 rounded-full flex items-center justify-center mr-4">
+                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center mr-4">
                   <CheckCircle className="w-6 h-6 text-futuristic-text-primary" />
                 </div>
                 <h4 className="text-2xl font-bold text-futuristic-text-primary">Gratis Konsultasi</h4>

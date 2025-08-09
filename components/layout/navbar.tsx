@@ -91,7 +91,7 @@ export function Navbar() {
             <div className="absolute -inset-1 bg-futuristic-accent rounded-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
           </div> */}
           <div className="flex flex-col">
-            <span className="font-bold text-xl text-futuristic-text-primary group-hover:text-futuristic-accent transition-colors tracking-wide">
+            <span className="font-bold text-xl text-futuristic-text-primary group-hover:text-blue-200 transition-colors tracking-wide">
               Palugada Digital
             </span>
             <span className="text-xs text-futuristic-text-secondary font-medium tracking-wider">
@@ -146,7 +146,7 @@ export function Navbar() {
                     href={page.href}
                     className="flex items-center px-4 py-3 text-sm text-futuristic-text-secondary hover:bg-futuristic-primary/70 hover:text-futuristic-text-primary rounded-lg transition-all duration-200 group/item"
                   >
-                    <div className="w-2 h-2 rounded-full bg-futuristic-accent mr-3 opacity-60 group-hover/item:opacity-100 transition-opacity"></div>
+                    {/* <div className="w-2 h-2 rounded-full bg-futuristic-accent mr-3 opacity-60 group-hover/item:opacity-100 transition-opacity"></div> */}
                     <span className="tracking-wide">{page.title}</span>
                   </Link>
                 ))}
@@ -159,7 +159,7 @@ export function Navbar() {
         <div className="hidden lg:flex items-center space-x-4">
           {/* <ThemeToggle /> */}
           <Button
-            className="bg-[#3b82f6] hover:bg-futuristic-accent-hover text-futuristic-text-primary border border-[#3b82f6] hover:border-[#d5d5d5]-hover shadow-lg hover:shadow-futuristic-glow transition-all duration-300 transform hover:scale-105 px-6 py-2 rounded-lg font-medium tracking-wide"
+            className="bg-blue-600 hover:bg-blue-500 text-futuristic-text-primary border border-blue-600 hover:border-[#d5d5d5]-hover shadow-lg hover:shadow-futuristic-glow transition-all duration-300 transform hover:scale-105 px-6 py-2 rounded-lg font-medium tracking-wide"
             asChild
           >
             <Link href="/booking">Get Started</Link>
@@ -231,7 +231,7 @@ export function Navbar() {
             </div>
 
             <Button
-              className="bg-blue-400 to-blue-600 hover:bg-futuristic-accent-hover w-full shadow-lg font-medium tracking-wide"
+              className="bg-blue-400 hover:bg-blue-600 w-full shadow-lg font-medium tracking-wide"
               asChild
             >
               <Link href="/booking" onClick={() => setIsOpen(false)}>

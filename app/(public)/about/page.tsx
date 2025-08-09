@@ -33,19 +33,19 @@ export default function AboutPage() {
       icon: Monitor,
       title: "OS Installation",
       description: "Instalasi sistem operasi Windows, Linux, dan macOS dengan konfigurasi optimal",
-      color: "from-cyan-500 to-blue-500"
+      color: "from-blue-500 to-blue-500"
     },
     {
       icon: Settings,
       title: "Software Setup",
       description: "Setup dan konfigurasi software sesuai kebutuhan bisnis dan personal",
-      color: "from-blue-500 to-purple-500"
+      color: "from-blue-500 to-blue-500"
     },
     {
       icon: Wrench,
       title: "Tech Support",
       description: "Dukungan teknis 24/7 untuk masalah hardware dan software",
-      color: "from-purple-500 to-cyan-500"
+      color: "from-blue-500 to-blue-500"
     }
   ]
 
@@ -172,7 +172,7 @@ export default function AboutPage() {
               <ScrollReveal key={index} direction="up" delay={index * 200}>
                 <Card className="text-center border-0 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-gradient-to-br from-slate-800 to-slate-700 backdrop-blur-sm">
                   <CardHeader>
-                    <div className="mx-auto w-16 h-16 bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 rounded-xl flex items-center justify-center mb-4 shadow-lg">
+                    <div className="mx-auto w-16 h-16 bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 shadow-lg">
                       <value.icon className="h-8 w-8 text-white" />
                     </div>
                     <CardTitle className="text-lg text-white tracking-wide">{value.title}</CardTitle>
@@ -198,7 +198,7 @@ export default function AboutPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-cyan-500 via-blue-600 to-purple-600 hover:from-cyan-500/90 hover:via-blue-600/90 hover:to-purple-600/90 text-white shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 px-8 py-3 font-semibold tracking-wide"
+                className="bg-gradient-to-r from-blue-500  to-blue-600 hover:from-cyan-500/90 hover:via-blue-600/90 hover:to-blue-600/90 text-white shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-105 px-8 py-3 font-semibold tracking-wide"
                 asChild
               >
                 <Link href="/booking">Mulai Konsultasi</Link>

@@ -11,8 +11,8 @@ let services = [
     gradient: 'from-cyan-500 to-blue-500',
     popular: true,
     features: ['Pembersihan junk file & cache', 'Deep cleaning hardware', 'Install ulang windows/Linux', 'Setup dual boot(windows+linux)'],
-    price: 'Mulai dari Rp100.000',
-    note: "Backup data bersifat opsional dan hanya dilakukan jika diminta.",
+    price: 'Mulai Rp 100K',
+    note: "Layanan mencakup optimasi startup (+30k), partisi, dan perbaikan GRUB. Termasuk driver dasar dan opsi backup data (+50). Harga menyesuaikan tingkat kerusakan dan penggantian thermal paste.",
     category: 'Software',
     status: 'active',
     createdAt: '2025-01-15'

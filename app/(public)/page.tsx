@@ -9,7 +9,7 @@ import { Notification } from "@/components/ui/interactive-notification"
 import { InteractiveProgress } from "@/components/ui/interactive-progress"
 import { useState, useEffect } from "react"
 import TestimonialPage from "./testimonial/page"
-import { ServicesSection } from '@/components/sections/services-section';
+import ServicesSection from "@/components/sections/services-section"
 
 export default function HomePage() {
   const [showPromo, setShowPromo] = useState(false)
