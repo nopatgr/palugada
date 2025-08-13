@@ -1,25 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ScrollReveal } from "@/components/ui/scroll-reveal";
-import { Star, Zap, Shield, Clock, ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { Clock, Shield, Zap, ArrowRight, Star } from "lucide-react";
 
 interface Service {
   id: string;
   title: string;
   description: string;
   price: string;
-  note: string;
+  note?: string;
   category: string;
   status: "active" | "inactive";
   image?: string;
@@ -33,200 +24,201 @@ export default function LayananPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchServices = async () => {
+    async function fetchServices() {
       try {
-        const response = await fetch("/api/services");
-        const data = await response.json();
-        // Hanya tampilkan layanan yang aktif
+        const res = await fetch("/api/services");
+        const data = await res.json();
         setServices(
-          data.services?.filter(
-            (service: Service) => service.status === "active"
-          ) || []
+          Array.isArray(data) ? data.filter((s) => s.status === "active") : []
         );
-      } catch (error) {
-        console.error("Error fetching services:", error);
+      } catch {
+        setServices([]);
       } finally {
         setIsLoading(false);
       }
-    };
-
+    }
     fetchServices();
   }, []);
 
-  if (isLoading) {
+  /* ---------- LOADING ---------- */
+  if (isLoading)
     return (
-      <div className="min-h-screen bg-gradient-to-r from-futuristic-accent/10 to-futuristic-cyan/10 border-futuristic-accent/20 backdrop-blur-sm flex items-center justify-center">
-        <div className="text-futuristic-text-primary text-xl">
-          Memuat layanan...
-        </div>
+      <div className="min-h-screen flex items-center justify-center bg-[#171C21] text-[#64FFE3]">
+        <div className="text-xl">Memuat layanan...</div>
       </div>
     );
-  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-futuristic-accent/10 to-futuristic-cyan/10 border-futuristic-accent/20 backdrop-blur-sm">
-      <div className="container mx-auto px-4 py-8">
-        <ScrollReveal direction="up">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-futuristic-accent/30 bg-futuristic-accent/10 backdrop-blur-sm mb-6">
-              <Zap className="w-4 h-4 text-futuristic-accent" />
-              <span className="text-futuristic-text-primary text-sm font-semibold tracking-wide">
-                Layanan Profesional
-              </span>
-            </div>
-            <h1 className="text-3xl lg:text-4xl font-bold mb-4 text-futuristic-text-primary tracking-tight">
-              Layanan Kami
-            </h1>
-            <p className="text-xl text-futuristic-text-secondary max-w-2xl mx-auto leading-relaxed tracking-wide">
-              Berbagai layanan teknologi profesional untuk mendukung operasional
-              bisnis Anda
-            </p>
+    <div className="min-h-screen bg-[#171C21] text-white px-4 py-12">
+      <div className="max-w-7xl mx-auto">
+        {/* HERO / TITLE */}
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#64FFE3]/30 bg-[#64FFE3]/10 backdrop-blur-sm mb-6">
+            <Zap className="w-4 h-4 text-[#64FFE3]" />
+            <span className="text-sm font-semibold tracking-wide">
+              Layanan Profesional
+            </span>
           </div>
-        </ScrollReveal>
+          <h1 className="text-3xl lg:text-4xl font-bold mb-4 text-[#64FFE3]">
+            Layanan Kami
+          </h1>
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
+            Berbagai layanan teknologi profesional untuk mendukung operasional
+            bisnis Anda
+          </p>
+        </div>
 
-        {/* Services Grid */}
-        <ScrollReveal direction="up" delay={200}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-16">
-            {services.map((service, index) => (
-              <Card
-                key={service.id}
-                className="bg-futuristic-secondary/50 border-futuristic-border backdrop-blur-sm hover:bg-futuristic-secondary/70 transition-all duration-300 group"
-              >
-                <CardHeader className="relative">
-                  {service.popular && (
-                    <Badge className="absolute top-4 right-4 bg-gradient-to-r from-yellow-500 to-orange-500 text-white">
-                      <Star className="w-3 h-3 mr-1" />
-                      Populer
-                    </Badge>
-                  )}
-                  <div className="flex items-center gap-3 mb-4">
-                    
-                    <CardTitle className="text-xl text-futuristic-text-primary">
-                      {service.title}
-                    </CardTitle>
-                  </div>
-                  <CardDescription className="text-futuristic-text-secondary leading-relaxed">
-                    {service.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {service.features && service.features.length > 0 && (
-                    <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-[#fafafa] mb-3">
-                        Fitur Utama:
-                      </h4>
-                      <div className="grid grid-cols-1 gap-2">
-                        {service.features.map((feature, idx) => (
-                          <div
-                            key={idx}
-                            className="flex items-center gap-2 text-futuristic-text-secondary text-sm"
-                          >
-                            <div className="w-1.5 h-1.5 bg-[#fafafa] rounded-full" />
-                            <span>{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex items-center justify-between pt-4 border-t border-futuristic-border">
-                    <div>
-                      <span className="text-2xl font-bold text-[#fafafa]">
-                        {service.price}
-                      </span>
-                    </div>
-                    <Button
-                      size="sm"
-                      className="bg-gradient-to-r from-blue-600 to-futuristic-cyan hover:from-blue-500 hover:to-blue-400 text-futuristic-text-primary border-0 shadow-lg hover:shadow-futuristic-glow transition-all duration-300 transform hover:scale-105"
-                      asChild
-                    >
-                      <Link href="/booking">
-                        Pilih Layanan
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
-
-                  {service.note && (
-                    <p className="mt-4 text-xs text-futuristic-text-secondary italic">
-                      ⚠️ {service.note}
-                    </p>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </ScrollReveal>
-
-        {/* Additional Info */}
-        <ScrollReveal direction="up" delay={400}>
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
-            <div className="text-center p-6 rounded-2xl bg-gradient-to-r from-futuristic-accent/10 to-futuristic-cyan/10 border-futuristic-accent/20 backdrop-blur-sm transition-all duration-300">
-              <Clock className="w-8 h-8 text-futuristic-accent mx-auto mb-3" />
-              <h3 className="text-lg font-semibold text-futuristic-text-primary mb-2">
-                Response Cepat
-              </h3>
-              <p className="text-futuristic-text-secondary text-sm">
-                Dukungan teknis 24/7 dengan response time &lt; 2 jam
-              </p>
-            </div>
-            <div className="text-center p-6 rounded-2xl bg-gradient-to-r from-futuristic-accent/10 to-futuristic-cyan/10 border-futuristic-accent/20 backdrop-blur-sm transition-all duration-300">
-              <Shield className="w-8 h-8 text-futuristic-cyan mx-auto mb-3" />
-              <h3 className="text-lg font-semibold text-futuristic-text-primary mb-2">
-                Garansi Layanan
-              </h3>
-              <p className="text-futuristic-text-secondary text-sm">
-                Garansi 30 hari untuk semua layanan yang kami berikan
-              </p>
-            </div>
-            <div className="text-center p-6 rounded-2xl bg-gradient-to-r from-futuristic-accent/10 to-futuristic-cyan/10 border-futuristic-accent/20 backdrop-blur-sm transition-all duration-300">
-              <Zap className="w-8 h-8 text-futuristic-accent-hover mx-auto mb-3" />
-              <h3 className="text-lg font-semibold text-futuristic-text-primary mb-2">
-                Solusi Terbaik
-              </h3>
-              <p className="text-futuristic-text-secondary text-sm">
-                Tim ahli berpengalaman dengan solusi yang tepat sasaran
-              </p>
-            </div>
-          </div>
-        </ScrollReveal>
-
-        {/* CTA Section */}
-        <ScrollReveal direction="up" delay={600}>
-          <div className="text-center">
-            <Card className="bg-gradient-to-r from-futuristic-accent/10 to-futuristic-cyan/10 border-futuristic-accent/20 backdrop-blur-sm">
-              <CardContent className="p-8">
-                <h2 className="text-4xl font-bold text-futuristic-text-primary mb-4">
-                  Siap untuk Memulai?
-                </h2>
-                <p className="text-futuristic-text-secondary mb-6 max-w-md mx-auto">
-                  Hubungi kami sekarang untuk konsultasi gratis dan dapatkan
-                  solusi terbaik untuk kebutuhan teknologi Anda.
-                </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Button
-                    size="lg"
-                    className="bg-gradient-to-r from-futuristic-accent to-futuristic-cyan hover:from-futuristic-accent-hover hover:to-futuristic-cyan text-futuristic-text-primary shadow-lg hover:shadow-futuristic-glow transition-all duration-300 transform hover:scale-105"
-                    asChild
-                  >
-                    <Link href="/booking">
-                      Mulai Konsultasi
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
-                  </Button>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-futuristic-text-primary/30 text-futuristic-text-primary hover:bg-futuristic-secondary/50 backdrop-blur-sm"
-                    asChild
-                  >
-                    <Link href="/contact">Hubungi Kami</Link>
-                  </Button>
+        {/* SERVICES GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-16">
+          {services.map((s) => (
+            <div
+              key={s.id}
+              className="bg-[#171C21] border border-[#64FFE3]/30 rounded-xl p-6 
+                         hover:border-[#64FFE3] hover:shadow-[0_0_20px_#64FFE3]/40
+                         transition-all duration-300 group"
+            >
+              {s.popular && (
+                <div className="mb-4 inline-flex items-center bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+                  <Star className="w-3 h-3 mr-1" />
+                  Populer
                 </div>
-              </CardContent>
-            </Card>
+              )}
+
+              <Image
+                src={s.image || "/images/placeholder.jpg"}
+                alt={s.title}
+                width={400}
+                height={200}
+                className="rounded-md w-full h-48 object-cover mb-4"
+              />
+
+              <h2 className="text-xl font-semibold text-[#64FFE3] mb-2">
+                {s.title}
+              </h2>
+              <p className="text-sm text-gray-300 mb-4">
+                {s.description}
+              </p>
+
+              {/* FITUR */}
+              {s.features?.length && (
+                <div className="mb-4">
+                  <h4 className="text-sm font-semibold text-white mb-2">
+                    Fitur Utama:
+                  </h4>
+                  <ul className="space-y-1">
+                    {s.features.map((f, i) => (
+                      <li
+                        key={i}
+                        className="flex items-center gap-2 text-sm text-gray-400"
+                      >
+                        <div className="w-1.5 h-1.5 bg-[#64FFE3] rounded-full" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* PRICE & CTA */}
+              <div className="flex items-center justify-between pt-4 border-t border-[#64FFE3]/20">
+                <span className="text-2xl font-bold text-[#64FFE3]">
+                  {s.price}
+                </span>
+                <Link href="/booking">
+                  <button
+                    className="bg-[#3640F0] text-white px-4 py-2 rounded
+                                     hover:bg-[#3640F0]/80 transition-all duration-300
+                                     hover:scale-105 shadow-lg hover:shadow-[#3640F0]/50"
+                  >
+                    Pilih Layanan
+                    <ArrowRight className="inline ml-2 w-4 h-4" />
+                  </button>
+                </Link>
+              </div>
+
+              {s.note && (
+                <p className="mt-4 text-xs text-gray-400 italic">
+                  ⚠️ {s.note}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* ADDITIONAL INFO */}
+        <div className="grid md:grid-cols-3 gap-6 mb-12">
+          {[
+            {
+              icon: Clock,
+              title: "Response Cepat",
+              desc: "Dukungan teknis 24/7 dengan response time < 2 jam",
+            },
+            {
+              icon: Shield,
+              title: "Garansi Layanan",
+              desc: "Garansi 30 hari untuk semua layanan yang kami berikan",
+            },
+            {
+              icon: Zap,
+              title: "Solusi Terbaik",
+              desc: "Tim ahli berpengalaman dengan solusi yang tepat sasaran",
+            },
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="text-center p-6 rounded-2xl bg-gradient-to-r from-[#64FFE3]/10 to-[#3640F0]/10
+                         border border-[#64FFE3]/20 backdrop-blur-sm
+                         hover:border-[#64FFE3] hover:shadow-[0_0_20px_#64FFE3]/30
+                         transition-all duration-300"
+            >
+              <item.icon className="w-8 h-8 text-[#64FFE3] mx-auto mb-3" />
+              <h3 className="text-lg font-semibold text-white mb-2">
+                {item.title}
+              </h3>
+              <p className="text-sm text-gray-300">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA SECTION */}
+        <div className="text-center">
+          <div
+            className="bg-gradient-to-r from-[#64FFE3]/10 to-[#3640F0]/10
+                          border border-[#64FFE3]/20 rounded-2xl p-8
+                          hover:border-[#64FFE3] hover:shadow-[0_0_25px_#64FFE3]/40
+                          transition-all duration-300"
+          >
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Siap untuk Memulai?
+            </h2>
+            <p className="text-gray-300 mb-6 max-w-md mx-auto">
+              Hubungi kami sekarang untuk konsultasi gratis dan dapatkan solusi
+              terbaik untuk kebutuhan teknologi Anda.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/booking">
+                <button
+                  className="bg-[#3640F0] text-white px-6 py-3 rounded
+                                   hover:bg-[#3640F0]/80 hover:scale-105
+                                   shadow-lg hover:shadow-[#3640F0]/40
+                                   transition-all duration-300"
+                >
+                  Mulai Konsultasi
+                  <ArrowRight className="inline ml-2 w-4 h-4" />
+                </button>
+              </Link>
+              <Link href="/contact">
+                <button
+                  className="border border-[#64FFE3]/30 text-[#64FFE3] px-6 py-3 rounded
+                                   hover:bg-[#64FFE3]/20 hover:border-[#64FFE3]
+                                   transition-all duration-300"
+                >
+                  Hubungi Kami
+                </button>
+              </Link>
+            </div>
           </div>
-        </ScrollReveal>
+        </div>
       </div>
     </div>
   );

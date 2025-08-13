@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Force light gradient on login page */
+body[data-route="/admin"] {
+  background: linear-gradient(to bottom right, #6366f1, #ec4899) !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

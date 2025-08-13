@@ -6,7 +6,14 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { InteractiveCarousel } from "../ui/interactive-carousel";
 import { ScrollReveal } from "../ui/scroll-reveal";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
+import Image from "next/image";
 // import { Service } from "@/types/service";
 
 interface Service {
@@ -28,39 +35,42 @@ export default function ServicesSection() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchServices = async () => {
+    async function fetchServices() {
       try {
-        const response = await fetch("/api/services");
-        const data = await response.json();
-        // Tampilkan hanya layanan yang aktif dan populer
-        setServices(
-          data.services?.filter(
-            (service: Service) =>
-              service.status === "active" && service.popular === true
-          ) || []
-        );
-      } catch (error) {
-        console.error("Error fetching services:", error);
+        const res = await fetch("/api/services");
+        const data = await res.json();
+        // 🔁 filter hanya yang populer
+        const popular = Array.isArray(data)
+          ? data.filter((s) => s.status === "active" && s?.popular)
+          : [];
+        setServices(popular);
+      } catch {
+        setServices([]);
       } finally {
         setIsLoading(false);
       }
-    };
-
+    }
     fetchServices();
   }, []);
 
-  // Loading state
+  /* ---------- LOADING ---------- */
   if (isLoading) {
     return (
-      <section className="py-24 bg-gradient-to-br from-slate-50 to-blue-50">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-6 text-slate-600 text-lg">
-              Memuat layanan unggulan...
-            </p>
-          </div>
+      <section className="py-24 bg-[#1a365d]">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#64FFE3] mx-auto"></div>
+          <p className="mt-6 text-gray-300">Memuat layanan unggulan...</p>
         </div>
+      </section>
+    );
+  }
+
+  /* ---------- KOSONG ---------- */
+  if (services.length === 0) {
+    return (
+      <section className="py-24 bg-[#1a365d] text-white text-center">
+        <h2 className="text-3xl font-bold mb-4">Belum ada layanan populer</h2>
+        <p className="text-gray-300">Silakan kembali lagi nanti.</p>
       </section>
     );
   }
@@ -103,75 +113,86 @@ export default function ServicesSection() {
         </div>
 
         {/* Services Grid - Replace the carousel section */}
-       <ScrollReveal direction="up" delay={200}>
+        <ScrollReveal direction="up" delay={200}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 mb-16">
-            {services.map((service, index) => (
-              <Card
+            {services.map((service) => (
+              <div
                 key={service.id}
-                className="bg-futuristic-secondary/50 border-futuristic-border backdrop-blur-sm hover:bg-futuristic-secondary/70 transition-all duration-300 group"
+                className="bg-[#171C21] border border-[#64FFE3]/30 rounded-xl p-6
+                 hover:border-[#64FFE3] hover:shadow-[0_0_20px_#64FFE3]/40
+                 transition-all duration-300 group"
               >
-                <CardHeader className="relative">
-                  {service.popular && (
-                    <Badge className="absolute top-4 right-4 bg-gradient-to-r from-yellow-500 to-yellow-700 ">
-                     <Star className="w-3 h-3 mr-1" />
-                      Populer
-                     </Badge>
-                  )}
-                  <div className="flex items-center gap-3 mb-4">
-                    
-                    <CardTitle className="text-xl text-futuristic-text-primary">
-                      {service.title}
-                    </CardTitle>
-                  </div>
-                  <CardDescription className="text-futuristic-text-secondary leading-relaxed">
-                    {service.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {service.features && service.features.length > 0 && (
-                    <div className="mb-6">
-                      <h4 className="text-sm font-semibold text-[#fafafa] mb-3">
-                        Fitur Utama:
-                      </h4>
-                      <div className="grid grid-cols-1 gap-2">
-                        {service.features.map((feature, idx) => (
-                          <div
-                            key={idx}
-                            className="flex items-center gap-2 text-futuristic-text-secondary text-sm"
-                          >
-                            <div className="w-1.5 h-1.5 bg-[#fafafa] rounded-full" />
-                            <span>{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                {/* IMAGE */}
+                <div className="relative w-full h-48 mb-4 rounded-md overflow-hidden">
+                  <Image
+                    src={
+                      service.image?.startsWith("/")
+                        ? service.image
+                        : `/images/${service.image || "placeholder.jpg"}`
+                    }
+                    alt={service.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+                    className="object-cover"
+                  />
+                </div>
 
-                  <div className="flex items-center justify-between pt-4 border-t border-futuristic-border">
-                    <div>
-                      <span className="text-2xl font-bold text-[#fafafa]">
-                        {service.price}
-                      </span>
-                    </div>
-                    <Button
-                      size="sm"
-                      className="bg-gradient-to-r from-blue-600 to-futuristic-cyan hover:from-blue-500 hover:to-blue-400 text-futuristic-text-primary border-0 shadow-lg hover:shadow-futuristic-glow transition-all duration-300 transform hover:scale-105"
-                      asChild
-                    >
-                      <Link href="/booking">
-                        Pilih Layanan
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
+                {/* BADGE POPULER */}
+                {service.popular && (
+                  <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-500 to-yellow-700 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
+                    <Star className="w-3 h-3 inline mr-1" />
+                    Populer
                   </div>
+                )}
 
-                  {service.note && (
-                    <p className="mt-4 text-xs text-futuristic-text-secondary italic">
-                      ⚠️ {service.note}
-                    </p>
-                  )}
-                </CardContent>
-              </Card>
+                {/* TITLE & DESCRIPTION */}
+                <h2 className="text-xl font-semibold text-[#64FFE3] mb-2">
+                  {service.title}
+                </h2>
+                <p className="text-sm text-gray-300 mb-4">
+                  {service.description}
+                </p>
+
+                {/* FEATURES */}
+                {service.features && service.features.length > 0 && (
+                  <div className="mb-4">
+                    <h4 className="text-sm font-semibold text-white mb-2">
+                      Fitur Utama:
+                    </h4>
+                    <ul className="space-y-1">
+                      {service.features.map((f, i) => (
+                        <li
+                          key={i}
+                          className="flex items-center gap-2 text-sm text-gray-400"
+                        >
+                          <div className="w-1.5 h-1.5 bg-[#64FFE3] rounded-full" />
+                          {f}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* PRICE & CTA */}
+                <div className="flex items-center justify-between pt-4 border-t border-[#64FFE3]/20">
+                  <span className="text-2xl font-bold text-[#64FFE3]">
+                    {service.price}
+                  </span>
+                  <Link href="/booking">
+                    <button className="bg-[#3640F0] text-white px-4 py-2 rounded hover:bg-[#3640F0]/80 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-[#3640F0]/50">
+                      Pilih Layanan
+                      <ArrowRight className="inline ml-2 w-4 h-4" />
+                    </button>
+                  </Link>
+                </div>
+
+                {/* NOTE */}
+                {service.note && (
+                  <p className="mt-4 text-xs text-gray-400 italic">
+                    ⚠️ {service.note}
+                  </p>
+                )}
+              </div>
             ))}
           </div>
         </ScrollReveal>

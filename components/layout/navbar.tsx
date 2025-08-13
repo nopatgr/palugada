@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   Menu,
   X,
@@ -157,7 +156,6 @@ export function Navbar() {
 
         {/* CTA Button - Right */}
         <div className="hidden lg:flex items-center space-x-4">
-          {/* <ThemeToggle /> */}
           <Button
             className="bg-blue-600 hover:bg-blue-500 text-futuristic-text-primary border border-blue-600 hover:border-[#d5d5d5]-hover shadow-lg hover:shadow-futuristic-glow transition-all duration-300 transform hover:scale-105 px-6 py-2 rounded-lg font-medium tracking-wide"
             asChild
@@ -168,7 +166,6 @@ export function Navbar() {
 
         {/* Mobile menu button */}
         <div className="lg:hidden flex items-center space-x-4">
-          {/* <ThemeToggle /> */}
           <button
             className="p-2 rounded-lg hover:bg-futuristic-secondary/50 transition-colors"
             onClick={() => setIsOpen(!isOpen)}

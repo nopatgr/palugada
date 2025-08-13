@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import { Providers } from "./providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -14,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode}) {
     <html lang="id" className="scroll-smooth">
       <body className={`${inter.className} bg-futuristic-primary text-futuristic-text-primary transition-colors duration-300`}>
         <main className="pt-20">
-          {children}
+          <Providers>{children}</Providers>
         </main>
         <Toaster />
       </body>
