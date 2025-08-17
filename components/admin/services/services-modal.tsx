@@ -27,6 +27,7 @@ import { Switch } from "@/components/ui/switch";
 import { Service } from "@/types/service";
 import { ImageUpload } from "./image-upload";
 import { toast } from "@/components/ui/use-toast";
+import { on } from "events";
 
 const formSchema = z.object({
   title: z.string().min(1, "Judul harus diisi"),
@@ -34,7 +35,12 @@ const formSchema = z.object({
   image: z.string().optional(),
   gradient: z.string().optional(),
   popular: z.boolean().default(false),
-  features: z.string().transform((val) => val.split(',').map(f => f.trim()).filter(f => f)),
+  features: z.string().transform((val) =>
+    val
+      .split(",")
+      .map((f) => f.trim())
+      .filter((f) => f)
+  ),
   price: z.string().min(1, "Harga harus diisi"),
   note: z.string().optional(),
   category: z.string().min(1, "Kategori harus diisi"),
@@ -46,10 +52,16 @@ interface ServiceModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: () => void;
+  onSuccess?: () => void;
   service?: Service | null;
 }
 
-export function ServiceModal({ isOpen, onClose, onSave, service }: ServiceModalProps) {
+export function ServiceModal({
+  isOpen,
+  onClose,
+  onSuccess,
+  service,
+}: ServiceModalProps) {
   const [loading, setLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -60,7 +72,7 @@ export function ServiceModal({ isOpen, onClose, onSave, service }: ServiceModalP
       image: service?.image || "",
       gradient: service?.gradient || "",
       popular: service?.popular || false,
-      features: service?.features?.join(', ') || "",
+      features: service?.features?.join(", ") || "",
       price: service?.price || "",
       note: service?.note || "",
       category: service?.category || "",
@@ -83,7 +95,9 @@ export function ServiceModal({ isOpen, onClose, onSave, service }: ServiceModalP
 
       if (!response.ok) throw new Error();
 
-      onSave();
+      // onSave();
+      onSuccess?.();
+      onClose();
     } catch (error) {
       toast({
         title: "Error",
@@ -143,10 +157,10 @@ export function ServiceModal({ isOpen, onClose, onSave, service }: ServiceModalP
                 <FormItem>
                   <FormLabel>Deskripsi</FormLabel>
                   <FormControl>
-                    <Textarea 
+                    <Textarea
                       placeholder="Deskripsi layanan..."
                       rows={3}
-                      {...field} 
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
@@ -161,10 +175,10 @@ export function ServiceModal({ isOpen, onClose, onSave, service }: ServiceModalP
                 <FormItem>
                   <FormLabel>Fitur (pisahkan dengan koma)</FormLabel>
                   <FormControl>
-                    <Textarea 
+                    <Textarea
                       placeholder="Fitur 1, Fitur 2, Fitur 3"
                       rows={3}
-                      {...field} 
+                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
@@ -208,10 +222,7 @@ export function ServiceModal({ isOpen, onClose, onSave, service }: ServiceModalP
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Gambar</FormLabel>
-                  <ImageUpload
-                    value={field.value}
-                    onChange={field.onChange}
-                  />
+                  <ImageUpload value={field.value} onChange={field.onChange} />
                   <FormMessage />
                 </FormItem>
               )}
@@ -225,7 +236,10 @@ export function ServiceModal({ isOpen, onClose, onSave, service }: ServiceModalP
                   <FormItem>
                     <FormLabel>Gradient (opsional)</FormLabel>
                     <FormControl>
-                      <Input placeholder="from-blue-500 to-purple-500" {...field} />
+                      <Input
+                        placeholder="from-blue-500 to-purple-500"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

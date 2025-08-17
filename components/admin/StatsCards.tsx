@@ -1,40 +1,26 @@
 // components/admin/stats-cards.tsx
 "use client";
 
+import useSWR from "swr";
+import { Service } from "@/types/service";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Star, CheckCircle, Package } from "lucide-react";
+import { Package, CheckCircle, Star } from "lucide-react";
 
-interface StatsCardsProps {
-  services: {
-    total: number;
-    active: number;
-    popular: number;
-  };
-}
+const fetcher = (url: string) => fetch(url).then(r => r.json());
 
-export function StatsCards({ services }: StatsCardsProps) {
+export function StatsCards() {
+  const { data: services = [] } = useSWR<Service[]>("/api/services", fetcher, {
+    revalidateOnFocus: false,
+  });
+
+  const total = services.length;
+  const active = services.filter(s => s.isActive).length;
+  const popular = services.filter(s => s.popular).length;
+
   const stats = [
-    {
-      title: "Total Layanan",
-      value: services.total,
-      icon: Package,
-      color: "text-blue-600",
-      bg: "bg-blue-50",
-    },
-    {
-      title: "Aktif",
-      value: services.active,
-      icon: CheckCircle,
-      color: "text-green-600",
-      bg: "bg-green-50",
-    },
-    {
-      title: "Populer",
-      value: services.popular,
-      icon: Star,
-      color: "text-yellow-600",
-      bg: "bg-yellow-50",
-    },
+    { title: "Total Layanan", value: total, icon: Package, color: "text-blue-600", bg: "bg-blue-50" },
+    { title: "Aktif", value: active, icon: CheckCircle, color: "text-green-600", bg: "bg-green-50" },
+    { title: "Populer", value: popular, icon: Star, color: "text-yellow-600", bg: "bg-yellow-50" },
   ];
 
   return (

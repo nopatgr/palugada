@@ -1,6 +1,6 @@
 // components/admin/services-manager.tsx
 "use client";
-
+import useSWR from "swr";
 import { useState } from "react";
 import { Service } from "@/types/service";
 import { Button } from "@/components/ui/button";
@@ -9,15 +9,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
+import { fireToast, fireConfirm } from "../ui/swal";
 import { ServiceModal } from "./services/services-modal";
 import Image from "next/image";
+import { ServicesTable } from "./services/services-table";
 
-interface ServicesManagerProps {
-  initialServices?: Service[];
-}
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
-export function ServicesManager({ initialServices }) {
-   const [services, setServices] = useState<Service[]>(initialServices || []);
+export function ServicesManager() {
+  const {
+    data: services = [],
+    error,
+    mutate,
+  } = useSWR<Service[]>("/api/services", fetcher, { revalidateOnFocus: false });
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
 
@@ -26,97 +31,95 @@ export function ServicesManager({ initialServices }) {
     setIsModalOpen(true);
   };
 
-  const handleEdit = (service: Service) => {
+  const handleEdit = (service) => {
     setSelectedService(service);
     setIsModalOpen(true);
   };
 
-// Method POST //
+  /* ------------------ POST ------------------ */
+  const handleSave = async (serviceData: any) => {
+    try {
+      if (
+        !serviceData.title?.trim() ||
+        !serviceData.description?.trim() ||
+        !serviceData.price
+      ) {
+        toast({ title: "❌ Form belum lengkap" });
+        return;
+      }
 
-const handleSave = async (serviceData: any) => {
-  try {
-    // Hindari kirim undefined
-    if (!serviceData.title || !serviceData.description || !serviceData.price) {
-      toast({ title: "❌ Form belum lengkap" });
-      return;
+      const payload = {
+        title: serviceData.title.trim(),
+        description: serviceData.description.trim(),
+        price: Number(serviceData.price),
+        image: serviceData.image || "",
+        features: Array.isArray(serviceData.features)
+          ? serviceData.features
+          : [],
+      };
+
+      const res = await fetch("/api/services", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const { error } = await res.json();
+        throw new Error(error || "Server error");
+      }
+
+      const created = await res.json();
+      toast({ title: "✅ Berhasil", description: created.title });
+
+      // tambahkan ke list tanpa reload
+      mutate([created, ...services], false);
+      fireToast("success", "Layanan berhasil ditambahkan");
+      setIsModalOpen(false);
+    } catch (err: any) {
+      fireToast("error", err.message || "Gagal menambahkan layanan");
     }
-
-    const payload = {
-      title: serviceData.title.trim(),
-      description: serviceData.description.trim(),
-      price: Number(serviceData.price),
-      image: serviceData.image || "",
-      features: Array.isArray(serviceData.features) ? serviceData.features : [],
-    };
-
-    const res = await fetch("/api/services", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    if (!res.ok) {
-      const { error } = await res.json();
-      throw new Error(error || "Server error");
-    }
-
-    const created = await res.json();
-    toast({ title: "✅ Berhasil", description: created.title });
-    // refresh list di parent
-  } catch (err: any) {
-    toast({ title: "❌ Gagal", description: err.message, variant: "destructive" });
-  }
-};
-
-// Method DELETE //
-  const handleDelete = async (id: string) => {
-    if (!confirm("Apakah Anda yakin ingin menghapus layanan ini?")) return;
-
-     try {
-    const res = await fetch(`/api/services/${id}`, {
-      method: "DELETE",
-      credentials: "include",
-    });
-
-    if (!res.ok) throw new Error(await res.text());
-
-    // langsung refresh list tanpa reload halaman
-     setServices(prev => prev.filter(s => s.id !== id));
-
-    toast({ title: "✅ Terhapus" });
-  } catch (err: any) {
-    toast({ title: "❌ Gagal", description: err.message, variant: "destructive" });
-  }
-   
   };
 
-  // Method PUT //
+  /* ------------------ PUT (update/toggle) ------------------ */
   const handleToggleActive = async (service: Service) => {
     try {
-      await fetch(`/api/services/${service.id}`, {
+      const updated = { ...service, isActive: !service.isActive };
+      await fetch("/api/services", {
         method: "PUT",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...service, isActive: !service.isActive }),
+        body: JSON.stringify(updated),
       });
-
-      setServices(services.map(s =>
-        s.id === service.id ? { ...s, isActive: !s.isActive } : s
-      ));
-
-      toast({
-        title: "✅ Status Diubah",
-        description: `Layanan ${service.isActive ? 'dinonaktifkan' : 'diaktifkan'}`,
-      });
-    } catch (error) {
-      toast({
-        title: "❌ Gagal",
-        description: "Gagal mengubah status",
-        variant: "destructive",
-      });
+      mutate(
+        services.map((s) => (s.id === service.id ? updated : s)),
+        false
+      );
+      fireToast("success", "Status berhasil diubah");
+    } catch {
+      fireToast("error", "Gagal mengubah status layanan");
     }
   };
+
+  /* ------------------ DELETE ------------------ */
+  const handleDelete = async (id: string) => {
+    try {
+      await fetch(`/api/services/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      mutate(
+        services.filter((s) => s.id !== id),
+        false
+      );
+      fireToast("success", "Layanan berhasil dihapus");
+    } catch {
+      fireToast("error", "Gagal menghapus layanan");
+    }
+  };
+
+  if (error) return <p className="p-4 text-red-600">Gagal memuat layanan</p>;
 
   return (
     <div className="space-y-8">
@@ -125,10 +128,14 @@ const handleSave = async (serviceData: any) => {
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Kelola Layanan</h1>
           <p className="text-gray-600 mt-1">
-            Total <span className="font-semibold text-blue-600">{services.length}</span> layanan tersedia
+            Total{" "}
+            <span className="font-semibold text-blue-600">
+              {services.length}
+            </span>{" "}
+            layanan tersedia
           </p>
         </div>
-        <Button 
+        <Button
           onClick={handleAdd}
           className="bg-blue-600 hover:bg-blue-700 text-white gap-2"
         >
@@ -140,8 +147,8 @@ const handleSave = async (serviceData: any) => {
       {/* Grid Cards */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {services.map((service) => (
-          <Card 
-            key={service.id} 
+          <Card
+            key={service.id}
             className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
           >
             <div className="relative overflow-hidden">
@@ -158,7 +165,7 @@ const handleSave = async (serviceData: any) => {
                   <div className="text-6xl text-gray-300">📦</div>
                 </div>
               )}
-              
+
               {/* Overlay Status */}
               <div className="absolute top-3 right-3 flex gap-2">
                 {service.popular && (
@@ -167,7 +174,7 @@ const handleSave = async (serviceData: any) => {
                     Populer
                   </Badge>
                 )}
-                <Badge 
+                <Badge
                   variant={service.isActive ? "default" : "destructive"}
                   className="text-xs"
                 >
@@ -229,7 +236,12 @@ const handleSave = async (serviceData: any) => {
                     <Button
                       size="sm"
                       variant="ghost"
-                      onClick={() => handleDelete(service.id)}
+                      onClick={async () => {
+                        const { isConfirmed } = await fireConfirm(
+                          "Yakin ingin menghapus layanan ini?"
+                        );
+                        if (isConfirmed) await handleDelete(service.id);
+                      }}
                       className="hover:bg-red-100 hover:text-red-700"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -260,13 +272,21 @@ const handleSave = async (serviceData: any) => {
       )}
 
       {/* Modal */}
+      {/* <ServicesTable
+        services={services}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        onRefresh={mutate} // ← penting
+      /> */}
+
       <ServiceModal
         isOpen={isModalOpen}
         onClose={() => {
           setIsModalOpen(false);
           setSelectedService(null);
         }}
-        onSave={handleSave}
+        onSave={() => console.log('Save button clicked')}
+        onSuccess={mutate} // ← penting
         service={selectedService}
       />
     </div>

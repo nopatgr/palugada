@@ -43,13 +43,13 @@ export default async function AdminDashboard() {
 
           {/* Stats Cards */}
           <div className="mb-6">
-            <StatsCards services={stats} />
+            <StatsCards />
           </div>
 
           {/* Services Manager */}
           <div className="bg-white rounded-xl shadow-sm border">
             <div className="p-6">
-              <ServicesManager initialServices={services} />
+              <ServicesManager />
             </div>
           </div>
         </div>
