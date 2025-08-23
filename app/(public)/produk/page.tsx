@@ -4,6 +4,17 @@ import { Badge } from "@/components/ui/badge"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
 import Link from "next/link"
 import { ExternalLink, Star, Monitor, Smartphone, Globe, Cpu, Zap, Shield } from "lucide-react"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Produk Hardware - Palugada Digital",
+  description: "Temukan berbagai solusi hardware berkualitas tinggi dari Palugada Digital. Dari diagnostic tools hingga security kits, semua produk dirancang untuk performa optimal.",
+  keywords: ["hardware products", "diagnostic tools", "security kits", "system optimization", "hardware solutions"],
+  openGraph: {
+    title: "Produk Hardware - Palugada Digital",
+    description: "Temukan berbagai solusi hardware berkualitas tinggi untuk sistem Anda.",
+  }
+}
 
 export default function ProdukPage() {
   const products = [
@@ -18,7 +29,6 @@ export default function ProdukPage() {
       rating: 4.9,
       clients: 45,
       icon: Cpu,
-      color: "from-futuristic-accent to-futuristic-cyan"
     },
     {
       id: 2,
@@ -31,7 +41,6 @@ export default function ProdukPage() {
       rating: 4.8,
       clients: 78,
       icon: Zap,
-      color: "from-futuristic-cyan to-futuristic-accent"
     },
     {
       id: 3,
@@ -44,7 +53,6 @@ export default function ProdukPage() {
       rating: 4.9,
       clients: 32,
       icon: Shield,
-      color: "from-futuristic-accent to-futuristic-accent-hover"
     },
     {
       id: 4,
@@ -57,7 +65,6 @@ export default function ProdukPage() {
       rating: 4.7,
       clients: 56,
       icon: Globe,
-      color: "from-futuristic-cyan to-futuristic-accent"
     },
     {
       id: 5,
@@ -70,7 +77,6 @@ export default function ProdukPage() {
       rating: 4.9,
       clients: 28,
       icon: Monitor,
-      color: "from-futuristic-accent to-futuristic-cyan"
     },
     {
       id: 6,
@@ -83,27 +89,29 @@ export default function ProdukPage() {
       rating: 4.8,
       clients: 89,
       icon: Smartphone,
-      color: "from-futuristic-accent-hover to-futuristic-accent"
     },
   ]
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Header */}
+      {/* Header dengan Background Pattern */}
       <section className="relative py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-slate-800/50 backdrop-blur"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(127,90,240,0.1),transparent_50%)]"></div>
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-blue-500/3 to-cyan-500/5"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(99,102,241,0.1),transparent_50%)]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(59,130,246,0.1),transparent_50%)]"></div>
+        
         <div className="container px-4 mx-auto relative z-10">
           <ScrollReveal direction="up">
             <div className="text-center">
-              <div className="inline-flex items-center px-4 py-2 rounded-full border border-futuristic-accent/30 bg-futuristic-accent/10 backdrop-blur-sm mb-6">
-                <Cpu className="w-4 h-4 mr-2 text-futuristic-accent" />
-                <span className="text-futuristic-text-primary text-sm font-semibold tracking-wide">Hardware Products</span>
+              <div className="inline-flex items-center px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-sm mb-6">
+                <Cpu className="w-4 h-4 mr-2 text-indigo-500" />
+                <span className="text-indigo-500 text-sm font-semibold tracking-wide">Hardware Products</span>
               </div>
-              <h1 className="text-4xl lg:text-6xl font-bold mb-6 text-futuristic-text-primary">
-                Produk <span className="bg-gradient-to-r from-futuristic-accent via-futuristic-cyan to-futuristic-accent-hover bg-clip-text text-transparent">Kami</span>
+              <h1 className="text-4xl lg:text-6xl text-futuristic-text-primary font-bold mb-6 ">
+                Produk <span className="text-indigo-500">Kami</span>
               </h1>
-              <p className="text-xl text-futuristic-text-secondary max-w-3xl mx-auto leading-relaxed tracking-wide">
+              <p className="text-xl text-slate-500 max-w-3xl mx-auto leading-relaxed tracking-wide">
                 Berbagai solusi hardware yang telah kami kembangkan untuk membantu sistem Anda berjalan optimal
               </p>
             </div>
@@ -112,44 +120,45 @@ export default function ProdukPage() {
       </section>
 
       {/* Products Grid */}
-      <section className="py-20">
+      <section className="py-10 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
         <div className="container px-4 mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {products.map((product, index) => {
               const IconComponent = product.icon
               return (
                 <ScrollReveal key={product.id} direction="up" delay={index * 200}>
-                  <Card className="group overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 bg-futuristic-secondary/50 border-futuristic-border backdrop-blur-sm shadow-xl">
+                  <Card className="group overflow-hidden bg-slate-900 border border-slate-800 hover:border-cyan-400/50 transition-colors duration-300 relative">
                     <div className="aspect-video overflow-hidden relative">
-                      <div className="absolute inset-0 bg-futuristic-secondary/50"></div>
+                      {/* Background Pattern untuk Card */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-blue-500/3 to-cyan-500/5"></div>
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <div className={`w-20 h-20 bg-gradient-to-r ${product.color} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                          <IconComponent className="h-10 w-10 text-futuristic-text-primary" />
+                        <div className="w-20 h-20 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                          <IconComponent className="h-10 w-10 text-white" />
                         </div>
                       </div>
                     </div>
                     <CardHeader>
                       <div className="flex items-center justify-between mb-2">
-                        <Badge className={`bg-gradient-to-r ${product.color} text-futuristic-text-primary border-0`}>
+                        <Badge className="bg-gradient-to-r from-indigo-500 to-blue-600 text-white border-0">
                           {product.category}
                         </Badge>
                         <div className="flex items-center gap-1">
                           <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                          <span className="text-sm font-medium text-futuristic-text-secondary">{product.rating}</span>
+                          <span className="text-sm font-medium text-slate-500">{product.rating}</span>
                         </div>
                       </div>
-                      <CardTitle className="text-xl text-futuristic-text-primary tracking-wide group-hover:text-futuristic-accent transition-colors">{product.name}</CardTitle>
-                      <CardDescription className="text-base text-futuristic-text-secondary tracking-wide">{product.description}</CardDescription>
+                      <CardTitle className="text-xl text-slate-400 tracking-wide group-hover:text-indigo-500 transition-colors">{product.name}</CardTitle>
+                      <CardDescription className="text-base text-slate-400 tracking-wide">{product.description}</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="space-y-2">
-                        <h4 className="font-medium text-sm text-futuristic-text-secondary tracking-wide">Fitur Utama:</h4>
+                        <h4 className="font-medium text-sm text-slate-500 tracking-wide">Fitur Utama:</h4>
                         <div className="flex flex-wrap gap-1">
                           {product.features.map((feature) => (
                             <Badge
                               key={feature}
                               variant="outline"
-                              className="text-xs border-futuristic-border text-futuristic-text-secondary hover:border-futuristic-accent hover:text-futuristic-accent transition-colors"
+                              className="text-xs border-slate-200 text-slate-500 hover:border-indigo-500 hover:text-indigo-500 transition-colors"
                             >
                               {feature}
                             </Badge>
@@ -157,15 +166,15 @@ export default function ProdukPage() {
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between text-sm text-futuristic-text-secondary tracking-wide">
+                      <div className="flex items-center justify-between text-sm text-slate-500 tracking-wide">
                         <span>{product.clients} klien menggunakan</span>
                       </div>
 
                       <div className="space-y-3">
-                        <div className="text-lg font-bold text-futuristic-accent">{product.price}</div>
+                        <div className="text-lg font-bold text-indigo-500">{product.price}</div>
                         <div className="flex gap-2">
                           <Button
-                            className={`flex-1 bg-gradient-to-r ${product.color} hover:opacity-90 text-futuristic-text-primary shadow-xl hover:shadow-futuristic-glow transition-all duration-300 font-semibold tracking-wide`}
+                            className="flex-1 bg-gradient-to-r from-indigo-500 to-blue-600 text-white rounded-lg px-4 py-2 hover:from-indigo-600 hover:to-blue-700 focus:ring-2 focus:ring-indigo-500 font-semibold tracking-wide shadow-lg hover:shadow-xl transition-all duration-300"
                             asChild
                           >
                             <Link href="/booking">Pesan Sekarang</Link>
@@ -173,7 +182,7 @@ export default function ProdukPage() {
                           <Button
                             variant="outline"
                             size="icon"
-                            className="border-futuristic-border text-futuristic-text-secondary hover:bg-futuristic-secondary/50 hover:text-futuristic-accent transition-all duration-300"
+                            className="border-slate-200 text-slate-500 hover:bg-indigo-500 hover:text-white hover:border-indigo-500 transition-all duration-300"
                           >
                             <ExternalLink className="h-4 w-4" />
                           </Button>
@@ -188,21 +197,21 @@ export default function ProdukPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-futuristic-secondary/30">
+      {/* CTA Section dengan Background Pattern */}
+      <section className="py-20  mx-4 ">
         <div className="container px-4 mx-auto text-center">
           <ScrollReveal direction="up">
-            <h2 className="text-3xl font-bold mb-4 text-futuristic-text-primary">
-              Butuh <span className="bg-gradient-to-r from-futuristic-accent to-futuristic-cyan bg-clip-text text-transparent">Solusi Hardware?</span>
+            <h2 className="text-3xl font-bold mb-4 text-slate-700">
+              Butuh <span className="text-indigo-500">Solusi Hardware?</span>
             </h2>
-            <p className="text-xl mb-8 text-futuristic-text-secondary max-w-2xl mx-auto tracking-wide">
+            <p className="text-xl mb-8 text-slate-500 max-w-2xl mx-auto tracking-wide">
               Konsultasikan kebutuhan hardware Anda dengan tim ahli kami.
               Dapatkan solusi terbaik untuk sistem Anda.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-futuristic-accent via-futuristic-cyan to-futuristic-accent-hover hover:from-futuristic-accent/90 hover:via-futuristic-cyan/90 hover:to-futuristic-accent-hover/90 text-futuristic-text-primary shadow-xl hover:shadow-futuristic-glow transition-all duration-300 px-8 py-3 font-semibold tracking-wide"
+                className="bg-gradient-to-r from-indigo-500 to-blue-600 text-white rounded-lg px-8 py-3 hover:from-indigo-600 hover:to-blue-700 focus:ring-2 focus:ring-indigo-500 font-semibold tracking-wide shadow-lg hover:shadow-xl transition-all duration-300"
                 asChild
               >
                 <Link href="/booking">Konsultasi Gratis</Link>
@@ -210,7 +219,7 @@ export default function ProdukPage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="text-futuristic-text-primary border-futuristic-border hover:bg-futuristic-secondary/50 bg-futuristic-secondary/50 backdrop-blur-sm shadow-xl hover:shadow-futuristic-glow transition-all duration-300 px-8 py-3 font-semibold tracking-wide"
+                className="text-indigo-500 border-indigo-500 hover:bg-indigo-500 hover:text-white rounded-lg px-8 py-3 font-semibold tracking-wide"
                 asChild
               >
                 <Link href="/contact">Hubungi Kami</Link>

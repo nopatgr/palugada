@@ -49,7 +49,7 @@ export default function LayananPage() {
     );
 
   return (
-    <div className="min-h-screen bg-[#171C21] text-white px-4 py-12">
+    <div className="min-h-screen bg-[#171C21] text-white px-4 pt-24">
       <div className="max-w-7xl mx-auto">
         {/* HERO / TITLE */}
         <div className="text-center mb-16">
@@ -74,8 +74,7 @@ export default function LayananPage() {
             <div
               key={s.id}
               className="bg-[#171C21] border border-[#64FFE3]/30 rounded-xl p-6 
-                         hover:border-[#64FFE3] hover:shadow-[0_0_20px_#64FFE3]/40
-                         transition-all duration-300 group"
+                         hover:border-cyan-400/50 transition-colors duration-300 group"
             >
               {s.popular && (
                 <div className="mb-4 inline-flex items-center bg-gradient-to-r from-yellow-500 to-orange-500 text-white text-xs font-semibold px-2.5 py-1 rounded-full">
@@ -92,12 +91,10 @@ export default function LayananPage() {
                 className="rounded-md w-full h-48 object-cover mb-4"
               />
 
-              <h2 className="text-xl font-semibold text-[#64FFE3] mb-2">
+              <h2 className="text-xl font-semibold text-white group-hover:text-slate-400 mb-2">
                 {s.title}
               </h2>
-              <p className="text-sm text-gray-300 mb-4">
-                {s.description}
-              </p>
+              <p className="text-sm text-slate-300 mb-4">{s.description}</p>
 
               {/* FITUR */}
               {s.features?.length && (
@@ -111,7 +108,7 @@ export default function LayananPage() {
                         key={i}
                         className="flex items-center gap-2 text-sm text-gray-400"
                       >
-                        <div className="w-1.5 h-1.5 bg-[#64FFE3] rounded-full" />
+                        <div className="w-1.5 h-1.5 bg-[#64b9ff] rounded-full" />
                         {f}
                       </li>
                     ))}
@@ -121,7 +118,7 @@ export default function LayananPage() {
 
               {/* PRICE & CTA */}
               <div className="flex items-center justify-between pt-4 border-t border-[#64FFE3]/20">
-                <span className="text-2xl font-bold text-[#64FFE3]">
+                <span className="text-2xl font-bold text-slate-400">
                   {s.price}
                 </span>
                 <Link href="/booking">
@@ -137,9 +134,7 @@ export default function LayananPage() {
               </div>
 
               {s.note && (
-                <p className="mt-4 text-xs text-gray-400 italic">
-                  ⚠️ {s.note}
-                </p>
+                <p className="mt-4 text-xs text-gray-400 italic"> 💡 {s.note}</p>
               )}
             </div>
           ))}
@@ -166,10 +161,8 @@ export default function LayananPage() {
           ].map((item, idx) => (
             <div
               key={idx}
-              className="text-center p-6 rounded-2xl bg-gradient-to-r from-[#64FFE3]/10 to-[#3640F0]/10
-                         border border-[#64FFE3]/20 backdrop-blur-sm
-                         hover:border-[#64FFE3] hover:shadow-[0_0_20px_#64FFE3]/30
-                         transition-all duration-300"
+              className="text-center border-[#64FFE3]/30 rounded-xl p-6 
+                         hover:border-[#64FFE3] hover:shadow-[0_0_20px_#64FFE3]/40"
             >
               <item.icon className="w-8 h-8 text-[#64FFE3] mx-auto mb-3" />
               <h3 className="text-lg font-semibold text-white mb-2">
@@ -181,14 +174,10 @@ export default function LayananPage() {
         </div>
 
         {/* CTA SECTION */}
-        <div className="text-center">
+        <div className="text-center bg-gradient-to-r from-futuristic-accent/10 to-futuristic-cyan/10 border-futuristic-accent/20 backdrop-blur-sm pb-8">
           <div
-            className="bg-gradient-to-r from-[#64FFE3]/10 to-[#3640F0]/10
-                          border border-[#64FFE3]/20 rounded-2xl p-8
-                          hover:border-[#64FFE3] hover:shadow-[0_0_25px_#64FFE3]/40
-                          transition-all duration-300"
           >
-            <h2 className="text-4xl font-bold text-white mb-4">
+            <h2 className="text-4xl font-bold text-white p-8">
               Siap untuk Memulai?
             </h2>
             <p className="text-gray-300 mb-6 max-w-md mx-auto">
@@ -209,8 +198,8 @@ export default function LayananPage() {
               </Link>
               <Link href="/contact">
                 <button
-                  className="border border-[#64FFE3]/30 text-[#64FFE3] px-6 py-3 rounded
-                                   hover:bg-[#64FFE3]/20 hover:border-[#64FFE3]
+                  className="border border-[#64FFE3]/30 text-slate-400 px-6 py-3 rounded
+                                   hover:bg-[#64FFE3]/20 hover:border-[#64b9ff]
                                    transition-all duration-300"
                 >
                   Hubungi Kami

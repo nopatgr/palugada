@@ -19,20 +19,54 @@ const config: Config = {
     },
     extend: {
       colors: {
-        // Custom Futuristic Purple + Black Palette
-        'futuristic': {
-          'primary': '#0D0D0D',      // Hitam pekat - Primary Background
-          'secondary': '#1A1A1A',     // Abu gelap - Secondary Background
-          'accent': '#7F5AF0',        // Ungu Futuristik - Accent/Primary Color
-          'accent-hover': '#9C84F9',  // Ungu Muda/Neon - Hover Accent
-          'cyan': '#00CFFF',          // Cyan Elektrik - Secondary Accent
-          'text-primary': '#FFFFFF',   // Putih - Text Utama
-          'text-secondary': '#C5C5C5', // Abu terang - Text Sekunder
-          'border': '#2A2A2A',        // Abu transparan - Border/Divider
-          'glow': '#00CFFF80',        // Neon Cyan Glow - Shadow Glow
-          'button-secondary': '#FFFFFF20', // Transparent border putih
-          'button-secondary-hover': '#333333', // Border + Background abu
+        // Custom Brand Colors for Different Pages
+        'brand': {
+          'home': {
+            'primary': '#0ea5e9',    // Blue
+            'secondary': '#14b8a6',  // Teal
+            'gradient': 'from-[#0ea5e9] to-[#14b8a6]'
+          },
+          'product': {
+            'primary': '#10b981',    // Emerald
+            'secondary': '#f9fafb',  // Soft Gray
+            'gradient': 'from-[#10b981] to-[#059669]'
+          },
+          'testimonial': {
+            'primary': '#8b5cf6',    // Purple
+            'secondary': '#ec4899',  // Pink
+            'gradient': 'from-[#8b5cf6] to-[#ec4899]'
+          },
+          'blog': {
+            'primary': '#f97316',    // Orange
+            'secondary': '#ffffff',  // White
+            'gradient': 'from-[#f97316] to-[#ea580c]'
+          },
+          'about': {
+            'primary': '#1e3a8a',    // Navy Blue
+            'secondary': '#e5e7eb',  // Gray
+            'gradient': 'from-[#1e3a8a] to-[#1d4ed8]'
+          },
+          'booking': {
+            'primary': '#b91c1c',    // Maroon
+            'secondary': '#ffffff',  // White
+            'gradient': 'from-[#b91c1c] to-[#dc2626]'
+          }
         },
+        // Custom Futuristic Purple + Black Palette (for admin)
+        'futuristic': {
+          'primary': '#0D0D0D',
+          'secondary': '#1A1A1A',
+          'accent': '#7F5AF0',
+          'accent-hover': '#9C84F9',
+          'cyan': '#00CFFF',
+          'text-primary': '#FFFFFF',
+          'text-secondary': '#C5C5C5',
+          'border': '#2A2A2A',
+          'glow': '#00CFFF80',
+          'button-secondary': '#FFFFFF20',
+          'button-secondary-hover': '#333333',
+        },
+        // Default theme colors
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

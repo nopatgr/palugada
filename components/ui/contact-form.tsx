@@ -1,14 +1,20 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle, Send, MessageCircle, Mail } from "lucide-react"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { CheckCircle, Send, MessageCircle, Mail } from "lucide-react";
 
 export function ContactForm() {
   const [formData, setFormData] = useState({
@@ -17,14 +23,14 @@ export function ContactForm() {
     phone: "",
     subject: "",
     message: "",
-  })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [whatsappUrl, setWhatsappUrl] = useState("")
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [whatsappUrl, setWhatsappUrl] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
     try {
       const response = await fetch("/api/contact", {
@@ -33,49 +39,54 @@ export function ContactForm() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
-      })
+      });
 
-      const result = await response.json()
+      const result = await response.json();
 
       if (result.success) {
-        setWhatsappUrl(result.whatsappUrl)
-        setIsSubmitted(true)
+        setWhatsappUrl(result.whatsappUrl);
+        setIsSubmitted(true);
         setFormData({
           name: "",
           email: "",
           phone: "",
           subject: "",
           message: "",
-        })
+        });
       } else {
-        alert("Gagal mengirim pesan. Silakan coba lagi.")
+        alert("Gagal mengirim pesan. Silakan coba lagi.");
       }
     } catch (error) {
-      console.error("Error:", error)
-      alert("Terjadi kesalahan. Silakan coba lagi.")
+      console.error("Error:", error);
+      alert("Terjadi kesalahan. Silakan coba lagi.");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   const handleWhatsAppRedirect = () => {
     if (whatsappUrl) {
-      window.open(whatsappUrl, "_blank")
+      window.open(whatsappUrl, "_blank");
     }
-  }
+  };
 
   const handleEmailRedirect = () => {
-    const emailSubject = encodeURIComponent(`${formData.subject || "Inquiry dari Website"}`)
+    const emailSubject = encodeURIComponent(
+      `${formData.subject || "Inquiry dari Website"}`
+    );
     const emailBody = encodeURIComponent(`Halo Palugada Digital,
 
 ${formData.message}
 
 Salam,
 ${formData.name}
-${formData.phone}`)
+${formData.phone}`);
 
-    window.open(`mailto:services@palugada.biz.id?subject=${emailSubject}&body=${emailBody}`, "_self")
-  }
+    window.open(
+      `mailto:services@palugada.biz.id?subject=${emailSubject}&body=${emailBody}`,
+      "_self"
+    );
+  };
 
   if (isSubmitted) {
     return (
@@ -86,14 +97,20 @@ ${formData.phone}`)
               <CheckCircle className="h-8 w-8 text-green-600" />
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-[#1E3A8A]">Pesan Berhasil Dikirim!</h3>
+              <h3 className="text-lg font-semibold text-[#1E3A8A]">
+                Pesan Berhasil Dikirim!
+              </h3>
               <p className="text-[#1E3A8A]/70 mt-2">
-                Terima kasih telah menghubungi kami. Pilih cara untuk melanjutkan komunikasi:
+                Terima kasih telah menghubungi kami. Pilih cara untuk
+                melanjutkan komunikasi:
               </p>
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button onClick={handleWhatsAppRedirect} className="bg-green-600 hover:bg-green-700 text-white">
+              <Button
+                onClick={handleWhatsAppRedirect}
+                className="bg-green-600 hover:bg-green-700 text-white"
+              >
                 <MessageCircle className="mr-2 h-4 w-4" />
                 Lanjut ke WhatsApp
               </Button>
@@ -109,8 +126,8 @@ ${formData.phone}`)
 
             <Button
               onClick={() => {
-                setIsSubmitted(false)
-                setWhatsappUrl("")
+                setIsSubmitted(false);
+                setWhatsappUrl("");
               }}
               variant="ghost"
               className="text-[#1E3A8A]/70 hover:text-[#1E3A8A]"
@@ -120,7 +137,7 @@ ${formData.phone}`)
           </div>
         </CardContent>
       </Card>
-    )
+    );
   }
 
   return (
@@ -135,26 +152,32 @@ ${formData.phone}`)
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="name" className="text-[fafafa]">
+              <Label htmlFor="name" className="text-[#fafafa]">
                 Nama Lengkap *
               </Label>
               <Input
                 id="name"
                 value={formData.name}
-                onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, name: e.target.value }))
+                }
+                placeholder="Nama lengkap"
                 className="border-[#262e3f] focus:border-[#3B82F6] focus:ring-[#3B82F6]"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-[fafafa]">
+              <Label htmlFor="email" className="text-[#fafafa]">
                 Email *
               </Label>
               <Input
                 id="email"
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData((prev) => ({ ...prev, email: e.target.value }))}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, email: e.target.value }))
+                }
+                placeholder="Alamat email"
                 className="border-[#E5E7EB] focus:border-[#3B82F6] focus:ring-[#3B82F6]"
                 required
               />
@@ -169,19 +192,23 @@ ${formData.phone}`)
               <Input
                 id="phone"
                 value={formData.phone}
-                onChange={(e) => setFormData((prev) => ({ ...prev, phone: e.target.value }))}
-                placeholder=""
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, phone: e.target.value }))
+                }
+                placeholder="085"
                 className="border-[#E5E7EB] focus:border-[#3B82F6] focus:ring-[#3B82F6]"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="subject" className="text-[fafafa]">
+              <Label htmlFor="subject" className="text-[#fafafa]">
                 Subjek *
               </Label>
               <Input
                 id="subject"
                 value={formData.subject}
-                onChange={(e) => setFormData((prev) => ({ ...prev, subject: e.target.value }))}
+                onChange={(e) =>
+                  setFormData((prev) => ({ ...prev, subject: e.target.value }))
+                }
                 placeholder="Konsultasi Project"
                 className="border-[#E5E7EB] focus:border-[#3B82F6] focus:ring-[#3B82F6]"
                 required
@@ -190,13 +217,15 @@ ${formData.phone}`)
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="message" className="text-[fafafa]">
+            <Label htmlFor="message" className="text-[#fafafa]">
               Pesan *
             </Label>
             <Textarea
               id="message"
               value={formData.message}
-              onChange={(e) => setFormData((prev) => ({ ...prev, message: e.target.value }))}
+              onChange={(e) =>
+                setFormData((prev) => ({ ...prev, message: e.target.value }))
+              }
               placeholder="Jelaskan kebutuhan atau pertanyaan Anda..."
               rows={5}
               className="border-[#E5E7EB] focus:border-[#3B82F6] focus:ring-[#3B82F6]"
@@ -224,7 +253,7 @@ ${formData.phone}`)
               type="button"
               onClick={handleEmailRedirect}
               variant="outline"
-              className="border-[#1E3A8A] text-[#1E3A8A] hover:bg-[#1E3A8A] hover:text-white bg-transparent"
+              className="border-[#1E3A8A] text-white hover:bg-[#1E3A8A] hover:text-white bg-transparent"
             >
               <Mail className="mr-2 h-4 w-4" />
               Email Langsung
@@ -233,5 +262,5 @@ ${formData.phone}`)
         </form>
       </CardContent>
     </Card>
-  )
+  );
 }

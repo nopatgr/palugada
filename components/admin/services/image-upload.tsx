@@ -57,11 +57,16 @@ export function ImageUpload({ value, onChange }: ImageUploadProps) {
   return (
     <div className="space-y-2">
       {value ? (
-        <div className="relative h-32 w-full">
-          <img src={value} alt="Preview" className="object-cover rounded" />
+        <div className="relative h-32 w-full border rounded overflow-hidden">
+          <img
+            src={value}
+            alt="Preview"
+            className="w-full h-full object-cover rounded"
+            style={{ maxWidth: '100%', maxHeight: '128px' }}
+          />
           <button
             type="button"
-            className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded"
+            className="absolute top-2 right-2 bg-red-500 text-white text-xs px-2 py-1 rounded hover:bg-red-600 transition-colors"
             onClick={() => onChange("")}
           >
             Hapus

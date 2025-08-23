@@ -2,16 +2,21 @@
 
 import { Button } from "@/components/ui/button"
 import { ScrollReveal } from "@/components/ui/scroll-reveal"
-import LightRays from "@/components/ui/light-rays"
-import { Wrench, Settings, Monitor, CheckCircle, ArrowRight, Star, Users, Clock, Sparkles, Play, Award, Shield } from "lucide-react"
 import Link from "next/link"
+import { ArrowRight, Play, CheckCircle } from "lucide-react"
 import Image from "next/image"
 
 export function HeroSection() {
+  const features = [
+    "Hardware Diagnostic & Repair",
+    "OS Installation & Setup",
+    "System Optimization",
+    "24/7 Tech Support"
+  ]
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-futuristic-primary">
-      {/* Enhanced Background Image */}
-      <div className="absolute inset-0 z-0">
+    <section className="relative py-20 overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/20">
+       <div className="absolute inset-0 z-0">
         <Image
           src="/images/bg.png"
           alt="Hero Background"
@@ -23,127 +28,87 @@ export function HeroSection() {
         {/* Enhanced overlay for better text readability */}
         <div className="absolute inset-0 bg-gradient-to-b from-futuristic-primary/90 via-futuristic-primary/70 to-futuristic-primary/95"></div>
       </div>
-
-      {/* Enhanced LightRays Background */}
-      {/* <div className="absolute inset-0 pointer-events-none z-10">
-        <LightRays
-          raysOrigin="top-center"
-          raysColor="#7F5AF0"
-          raysSpeed={0.6}
-          lightSpread={1.5}
-          rayLength={3.0}
-          pulsating={true}
-          fadeDistance={2.0}
-          saturation={1.4}
-          followMouse={true}
-          mouseInfluence={0.25}
-          noiseAmount={0.15}
-          distortion={0.08}
-          className="opacity-40"
-        />
-      </div> */}
-
-      {/* Additional Interactive Background Elements */}
-      {/* <div className="absolute inset-0 overflow-hidden z-20"> */}
-        {/* Animated Grid Pattern */}
-        {/* <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0 bg-gradient-to-r from-futuristic-accent/20 via-transparent to-futuristic-cyan/20 animate-pulse"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-futuristic-accent/10 to-transparent animate-pulse" style={{animationDelay: '2s'}}></div>
-        </div> */}
-        
-        {/* Enhanced Floating Elements */}
-        {/* <div className="absolute top-20 left-10 w-3 h-3 bg-futuristic-accent rounded-full animate-pulse shadow-lg shadow-futuristic-accent/50"></div>
-        <div className="absolute top-40 right-20 w-2 h-2 bg-futuristic-cyan rounded-full animate-pulse shadow-lg shadow-futuristic-cyan/50" style={{animationDelay: '1s'}}></div>
-        <div className="absolute bottom-40 left-20 w-2.5 h-2.5 bg-futuristic-accent-hover rounded-full animate-pulse shadow-lg shadow-futuristic-accent-hover/50" style={{animationDelay: '2s'}}></div>
-        <div className="absolute bottom-20 right-10 w-2 h-2 bg-futuristic-cyan rounded-full animate-pulse shadow-lg shadow-futuristic-cyan/50" style={{animationDelay: '3s'}}></div> */}
-        
-        {/* Additional floating particles */}
-        {/* <div className="absolute top-1/3 left-1/4 w-1 h-1 bg-futuristic-accent rounded-full animate-float"></div>
-        <div className="absolute top-2/3 right-1/3 w-1.5 h-1.5 bg-futuristic-cyan rounded-full animate-float-delay"></div>
-        <div className="absolute bottom-1/3 left-1/3 w-1 h-1 bg-futuristic-accent-hover rounded-full animate-float-delay-2"></div>
-      </div> */}
-
-      {/* Content */}
-      <div className="relative z-40 container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center min-h-screen py-8 lg:py-0">
-          {/* Left Content */}
-          <div className="text-center lg:text-left">
-            {/* Badge */}
-            {/* <ScrollReveal direction="up">
-              <div className="inline-flex items-center px-6 py-3 rounded-full bg-futuristic-secondary/80 border border-futuristic-accent/30 text-futuristic-text-primary text-sm font-medium mb-8 backdrop-blur-sm shadow-lg">
-                <Sparkles className="w-4 h-4 mr-2 text-futuristic-accent" />
-                Layanan Teknologi Terpercaya
+      
+      <div className="container px-4 mx-auto relative z-10">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <ScrollReveal direction="left">
+            <div className="text-center lg:text-left">
+              <div className="inline-flex items-center px-4 py-2 rounded-full border border-indigo-500/30 bg-indigo-500/10 backdrop-blur-sm mb-6">
+                <CheckCircle className="w-4 h-4 mr-2 text-indigo-500" />
+                <span className="text-indigo-500 text-sm font-semibold tracking-wide">Hardware Solutions</span>
               </div>
-            </ScrollReveal> */}
-
-            {/* Main Title */}
-            <ScrollReveal direction="up" delay={200}>
-              <h1 className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-futuristic-text-primary mb-8 leading-tight">
-                Solusi Digital
-                <span className="block text-[#3b82f6]">
-                  untuk Bisnis Anda
-                </span>
+              
+              <h1 className="text-3xl lg:text-5xl font-bold mb-6 text-slate-700 leading-tight">
+                Solusi Hardware <span className="text-indigo-500">Terpadu</span> untuk Sistem Anda
               </h1>
-            </ScrollReveal>
-
-            {/* Description */}
-            <ScrollReveal direction="up" delay={400}>
-              <p className="text-l sm:text-xl text-futuristic-text-secondary mb-10 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-                Kami menyediakan layanan teknologi terpadu untuk membantu bisnis Anda berkembang di era digital. 
-                Dari instalasi sistem hingga dukungan teknis 24/7.
+              
+              <p className="text-xl text-slate-500 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                Kami menyediakan layanan hardware lengkap mulai dari instalasi OS, 
+                optimasi sistem, hingga perbaikan hardware dengan standar profesional.
               </p>
-            </ScrollReveal>
 
-            {/* CTA Buttons */}
-            <ScrollReveal direction="up" delay={600}>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start mb-16">
-                <Button
+              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                <Button 
+                  size="lg" 
+                  className="bg-gradient-to-r from-indigo-500 to-blue-600 text-white rounded-lg px-6 py-3 hover:from-indigo-600 hover:to-blue-700 focus:ring-2 focus:ring-indigo-500 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
                   asChild
-                  size="lg"
-                  className="bg-[#3b82f6] hover:bg-[#3b82f6]-hover text-futuristic-text-primary border border-futuristic-accent hover:border-futuristic-accent-hover transition-all duration-300 text-lg px-10 py-6 rounded-lg font-medium group shadow-lg hover:shadow-futuristic-glow"
                 >
                   <Link href="/booking" className="flex items-center">
                     Mulai Konsultasi
-                    <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>
-                <Button
-                  asChild
-                  variant="outline"
+                
+                <Button 
+                  variant="outline" 
                   size="lg"
-                  className="border border-futuristic-text-primary/30 text-futuristic-text-primary hover:bg-futuristic-secondary hover:text-futuristic-text-primary text-lg px-10 py-6 rounded-lg font-medium backdrop-blur-sm hover:border-futuristic-accent/50"
+                  className="text-indigo-500 border-indigo-500 hover:bg-indigo-500 hover:text-white rounded-lg px-6 py-3 font-semibold transition-all duration-300"
+                  asChild
                 >
                   <Link href="/layanan" className="flex items-center">
-                    <Play className="mr-3 h-5 w-5" />
-                    Lihat Layanan
+                    <Play className="mr-2 h-5 w-5" />
+                    Lihat Demo
                   </Link>
                 </Button>
               </div>
-            </ScrollReveal>
 
-            {/* Stats */}
-            <ScrollReveal direction="up" delay={800}>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-3xl mx-auto lg:mx-0">
-                <div className="text-center p-4 rounded-xl bg-futuristic-secondary/50 backdrop-blur-sm border border-futuristic-border hover:bg-futuristic-secondary/70 transition-all duration-300">
-                  <div className="text-2xl md:text-3xl font-bold text-futuristic-text-primary mb-2">500+</div>
-                  <div className="text-xs text-futuristic-text-secondary font-medium">Klien Puas</div>
-                </div>
-                <div className="text-center p-4 rounded-xl bg-futuristic-secondary/50 backdrop-blur-sm border border-futuristic-border hover:bg-futuristic-secondary/70 transition-all duration-300">
-                  <div className="text-2xl md:text-3xl font-bold text-futuristic-text-primary mb-2">24/7</div>
-                  <div className="text-xs text-futuristic-text-secondary font-medium">Dukungan</div>
-                </div>
-                <div className="text-center p-4 rounded-xl bg-futuristic-secondary/50 backdrop-blur-sm border border-futuristic-border hover:bg-futuristic-secondary/70 transition-all duration-300">
-                  <div className="text-2xl md:text-3xl font-bold text-futuristic-text-primary mb-2">99%</div>
-                  <div className="text-xs text-futuristic-text-secondary font-medium">Uptime</div>
-                </div>
-                <div className="text-center p-4 rounded-xl bg-futuristic-secondary/50 backdrop-blur-sm border border-futuristic-border hover:bg-futuristic-secondary/70 transition-all duration-300">
-                  <div className="text-2xl md:text-3xl font-bold text-futuristic-text-primary mb-2">5★</div>
-                  <div className="text-xs text-futuristic-text-secondary font-medium">Rating</div>
-                </div>
+              <div className="grid grid-cols-2 gap-4">
+                {features.map((feature, index) => (
+                  <div key={index} className="flex items-center text-sm text-slate-500">
+                    <CheckCircle className="w-4 h-4 mr-2 text-indigo-500 flex-shrink-0" />
+                    <span>{feature}</span>
+                  </div>
+                ))}
               </div>
-            </ScrollReveal>
-          </div>
+            </div>
+          </ScrollReveal>
 
+          <ScrollReveal direction="right">
+            <div className="relative">
+              {/* <div className="backdrop-blur-sm   rounded-2xl p-8 shadow-xl">
+                <div className="text-center">
+                  <div className="w-24 h-24 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                    <CheckCircle className="h-8 w-8 text-white" />
+                  </div>
+                  
+                  <h3 className="text-xl font-semibold text-slate-700 mb-4">
+                    Konsultasi Gratis
+                  </h3>
+                  
+                  <p className="text-slate-500 mb-6">
+                    Dapatkan analisis sistem hardware Anda secara gratis dari tim ahli kami
+                  </p>
+                  
+                  <Button 
+                    className="w-full bg-gradient-to-r from-indigo-500 to-blue-600 text-white rounded-lg px-4 py-2 hover:from-indigo-600 hover:to-blue-700 focus:ring-2 focus:ring-indigo-500 shadow-lg hover:shadow-xl transition-all duration-300"
+                    asChild
+                  >
+                    <Link href="/booking">Daftar Sekarang</Link>
+                  </Button>
+                </div>
+              </div> */}
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>

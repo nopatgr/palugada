@@ -1,7 +1,7 @@
 // components/admin/services/service-modal.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -48,6 +48,20 @@ const formSchema = z.object({
   isActive: z.boolean().default(true),
 });
 
+type FormData = {
+  title: string;
+  description: string;
+  image?: string;
+  gradient?: string;
+  popular: boolean;
+  features: string;
+  price: string;
+  note?: string;
+  category: string;
+  orderIndex: number;
+  isActive: boolean;
+};
+
 interface ServiceModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -64,24 +78,43 @@ export function ServiceModal({
 }: ServiceModalProps) {
   const [loading, setLoading] = useState(false);
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: service?.title || "",
-      description: service?.description || "",
-      image: service?.image || "",
-      gradient: service?.gradient || "",
-      popular: service?.popular || false,
-      features: service?.features?.join(", ") || "",
-      price: service?.price || "",
-      note: service?.note || "",
-      category: service?.category || "",
-      orderIndex: service?.orderIndex || 0,
-      isActive: service?.isActive ?? true,
+      title: "",
+      description: "",
+      image: "",
+      gradient: "",
+      popular: false,
+      features: "",
+      price: "",
+      note: "",
+      category: "",
+      orderIndex: 0,
+      isActive: true,
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  // Reset form when service changes
+  useEffect(() => {
+    if (isOpen) {
+      form.reset({
+        title: service?.title || "",
+        description: service?.description || "",
+        image: service?.image || "",
+        gradient: service?.gradient || "",
+        popular: service?.popular || false,
+        features: service?.features?.join(", ") || "",
+        price: service?.price || "",
+        note: service?.note || "",
+        category: service?.category || "",
+        orderIndex: service?.orderIndex || 0,
+        isActive: service?.isActive ?? true,
+      });
+    }
+  }, [service, isOpen, form]);
+
+  const onSubmit = async (values: FormData) => {
     setLoading(true);
     try {
       const url = service ? `/api/services/${service.id}` : "/api/services";
@@ -111,15 +144,16 @@ export function ServiceModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto text-black">
-        <DialogHeader>
+      <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col text-black">
+        <DialogHeader className="flex-shrink-0">
           <DialogTitle>
             {service ? "Edit Layanan" : "Tambah Layanan Baru"}
           </DialogTitle>
         </DialogHeader>
 
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        <div className="flex-1 overflow-y-auto px-1">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pr-2">
             <div className="grid grid-cols-2 gap-4 text-black">
               <FormField
                 control={form.control}
@@ -295,16 +329,22 @@ export function ServiceModal({
               />
             </div>
 
-            <DialogFooter>
-              <Button type="button" variant="outline" onClick={onClose}>
-                Batal
-              </Button>
-              <Button type="submit" disabled={loading}>
-                {loading ? "Menyimpan..." : "Simpan"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
+            </form>
+          </Form>
+        </div>
+        
+        <DialogFooter className="flex-shrink-0 mt-4">
+          <Button type="button" variant="outline" onClick={onClose}>
+            Batal
+          </Button>
+          <Button
+            type="submit"
+            disabled={loading}
+            onClick={form.handleSubmit(onSubmit)}
+          >
+            {loading ? "Menyimpan..." : "Simpan"}
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

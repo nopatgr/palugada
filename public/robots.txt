@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://palugada-digital.com/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /api/admin/
+
+# Allow important pages
+Allow: /about
+Allow: /produk
+Allow: /layanan
+Allow: /testimonial
+Allow: /booking
+Allow: /contact
+
+# Crawl delay
+Crawl-delay: 1

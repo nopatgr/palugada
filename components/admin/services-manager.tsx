@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { useState } from "react";
 import { Service } from "@/types/service";
 import { Button } from "@/components/ui/button";
-import { Plus, Edit, Trash2, Star, CheckCircle, Eye } from "lucide-react";
+import { Plus, Edit, Trash2, Star, CheckCircle, Eye, TrendingUp } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
@@ -14,14 +14,14 @@ import { ServiceModal } from "./services/services-modal";
 import Image from "next/image";
 import { ServicesTable } from "./services/services-table";
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
+const fetcher = (url) => fetch(url).then((r) => r.json());
 
 export function ServicesManager() {
   const {
     data: services = [],
     error,
     mutate,
-  } = useSWR<Service[]>("/api/services", fetcher, { revalidateOnFocus: false });
+  } = useSWR("/api/services", fetcher, { revalidateOnFocus: false });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
@@ -37,7 +37,7 @@ export function ServicesManager() {
   };
 
   /* ------------------ POST ------------------ */
-  const handleSave = async (serviceData: any) => {
+  const handleSave = async (serviceData) => {
     try {
       if (
         !serviceData.title?.trim() ||
@@ -77,13 +77,13 @@ export function ServicesManager() {
       mutate([created, ...services], false);
       fireToast("success", "Layanan berhasil ditambahkan");
       setIsModalOpen(false);
-    } catch (err: any) {
+    } catch (err) {
       fireToast("error", err.message || "Gagal menambahkan layanan");
     }
   };
 
   /* ------------------ PUT (update/toggle) ------------------ */
-  const handleToggleActive = async (service: Service) => {
+  const handleToggleActive = async (service) => {
     try {
       const updated = { ...service, isActive: !service.isActive };
       await fetch("/api/services", {
@@ -103,7 +103,7 @@ export function ServicesManager() {
   };
 
   /* ------------------ DELETE ------------------ */
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id) => {
     try {
       await fetch(`/api/services/${id}`, {
         method: "DELETE",
@@ -122,30 +122,39 @@ export function ServicesManager() {
   if (error) return <p className="p-4 text-red-600">Gagal memuat layanan</p>;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 lg:space-y-8">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Kelola Layanan</h1>
-          <p className="text-gray-600 mt-1">
-            Total{" "}
-            <span className="font-semibold text-blue-600">
-              {services.length}
-            </span>{" "}
-            layanan tersedia
-          </p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl border border-blue-100">
+        <div className="space-y-2">
+          <h1 className="text-2xl lg:text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            Kelola Layanan
+          </h1>
+          <div className="flex items-center gap-2">
+            <p className="text-gray-600">
+              Total{" "}
+              <span className="font-semibold text-blue-600 text-lg">
+                {services.length}
+              </span>{" "}
+              layanan tersedia
+            </p>
+            <div className="flex items-center gap-1 text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">
+              <TrendingUp className="h-3 w-3" />
+              Active
+            </div>
+          </div>
         </div>
         <Button
           onClick={handleAdd}
-          className="bg-blue-600 hover:bg-blue-700 text-white gap-2"
+          className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white gap-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
         >
           <Plus className="h-4 w-4" />
-          Tambah Layanan Baru
+          <span className="hidden sm:inline">Tambah Layanan Baru</span>
+          <span className="sm:hidden">Tambah</span>
         </Button>
       </div>
 
       {/* Grid Cards */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {services.map((service) => (
           <Card
             key={service.id}
@@ -270,14 +279,7 @@ export function ServicesManager() {
           </Button>
         </div>
       )}
-
-      {/* Modal */}
-      {/* <ServicesTable
-        services={services}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        onRefresh={mutate} // ← penting
-      /> */}
+      
 
       <ServiceModal
         isOpen={isModalOpen}

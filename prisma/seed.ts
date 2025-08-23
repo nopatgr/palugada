@@ -11,24 +11,22 @@ async function main() {
     throw new Error("❌ ADMIN_EMAIL dan ADMIN_PASSWORD harus ada di .env");
   }
 
-  // Hash password admin
-  const hashedPassword = await bcrypt.hash(adminPassword, 10);
+  // 1️⃣ Hapus SEMUA data
+  await prisma.user.deleteMany();
+  await prisma.service.deleteMany();
 
-  // Upsert admin user
-  const admin = await prisma.user.upsert({
-    where: { email: adminEmail },
-    update: {
-      password: hashedPassword,
-      role: "ADMIN",
-    },
-    create: {
+  // 2️⃣ Buat admin baru
+  const hashedPassword = await bcrypt.hash(adminPassword, 10);
+  const admin = await prisma.user.create({
+    data: {
       email: adminEmail,
       password: hashedPassword,
       role: "ADMIN",
     },
   });
 
-  console.log("✅ Admin user siap:", admin);
+  console.log("✅ Admin baru:", admin);
+
 
   // 2) 4 layanan awal
   const services = [
@@ -106,18 +104,18 @@ async function main() {
     },
   ];
 
- await prisma.service.deleteMany();
+  await prisma.service.deleteMany();
   for (const s of services) {
     await prisma.service.create({ data: s });
   }
-  console.log('✅ Services seeded');
-  }
+  console.log("✅ Services seeded");
+}
 
-  main()
-    .catch((e) => {
-      console.error(e);
-      process.exit(1);
-    })
-    .finally(async () => {
-      await prisma.$disconnect();
-    });
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });
