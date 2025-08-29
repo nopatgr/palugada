@@ -26,7 +26,7 @@ export async function PUT(
         features: Array.isArray(body.features) ? body.features : [],
       },
     });
-    return NextResponse.json(updated, { status: 200 });
+    return NextResponse.json(updated, { status: 202 });
   } catch (err) {
     console.error("PUT /services/[id]", err);
     return NextResponse.json({ error: "Update failed" }, { status: 500 });
