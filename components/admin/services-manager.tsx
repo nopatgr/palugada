@@ -4,65 +4,75 @@ import useSWR from "swr";
 import { useState } from "react";
 import { Service } from "@/types/service";
 import { Button } from "@/components/ui/button";
-import { Plus, Edit, Trash2, Star, CheckCircle, Eye, TrendingUp } from "lucide-react";
+import { Plus, Edit, Trash2, Star, TrendingUp } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Switch } from "@/components/ui/switch";
 import { toast } from "@/components/ui/use-toast";
 import { fireToast, fireConfirm } from "../ui/swal";
-import { ServiceModal } from "./services/services-modal";
 import Image from "next/image";
-import { ServicesTable } from "./services/services-table";
+import { ServiceModal } from "./services/services-modal";
+import { on } from 'events';
 
-const fetcher = (url) => fetch(url).then((r) => r.json());
+const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 export function ServicesManager() {
   const {
     data: services = [],
     error,
     mutate,
-  } = useSWR("/api/services", fetcher, { revalidateOnFocus: false });
+  } = useSWR<Service[]>("/api/services", fetcher, { revalidateOnFocus: false });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedService, setSelectedService] = useState(null);
+  const [selectedService, setSelectedService] = useState<Service | null>(null);
 
+  /* ---------- MODAL ---------- */
   const handleAdd = () => {
     setSelectedService(null);
     setIsModalOpen(true);
   };
-
-  const handleEdit = (service) => {
+  const handleEdit = (service: Service) => {
     setSelectedService(service);
     setIsModalOpen(true);
   };
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedService(null);
+  };
 
-  /* ------------------ POST ------------------ */
-  const handleSave = async (serviceData) => {
+  /* ---------- CRUD ---------- */
+  const handleSave = async (serviceData: Service & { imageFile?: File }) => {
     try {
-      if (
-        !serviceData.title?.trim() ||
-        !serviceData.description?.trim() ||
-        !serviceData.price
-      ) {
-        toast({ title: "❌ Form belum lengkap" });
-        return;
+      let imageUrl = serviceData.image || "";
+
+      /* 1. Jika user pilih file baru → upload dulu */
+      if (serviceData.imageFile) {
+        const form = new FormData();
+        form.append("file", serviceData.imageFile);
+        form.append("id", selectedService?.id || "");
+
+        const up = await fetch("/api/upload", { method: "POST", body: form });
+        if (!up.ok) throw new Error((await up.json()).error || "Upload gagal");
+        imageUrl = (await up.json()).url;
       }
 
+      /* 2. Siapkan payload */
       const payload = {
+        id: selectedService?.id,
         title: serviceData.title.trim(),
         description: serviceData.description.trim(),
         price: Number(serviceData.price),
-        image: serviceData.image || "",
-        features: Array.isArray(serviceData.features)
-          ? serviceData.features
-          : [],
+        image: imageUrl,
+        features: Array.isArray(serviceData.features) ? serviceData.features : [],
+        isActive: serviceData.isActive ?? true,
       };
 
+      /* 3. POST / PUT ke /api/services */
       const res = await fetch("/api/services", {
-        method: "POST",
-        credentials: "include",
+        method: selectedService ? "PUT" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
+        credentials: "include",
       });
 
       if (!res.ok) {
@@ -70,27 +80,36 @@ export function ServicesManager() {
         throw new Error(error || "Server error");
       }
 
-      const created = await res.json();
-      toast({ title: "✅ Berhasil", description: created.title });
+      const saved = await res.json();
 
-      // tambahkan ke list tanpa reload
-      mutate([created, ...services], false);
-      fireToast("success", "Layanan berhasil ditambahkan");
-      setIsModalOpen(false);
-    } catch (err) {
-      fireToast("error", err.message || "Gagal menambahkan layanan");
+      /* 4. Update SWR tanpa reload */
+      mutate(
+        selectedService
+          ? services.map((s) => (s.id === saved.id ? saved : s))
+          : [saved, ...services],
+        false
+      );
+
+      toast({
+        title: "✅ Berhasil",
+        description: selectedService
+          ? "Layanan diperbarui"
+          : `Layanan “${saved.title}” ditambahkan`,
+      });
+      closeModal();
+    } catch (err: any) {
+      toast({ title: "❌ Gagal", description: err.message });
     }
   };
 
-  /* ------------------ PUT (update/toggle) ------------------ */
-  const handleToggleActive = async (service) => {
+  const handleToggleActive = async (service: Service) => {
     try {
       const updated = { ...service, isActive: !service.isActive };
       await fetch("/api/services", {
         method: "PUT",
-        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updated),
+        credentials: "include",
       });
       mutate(
         services.map((s) => (s.id === service.id ? updated : s)),
@@ -102,23 +121,20 @@ export function ServicesManager() {
     }
   };
 
-  /* ------------------ DELETE ------------------ */
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: string) => {
+    const { isConfirmed } = await fireConfirm("Yakin ingin menghapus layanan ini?");
+    if (!isConfirmed) return;
+
     try {
-      await fetch(`/api/services/${id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
-      mutate(
-        services.filter((s) => s.id !== id),
-        false
-      );
+      await fetch(`/api/services/${id}`, { method: "DELETE", credentials: "include" });
+      mutate(services.filter((s) => s.id !== id), false);
       fireToast("success", "Layanan berhasil dihapus");
     } catch {
       fireToast("error", "Gagal menghapus layanan");
     }
   };
 
+  /* ---------- RENDER ---------- */
   if (error) return <p className="p-4 text-red-600">Gagal memuat layanan</p>;
 
   return (
@@ -132,10 +148,7 @@ export function ServicesManager() {
           <div className="flex items-center gap-2">
             <p className="text-gray-600">
               Total{" "}
-              <span className="font-semibold text-blue-600 text-lg">
-                {services.length}
-              </span>{" "}
-              layanan tersedia
+              <span className="font-semibold text-blue-600 text-lg">{services.length}</span> layanan tersedia
             </p>
             <div className="flex items-center gap-1 text-xs text-green-600 bg-green-100 px-2 py-1 rounded-full">
               <TrendingUp className="h-3 w-3" />
@@ -155,16 +168,13 @@ export function ServicesManager() {
 
       {/* Grid Cards */}
       <div className="grid gap-4 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-        {services.map((service) => (
-          <Card
-            key={service.id}
-            className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-          >
+        {services.map((s) => (
+          <Card key={s.id} className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div className="relative overflow-hidden">
-              {service.image ? (
+              {s.image ? (
                 <Image
-                  src={service.image}
-                  alt={service.title}
+                  src={s.image}
+                  alt={s.title}
                   width={400}
                   height={200}
                   className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
@@ -175,19 +185,18 @@ export function ServicesManager() {
                 </div>
               )}
 
-              {/* Overlay Status */}
               <div className="absolute top-3 right-3 flex gap-2">
-                {service.popular && (
+                {s.popular && (
                   <Badge className="bg-yellow-500 text-yellow-900">
                     <Star className="h-3 w-3 mr-1" />
                     Populer
                   </Badge>
                 )}
                 <Badge
-                  variant={service.isActive ? "default" : "destructive"}
+                  variant={s.isActive ? "default" : "destructive"}
                   className="text-xs"
                 >
-                  {service.isActive ? "Aktif" : "Nonaktif"}
+                  {s.isActive ? "Aktif" : "Nonaktif"}
                 </Badge>
               </div>
             </div>
@@ -196,48 +205,42 @@ export function ServicesManager() {
               <div className="space-y-3">
                 <div>
                   <h3 className="font-bold text-lg text-gray-900 group-hover:text-blue-600 transition-colors">
-                    {service.title}
+                    {s.title}
                   </h3>
-                  <p className="text-sm text-gray-600 line-clamp-2">
-                    {service.description}
-                  </p>
+                  <p className="text-sm text-gray-600 line-clamp-2">{s.description}</p>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-blue-600">
-                    {service.price}
-                  </span>
+                  <span className="text-lg font-bold text-blue-600">Rp{s.price.toLocaleString()}</span>
                   <Badge variant="outline" className="text-xs">
-                    {service.category}
+                    {s.category}
                   </Badge>
                 </div>
 
-                {/* Features Preview */}
                 <div className="flex flex-wrap gap-1">
-                  {service.features.slice(0, 2).map((feature, idx) => (
-                    <Badge key={idx} variant="secondary" className="text-xs">
-                      {feature}
+                  {s.features.slice(0, 2).map((f, i) => (
+                    <Badge key={i} variant="secondary" className="text-xs">
+                      {f}
                     </Badge>
                   ))}
-                  {service.features.length > 2 && (
+                  {s.features.length > 2 && (
                     <Badge variant="secondary" className="text-xs">
-                      +{service.features.length - 2}
+                      +{s.features.length - 2}
                     </Badge>
                   )}
                 </div>
 
-                {/* Actions */}
                 <div className="flex gap-2 pt-2 border-t">
                   <Switch
-                    checked={service.isActive}
-                    onCheckedChange={() => handleToggleActive(service)}
+                    checked={s.isActive}
+                    onCheckedChange={() => handleToggleActive(s)}
                     className="scale-90"
                   />
                   <div className="flex-1 flex justify-end gap-2">
                     <Button
                       size="sm"
                       variant="ghost"
-                      onClick={() => handleEdit(service)}
+                      onClick={() => handleEdit(s)}
                       className="hover:bg-blue-100 hover:text-blue-700"
                     >
                       <Edit className="h-4 w-4" />
@@ -245,12 +248,7 @@ export function ServicesManager() {
                     <Button
                       size="sm"
                       variant="ghost"
-                      onClick={async () => {
-                        const { isConfirmed } = await fireConfirm(
-                          "Yakin ingin menghapus layanan ini?"
-                        );
-                        if (isConfirmed) await handleDelete(service.id);
-                      }}
+                      onClick={() => handleDelete(s.id)}
                       className="hover:bg-red-100 hover:text-red-700"
                     >
                       <Trash2 className="h-4 w-4" />
@@ -263,33 +261,24 @@ export function ServicesManager() {
         ))}
       </div>
 
-      {/* Empty State */}
       {services.length === 0 && (
         <div className="text-center py-12">
           <div className="text-6xl mb-4">📭</div>
-          <h3 className="text-xl font-semibold text-gray-700 mb-2">
-            Belum ada layanan
-          </h3>
-          <p className="text-gray-500 mb-4">
-            Tambahkan layanan pertama Anda untuk memulai
-          </p>
+          <h3 className="text-xl font-semibold text-gray-700 mb-2">Belum ada layanan</h3>
+          <p className="text-gray-500 mb-4">Tambahkan layanan pertama Anda untuk memulai</p>
           <Button onClick={handleAdd} className="gap-2">
-            <Plus className="h-4 w-4" />
-            Tambah Layanan
+            <Plus className="h-4 w-4" /> Tambah Layanan
           </Button>
         </div>
       )}
-      
 
+      {/* MODAL */}
       <ServiceModal
         isOpen={isModalOpen}
-        onClose={() => {
-          setIsModalOpen(false);
-          setSelectedService(null);
-        }}
-        onSave={() => console.log('Save button clicked')}
-        onSuccess={mutate} // ← penting
+        onClose={closeModal}
+        onSave={handleSave}       // ← handleSave sekarang menerima File
         service={selectedService}
+        uploadUrl="/api/upload"   // ← URL upload diserahkan ke modal
       />
     </div>
   );

@@ -28,6 +28,7 @@ import { Service } from "@/types/service";
 import { ImageUpload } from "./image-upload";
 import { toast } from "@/components/ui/use-toast";
 import { on } from "events";
+// import { File } from "buffer";
 
 const formSchema = z.object({
   title: z.string().min(1, "Judul harus diisi"),
@@ -65,9 +66,10 @@ type FormData = {
 interface ServiceModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: () => void;
+  onSave: (data: Service & { imageFile?: globalThis.File }) => void | Promise<void>;
   onSuccess?: () => void;
   service?: Service | null;
+  uploadUrl?: string;
 }
 
 export function ServiceModal({
@@ -75,6 +77,7 @@ export function ServiceModal({
   onClose,
   onSuccess,
   service,
+  uploadUrl = "/api/upload"
 }: ServiceModalProps) {
   const [loading, setLoading] = useState(false);
 
