@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
 
     const sb = supabaseAdmin();
     const { data: uploadData, error: uploadError } = await sb.storage
-      .from("services")
+      .from("service")
       .upload(fileName, buffer, {
         cacheControl: "3600",
         upsert: false,
@@ -64,22 +64,23 @@ export async function POST(req: NextRequest) {
 
     // 5. Dapatkan Public Url
     const { data: urlData } = sb.storage
-      .from("services")
+      .from("service")
       .getPublicUrl(uploadData.path);
     const publicUrl = urlData.publicUrl;
 
     return NextResponse.json({ publicUrl }, { status: 200 });
 
-    // 6. Simpan Url ke table services
+    //6. Simpan Url ke table service
     const { error: dbError } = await sb
-      .from("services")
+      .from("service")
       .update({ image: publicUrl })
       .eq("id", idService);
     if (dbError) {
       return NextResponse.json({ error: "db update failed" }, { status: 500 });
     }
 
-    // 7. Response success
+// 7. Response success
+
     return NextResponse.json(
       { message: "upload successful", publicUrl },
       { status: 200 }
