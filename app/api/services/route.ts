@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 import { prisma } from "@/lib/prisma";
 import { revalidateTag } from 'next/cache';
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 // GET: public read
 export async function GET() {
@@ -18,12 +20,18 @@ export async function GET() {
 
 /* ===== ADMIN ONLY ===== */
 export async function POST(req: NextRequest) {
-  const token = await getToken({ req });
-  if (!token || token.role !== "admin") return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  const session = await getServerSession(authOptions);
+  if (!session?.user || session.user.role !== "admin") {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
   const body = await req.json();
+  if (!body.title || !body.description) {
+    return NextResponse.json({ error: "Field wajib" }, { status: 400 });
+  }
+
   const created = await prisma.service.create({ data: body });
-  revalidateTag('services-list');
+  revalidateTag("services-list");
   return NextResponse.json(created, { status: 201 });
 }
 export async function PUT(req: NextRequest) {
