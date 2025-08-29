@@ -66,7 +66,9 @@ type FormData = {
 interface ServiceModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: Service & { imageFile?: globalThis.File }) => void | Promise<void>;
+  onSave: (
+    data: Service & { imageFile?: globalThis.File }
+  ) => void | Promise<void>;
   onSuccess?: () => void;
   service?: Service | null;
   uploadUrl?: string;
@@ -77,7 +79,7 @@ export function ServiceModal({
   onClose,
   onSuccess,
   service,
-  uploadUrl = "/api/upload"
+  uploadUrl = "/api/upload",
 }: ServiceModalProps) {
   const [loading, setLoading] = useState(false);
 
@@ -120,6 +122,11 @@ export function ServiceModal({
   const onSubmit = async (values: FormData) => {
     setLoading(true);
     try {
+      const payload = {
+        ...values,
+        id: service?.id, // ← TAMBAHKAN INI
+      };
+
       const url = service ? `/api/services/${service.id}` : "/api/services";
       const method = service ? "PUT" : "POST";
 
@@ -145,6 +152,7 @@ export function ServiceModal({
     }
   };
 
+  // UI
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] flex flex-col text-black">
@@ -156,125 +164,53 @@ export function ServiceModal({
 
         <div className="flex-1 overflow-y-auto px-1">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pr-2">
-            <div className="grid grid-cols-2 gap-4 text-black">
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Judul Layanan</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Nama layanan..." {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <form
+              onSubmit={form.handleSubmit(onSubmit)}
+              className="space-y-4 pr-2"
+            >
+              <div className="grid grid-cols-2 gap-4 text-black">
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Judul Layanan</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Nama layanan..." {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="category"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Kategori</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="Software, Support, dll"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
 
               <FormField
                 control={form.control}
-                name="category"
+                name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Kategori</FormLabel>
+                    <FormLabel>Deskripsi</FormLabel>
                     <FormControl>
-                      <Input placeholder="Software, Support, dll" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Deskripsi</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Deskripsi layanan..."
-                      rows={3}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="features"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Fitur (pisahkan dengan koma)</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Fitur 1, Fitur 2, Fitur 3"
-                      rows={3}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="price"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Harga</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Mulai Rp 100K" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
-              <FormField
-                control={form.control}
-                name="orderIndex"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Urutan</FormLabel>
-                    <FormControl>
-                      <Input type="number" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-
-            <FormField
-              control={form.control}
-              name="image"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Gambar</FormLabel>
-                  <ImageUpload value={field.value} onChange={field.onChange} />
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="grid grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="gradient"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Gradient (opsional)</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="from-blue-500 to-purple-500"
+                      <Textarea
+                        placeholder="Deskripsi layanan..."
+                        rows={3}
                         {...field}
                       />
                     </FormControl>
@@ -285,57 +221,137 @@ export function ServiceModal({
 
               <FormField
                 control={form.control}
-                name="note"
+                name="features"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Catatan (opsional)</FormLabel>
+                    <FormLabel>Fitur (pisahkan dengan koma)</FormLabel>
                     <FormControl>
-                      <Input placeholder="Catatan tambahan..." {...field} />
+                      <Textarea
+                        placeholder="Fitur 1, Fitur 2, Fitur 3"
+                        rows={3}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-            </div>
 
-            <div className="flex items-center space-x-4">
+              <div className="grid grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="price"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Harga</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Mulai Rp 100K" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="orderIndex"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Urutan</FormLabel>
+                      <FormControl>
+                        <Input type="number" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
               <FormField
                 control={form.control}
-                name="popular"
+                name="image"
                 render={({ field }) => (
-                  <FormItem className="flex items-center space-x-2">
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormLabel>Popular</FormLabel>
+                  <FormItem>
+                    <FormLabel>Gambar</FormLabel>
+                    <ImageUpload
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                    <FormMessage />
                   </FormItem>
                 )}
               />
 
-              <FormField
-                control={form.control}
-                name="isActive"
-                render={({ field }) => (
-                  <FormItem className="flex items-center space-x-2">
-                    <FormControl>
-                      <Switch
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                      />
-                    </FormControl>
-                    <FormLabel>Aktif</FormLabel>
-                  </FormItem>
-                )}
-              />
-            </div>
+              <div className="grid grid-cols-2 gap-4">
+                <FormField
+                  control={form.control}
+                  name="gradient"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Gradient (opsional)</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="from-blue-500 to-purple-500"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
+                <FormField
+                  control={form.control}
+                  name="note"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Catatan (opsional)</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Catatan tambahan..." {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
+              <div className="flex items-center space-x-4">
+                <FormField
+                  control={form.control}
+                  name="popular"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center space-x-2">
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormLabel>Popular</FormLabel>
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="isActive"
+                  render={({ field }) => (
+                    <FormItem className="flex items-center space-x-2">
+                      <FormControl>
+                        <Switch
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
+                        />
+                      </FormControl>
+                      <FormLabel>Aktif</FormLabel>
+                    </FormItem>
+                  )}
+                />
+              </div>
             </form>
           </Form>
         </div>
-        
+
         <DialogFooter className="flex-shrink-0 mt-4">
           <Button type="button" variant="outline" onClick={onClose}>
             Batal

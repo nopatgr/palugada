@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json({ error: "invalid file type" }, { status: 400 });
     }
-    const maxSize = 2 * 1024 * 1024; //2mb
+    const maxSize = 5 * 1024 * 1024; //5mb
     if (file.size > maxSize) {
       return NextResponse.json({ error: "file to large" }, { status: 400 });
     }
