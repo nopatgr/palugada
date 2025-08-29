@@ -127,7 +127,7 @@ export default function ServicesSection() {
                     src={
                       service.image?.startsWith("/")
                         ? service.image
-                        : `/images/${service.image || "placeholder.jpg"}`
+                        : `${service.image || "placeholder.jpg"}`
                     }
                     alt={service.title}
                     fill
