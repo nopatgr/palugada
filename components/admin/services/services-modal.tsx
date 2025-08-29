@@ -82,6 +82,7 @@ export function ServiceModal({
   uploadUrl = "/api/upload",
 }: ServiceModalProps) {
   const [loading, setLoading] = useState(false);
+  const [imageFile, setImageFile] = useState<globalThis.File | null>(null);
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -119,38 +120,56 @@ export function ServiceModal({
     }
   }, [service, isOpen, form]);
 
-  const onSubmit = async (values: FormData) => {
-    setLoading(true);
-    try {
-      const payload = {
-        ...values,
-        id: service?.id, // ← TAMBAHKAN INI
-      };
+const onSubmit = async (values: FormData) => {
+  setLoading(true);
+  try {
+    let imageUrl = values.image || "";
 
-      const url = service ? `/api/services/${service.id}` : "/api/services";
-      const method = service ? "PUT" : "POST";
+    // 1. Upload file baru jika ada
+    if (imageFile) {
+      const formData = new FormData();
+      formData.append("file", imageFile);
+      formData.append("id", service?.id || "");
 
-      const response = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+      const up = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
       });
-
-      if (!response.ok) throw new Error();
-
-      // onSave();
-      onSuccess?.();
-      onClose();
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Gagal menyimpan data",
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
+      if (!up.ok) {
+        const { error } = await up.json();
+        throw new Error(error || "Upload gagal");
+      }
+      const { publicUrl } = await up.json();
+      imageUrl = publicUrl;
     }
-  };
+
+    // 2. Simpan data ke /api/services
+    const payload = {
+      ...values,
+      image: imageUrl,
+      id: service?.id,
+    };
+
+    const url = service ? `/api/services/${service.id}` : "/api/services";
+    const method = service ? "PUT" : "POST";
+
+    const res = await fetch(url, {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!res.ok) throw new Error();
+
+    toast({ title: "✅ Berhasil", description: service ? "Diperbarui" : "Ditambahkan" });
+    onSuccess?.();
+    onClose();
+  } catch (err: any) {
+    toast({ title: "❌ Gagal", description: err.message || "Kesalahan server" });
+  } finally {
+    setLoading(false);
+  }
+};
 
   // UI
   return (

@@ -14,14 +14,16 @@ function supabaseAdmin() {
 export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    if (!session?.user)
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
     const idService = formData.get("id") as string | null; // ← SAMAKAN nama field
 
     if (!file) return NextResponse.json({ error: "No file" }, { status: 400 });
-    if (!idService) return NextResponse.json({ error: "Missing id" }, { status: 400 });
+    if (!idService)
+      return NextResponse.json({ error: "Missing id" }, { status: 400 });
 
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
     if (!allowedTypes.includes(file.type))
@@ -44,9 +46,12 @@ export async function POST(req: NextRequest) {
         contentType: file.type,
       });
 
-    if (uploadError) return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+    if (uploadError)
+      return NextResponse.json({ error: "Upload failed" }, { status: 500 });
 
-    const { data: urlData } = sb.storage.from("service").getPublicUrl(uploadData.path);
+    const { data: urlData } = sb.storage
+      .from("service")
+      .getPublicUrl(uploadData.path);
     const publicUrl = urlData.publicUrl;
 
     // Simpan URL ke tabel services
@@ -55,7 +60,13 @@ export async function POST(req: NextRequest) {
       .update({ image: publicUrl })
       .eq("id", idService);
 
-    if (dbError) return NextResponse.json({ error: "DB update failed" }, { status: 500 });
+    if (dbError)
+      return NextResponse.json({ error: "DB update failed" }, { status: 500 });
+
+    // di dalam POST handler, sebelum return
+    console.log("formData keys:", [...formData.keys()]);
+    console.log("file:", file?.name, file?.type, file?.size);
+    console.log("idService:", idService);
 
     return NextResponse.json(
       { message: "Upload successful", publicUrl },
