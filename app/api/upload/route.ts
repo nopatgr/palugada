@@ -1,13 +1,9 @@
 // app/api/upload/route.ts
-
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import { AuthOptions } from "next-auth";
-import { createClient } from "@supabase/supabase-js";
 import authOptions from "@/lib/auth";
-import { error } from "console";
+import { createClient } from "@supabase/supabase-js";
 
-// helper client supabase di dalam handler
 function supabaseAdmin() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -18,33 +14,23 @@ function supabaseAdmin() {
 export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session?.user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    // 2. Ambil file dan id Services dari form data
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
-    const idService = formData.get("idService") as string | null;
+    const idService = formData.get("id") as string | null; // ← SAMAKAN nama field
 
-    if (!file) {
-      return NextResponse.json({ error: "no file" }, { status: 400 });
-    }
-    if (!idService) {
-      return NextResponse.json({ error: "missing Id" }, { status: 400 });
-    }
+    if (!file) return NextResponse.json({ error: "No file" }, { status: 400 });
+    if (!idService) return NextResponse.json({ error: "Missing id" }, { status: 400 });
 
-    // 3. Validasi file
     const allowedTypes = ["image/jpeg", "image/png", "image/webp"];
-    if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json({ error: "invalid file type" }, { status: 400 });
-    }
-    const maxSize = 5 * 1024 * 1024; //5mb
-    if (file.size > maxSize) {
-      return NextResponse.json({ error: "file to large" }, { status: 400 });
-    }
+    if (!allowedTypes.includes(file.type))
+      return NextResponse.json({ error: "Invalid file type" }, { status: 400 });
 
-    // 4. Upload file ke supabase storage
+    const maxSize = 5 * 1024 * 1024;
+    if (file.size > maxSize)
+      return NextResponse.json({ error: "File too large" }, { status: 400 });
+
     const fileExt = file.name.split(".").pop();
     const fileName = `${crypto.randomUUID()}.${fileExt}`;
     const buffer = Buffer.from(await file.arrayBuffer());
@@ -58,36 +44,25 @@ export async function POST(req: NextRequest) {
         contentType: file.type,
       });
 
-    if (uploadError) {
-      return NextResponse.json({ error: "upload failed" }, { status: 500 });
-    }
+    if (uploadError) return NextResponse.json({ error: "Upload failed" }, { status: 500 });
 
-    // 5. Dapatkan Public Url
-    const { data: urlData } = sb.storage
-      .from("service")
-      .getPublicUrl(uploadData.path);
+    const { data: urlData } = sb.storage.from("service").getPublicUrl(uploadData.path);
     const publicUrl = urlData.publicUrl;
 
-    return NextResponse.json({ publicUrl }, { status: 200 });
-
-    //6. Simpan Url ke table service
+    // Simpan URL ke tabel services
     const { error: dbError } = await sb
-      .from("service")
+      .from("Service") // pastikan nama tabel benar: "services"
       .update({ image: publicUrl })
       .eq("id", idService);
-    if (dbError) {
-      return NextResponse.json({ error: "db update failed" }, { status: 500 });
-    }
 
-// 7. Response success
+    if (dbError) return NextResponse.json({ error: "DB update failed" }, { status: 500 });
 
     return NextResponse.json(
-      { message: "upload successful", publicUrl },
+      { message: "Upload successful", publicUrl },
       { status: 200 }
     );
   } catch (error) {
     console.error("Upload error:", error);
-    return NextResponse.json({ error: "upload failed" }, { status: 500 });
+    return NextResponse.json({ error: "Upload failed" }, { status: 500 });
   }
 }
-
